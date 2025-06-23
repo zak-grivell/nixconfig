@@ -12,5 +12,5 @@
     ./packages.nix
     ./sketchybar.nix
     ./zed.nix
-  ]
+  ];
 }
