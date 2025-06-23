@@ -110,7 +110,7 @@ in {
       };
 
       mode.move.binding = {
-        escape = switch_mode "normal";
+        esc = switch_mode "normal";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
@@ -121,7 +121,7 @@ in {
       };
 
       mode.workspace.binding = {
-        escape = switch_mode "normal";
+        esc = switch_mode "normal";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
@@ -130,7 +130,7 @@ in {
       } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "workspace ${n}" ] ++ switch_mode "normal" );
 
       mode.relocate.binding = {
-        escape = switch_mode "normal";
+        esc = switch_mode "normal";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
@@ -139,7 +139,7 @@ in {
       } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n} --focus-follows-window" ] ++ switch_mode "normal" );
 
       mode.send.binding = {
-        escape = switch_mode "normal";
+        esc = switch_mode "normal";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
@@ -149,7 +149,7 @@ in {
 
 
       mode.config.binding = {
-        escape = switch_mode "normal";
+        esc = switch_mode "normal";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
