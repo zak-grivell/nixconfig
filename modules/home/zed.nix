@@ -41,4 +41,16 @@
     scrollbar.show = "never";
     terminal.dock = "right";
   };
+
+  home.file.".config/zed/keybindings.json".text = builtins.toJSON [
+    {
+      context = "Workspace && Editor";
+      bindings = {
+        ctrl-a = "workspace::ToggleLeftDock";
+        ctrl-s = "workspace::ToggleBottomDock";
+        ctrl-d = "workspace::ToggleRightDock";
+        ctrl-o = "projects::OpenRecent";
+      };
+    }
+  ];
 }
