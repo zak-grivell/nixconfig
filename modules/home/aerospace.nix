@@ -71,9 +71,12 @@ in {
     };
 
     mode.normal.binding = {
+      esc = switch_mode "main";
+      backspace = switch_mode "main";
+
         m = switch_mode "move";
         w = switch_mode "workspace";
-        r= switch_mode "relocate";
+        r = switch_mode "relocate";
         s = switch_mode "send";
         c = switch_mode "config";
 
@@ -106,11 +109,10 @@ in {
 
         minus = "resize smart -100";
         equal = "resize smart +100";
-
       };
 
       mode.move.binding = {
-        esc = switch_mode "normal";
+        esc = switch_mode "main";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
@@ -121,7 +123,7 @@ in {
       };
 
       mode.workspace.binding = {
-        esc = switch_mode "normal";
+        esc = switch_mode "main";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
@@ -130,7 +132,7 @@ in {
       } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "workspace ${n}" ] ++ switch_mode "normal" );
 
       mode.relocate.binding = {
-        esc = switch_mode "normal";
+        esc = switch_mode "main";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
@@ -139,7 +141,7 @@ in {
       } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n} --focus-follows-window" ] ++ switch_mode "normal" );
 
       mode.send.binding = {
-        esc = switch_mode "normal";
+        esc = switch_mode "main";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
@@ -149,7 +151,7 @@ in {
 
 
       mode.config.binding = {
-        esc = switch_mode "normal";
+        esc = switch_mode "main";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
