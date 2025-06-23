@@ -34,14 +34,6 @@
     mkalias
   ];
 
-  home.activation = {
-    aliasApplications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      ln -sfn $genProfilePath/home-path/Applications "$HOME/Applications/Home Manager Applications"
-    '';
-  };
-
-
-
   # Programs natively supported by home-manager.
   # They can be configured in `programs.*` instead of using home.packages.
   programs = {
