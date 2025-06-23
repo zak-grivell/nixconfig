@@ -41,5 +41,6 @@
     terminal.toolbar.breadcrumbs = false;
     inline_code_actions = false;
     scrollbar.show = "never";
+    terminal.dock = "right";
   };
 }
