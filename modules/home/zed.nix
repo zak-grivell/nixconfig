@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
-    zed
+    zed-editor
   ];
 
   home.file.".config/zed/settings.json".text = builtins.toJSON {
