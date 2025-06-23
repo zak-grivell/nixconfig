@@ -11,7 +11,7 @@ let
 in {
   home.packages = [ pkgs.aerospace ];
 
-  home.file.".config/aerospace.toml".text = std.serde.toTOML {
+  home.file.".config/aerospace/aerospace.toml".text = std.serde.toTOML {
     after-startup-command = [
         "exec-and-forget sketchybar"
         "exec-and-forget borders"
