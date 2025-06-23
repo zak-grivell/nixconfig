@@ -66,12 +66,11 @@ in {
         };
     };
 
-    mode = {
-      main.bindings = {
-        f18 = switch_mode "normal";
-      };
+    mode.main.bindings = {
+      f18 = switch_mode "normal";
+    };
 
-      normal.bindings = {
+    mode.normal.bindings = {
         move = switch_mode "move";
         workspace = switch_mode "workspace";
         relocate = switch_mode "relocate";
@@ -110,7 +109,7 @@ in {
 
       };
 
-      move.bindings = {
+      mode.move.bindings = {
         escape = switch_mode "normal";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
@@ -121,7 +120,7 @@ in {
         l = [ "move right "] ++ switch_mode "normal";
       };
 
-      workspace.bindings = {
+      mode.workspace.bindings = {
         escape = switch_mode "normal";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
@@ -130,7 +129,7 @@ in {
         k = [ "workspace previous --wrap-around" ] ++ switch_mode "normal";
       } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "workspace ${n}" ] ++ switch_mode "normal" );
 
-      relocate.bindings = {
+      mode.relocate.bindings = {
         escape = switch_mode "normal";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
@@ -139,7 +138,7 @@ in {
         k = [ "move-node-to-workspace prev --wrap-around --focus-follows-window" ] ++ switch_mode "normal";
       } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n} --focus-follows-window" ] ++ switch_mode "normal" );
 
-      send.bindings = {
+      mode.send.bindings = {
         escape = switch_mode "normal";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
@@ -149,7 +148,7 @@ in {
       } // lib.genAttrs ["1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n}" ] ++ switch_mode "normal" );
 
 
-      config.bindings = {
+      mode.config.bindings = {
         escape = switch_mode "normal";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
@@ -159,6 +158,5 @@ in {
         t = [ "layout tiles horizontal vertical" ] ++ switch_mode "normal";
         s = [ "exec-and-forget sketchybar --reload" ] ++ switch_mode "normal";
       };
-    };
   };
 }
