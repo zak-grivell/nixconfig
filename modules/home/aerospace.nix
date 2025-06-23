@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, nix-std, ... }:
 
 let
   switch_mode = mode: [
@@ -8,7 +8,7 @@ let
 in {
   home.packages = [ pkgs.aerospace ];
 
-  home.file.".config/aerospace.toml".text = builtins.toTOML {
+  home.file.".config/aerospace.toml".text = nix-std.lib.toTOML {
     after-startup-command = [
         "exec-and-forget sketchybar"
         "exec-and-forget borders"
