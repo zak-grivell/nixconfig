@@ -4,7 +4,6 @@
       homebrew.masApps = {
       };
       homebrew.taps = [
-        "nikitabobko/tap"
         "FelixKratz/formulae"
       ];
       homebrew.brews = [
@@ -15,7 +14,6 @@
         "font-jetbrains-mono"
         "font-jetbrains-mono-nerd-font"
         "ghostty@tip"
-        "nikitabobko/tap/aerospace"
         "sf-symbols"
       ];
 }
