@@ -29,6 +29,19 @@ in
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
 
+  # system.autoUpgrade = {
+  #   enable = true;
+  #   dates = "daily";
+  # };
+
+  nix.gc = {
+    automatic = true;
+    interval = { Weekday = 0; Hour = 0; Minute = 0; };
+    options = "--delete-older-than 7d";
+  };
+
+  nix.optimise.automatic = true;
+
   # Set nixbld group GID to match actual system value
   ids.gids.nixbld = 350;
 }
