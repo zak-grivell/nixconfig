@@ -1,11 +1,11 @@
-{ pkgs, lib, nix-std, ... }:
+{ pkgs, lib, inputs, ... }:
 
 let
   switch_mode = mode: [
     "mode ${mode}"
     "exec-and-forget sketchybar --trigger aerospace_mode_change MODE=${mode}"
   ];
-  std = nix-std.lib;
+  std = inputs.nix-std.lib;
 in {
   home.packages = [ pkgs.aerospace ];
 
