@@ -15,5 +15,6 @@
         "font-jetbrains-mono-nerd-font"
         "ghostty@tip"
         "sf-symbols"
+        "zen"
       ];
 }

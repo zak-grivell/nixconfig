@@ -8,7 +8,7 @@ let
 in {
   home.packages = [ pkgs.aerospace ];
 
-  home.file.".config/aerospace.toml".text = nix-std.lib.toTOML {
+  home.file.".config/aerospace.toml".text = nix-std.lib.serde.toTOML {
     after-startup-command = [
         "exec-and-forget sketchybar"
         "exec-and-forget borders"
