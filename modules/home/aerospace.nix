@@ -123,14 +123,14 @@ in {
         l = [ "move right "] ++ switch_mode "normal";
       };
 
-      # workspace.bindings = {
-      #   escape = switch_mode "normal";
-      #   f18 = switch_mode "normal";
-      #   backspace = switch_mode "normal";
+      workspace.bindings = {
+        escape = switch_mode "normal";
+        f18 = switch_mode "normal";
+        backspace = switch_mode "normal";
 
-      #   j = [ "workspace next --wrap-around" ] ++ switch_mode "normal";
-      #   k = [ "workspace previous --wrap-around" ] ++ switch_mode "normal";
-      # } // lib.genAttrs [ 1 2 3 4 5 6 7 8 9] (n: [ "workspace ${n}" ] ++ switch_mode "normal" );
+        j = [ "workspace next --wrap-around" ] ++ switch_mode "normal";
+        k = [ "workspace previous --wrap-around" ] ++ switch_mode "normal";
+      } // lib.genAttrs [ 1 2 3 4 5 6 7 8 9] (n: [ "workspace ${n}" ] ++ switch_mode "normal" );
 
       # relocate.bindings = {
       #   escape = switch_mode "normal";
