@@ -3,7 +3,7 @@
 let
   switch_mode = mode: [
     "mode ${mode}"
-    "exec-and-forget sketchybar --trigger aerospace_mode_change MODE=${mode}"
+    # "exec-and-forget sketchybar --trigger aerospace_mode_change MODE=${mode}"
   ];
 
   inherit (flake)  inputs;

@@ -10,7 +10,6 @@
     ./me.nix
     ./nix.nix
     ./packages.nix
-    ./sketchybar.nix
     ./zed.nix
     ./aerospace.nix
   ];
