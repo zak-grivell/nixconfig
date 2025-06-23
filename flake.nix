@@ -25,8 +25,8 @@
   # Wired using https://nixos-unified.org/autowiring.html
   outputs = inputs:
     inputs.nixos-unified.lib.mkFlake
-      { inherit inputs; root = ./.; # This makes `nix-std` available to all your config modules
-            extraSpecialArgs = {
-              nix-std = inputs.nix-std;
-            }; };
+      {
+        inherit inputs;
+        root = ./.; # This makes `nix-std` available to all your config modules
+      };
 }

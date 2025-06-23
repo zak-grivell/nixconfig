@@ -1,10 +1,14 @@
-{ pkgs, lib, inputs, ... }:
+{ flake, pkgs, lib, ... }:
 
 let
   switch_mode = mode: [
     "mode ${mode}"
     "exec-and-forget sketchybar --trigger aerospace_mode_change MODE=${mode}"
   ];
+
+  inherit (flake) config inputs;
+  inherit (inputs) self;
+
   std = inputs.nix-std.lib;
 in {
   home.packages = [ pkgs.aerospace ];
