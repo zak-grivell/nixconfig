@@ -6,9 +6,7 @@ let
     "exec-and-forget sketchybar --trigger aerospace_mode_change MODE=${mode}"
   ];
 
-  inherit (flake) config inputs;
-  inherit (inputs) self;
-
+  inherit (flake)  inputs;
   std = inputs.nix-std.lib;
 in {
   home.packages = [ pkgs.aerospace ];
