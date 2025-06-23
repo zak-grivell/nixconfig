@@ -1,4 +1,8 @@
-{ ... }: {
+{ pkgs, ... }: {
+  home.packages = with pkgs; [
+    zed
+  ];
+
   home.file.".config/zed/settings.json".text = builtins.toJSON {
     icon_theme = {
       light = "Catppuccin Latte";

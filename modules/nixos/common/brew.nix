@@ -15,8 +15,6 @@
         "font-jetbrains-mono"
         "font-jetbrains-mono-nerd-font"
         "ghostty@tip"
-        "zen"
-        "zed@preview"
         "nikitabobko/tap/aerospace"
         "sf-symbols"
       ];
