@@ -1,4 +1,4 @@
-{}: {
+{ ... }: {
   home.file.".config/zed/settings.json".json = {
     icon_theme = {
       light = "Catppuccin Latte";
