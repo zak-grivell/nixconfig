@@ -42,7 +42,7 @@
     terminal.dock = "right";
   };
 
-  home.file.".config/zed/keybindings.json".text = builtins.toJSON [
+  home.file.".config/zed/keymap.json".text = builtins.toJSON [
     {
       context = "Workspace && Editor";
       bindings = {
