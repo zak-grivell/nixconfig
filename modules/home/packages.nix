@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, lib, config, ... }:
 {
   # Nix packages to install to $HOME
   fonts.fontconfig.enable = true;
@@ -33,6 +33,12 @@
 
     mkalias
   ];
+
+  home.activation = {
+    aliasApplications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      ln -sfn $genProfilePath/home-path/Applications "$HOME/Applications/Home Manager Applications"
+    '';
+  };
 
 
 
