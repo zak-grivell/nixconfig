@@ -1,0 +1,3 @@
+{ ... }: {
+  imports = [ ./spotlight.nix ];
+}
