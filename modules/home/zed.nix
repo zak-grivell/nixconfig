@@ -1,5 +1,5 @@
 { ... }: {
-  home.file.".config/zed/settings.json".source = {
+  home.file.".config/zed/settings.json".text = builtins.toJSON {
     icon_theme = {
       light = "Catppuccin Latte";
       dark = "Catppuccin Frappé";
