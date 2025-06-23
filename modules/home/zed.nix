@@ -1,7 +1,5 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [
-    zed-editor
-  ];
+  home.packages = [ pkgs.zed-editor ];
 
   home.file.".config/zed/settings.json".text = builtins.toJSON {
     icon_theme = {
