@@ -1,5 +1,5 @@
 { ... }: {
-  home.file.".config/zed/settings.json".text = {
+  home.file.".config/zed/settings.json".source = {
     icon_theme = {
       light = "Catppuccin Latte";
       dark = "Catppuccin Frappé";
