@@ -71,11 +71,11 @@ in {
     };
 
     mode.normal.binding = {
-        move = switch_mode "move";
-        workspace = switch_mode "workspace";
-        relocate = switch_mode "relocate";
-        send = switch_mode "send";
-        config = switch_mode "config";
+        m = switch_mode "move";
+        w = switch_mode "workspace";
+        r= switch_mode "relocate";
+        s = switch_mode "send";
+        c = switch_mode "config";
 
         h = "focus left";
         j = "focus down";
