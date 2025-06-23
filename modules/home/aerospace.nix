@@ -97,10 +97,10 @@ in {
 
         a = "exec-and-forget open -a 'Launchpad.app'";
         p = ''
-        osascript -e 'tell application "System Events" to key code 49 using {command down}' -e 'delay 1' -e 'tell application "System Events" to key code 21 using {command down}'
+        exec-and-forget osascript -e 'tell application "System Events" to key code 49 using {command down}' -e 'delay 1' -e 'tell application "System Events" to key code 21 using {command down}'
         '';
         g = ''
-        osascript -e 'tell application "System Events" to key code 49 using {command down}' -e 'delay 1' -e 'tell application "System Events" to key code 19 using {comma
+        exec-and-forget osascript -e 'tell application "System Events" to key code 49 using {command down}' -e 'delay 1' -e 'tell application "System Events" to key code 19 using {command down}'
         '';
 
 
@@ -126,7 +126,7 @@ in {
         backspace = switch_mode "normal";
 
         j = [ "workspace next --wrap-around" ] ++ switch_mode "normal";
-        k = [ "workspace previous --wrap-around" ] ++ switch_mode "normal";
+        k = [ "workspace prev --wrap-around" ] ++ switch_mode "normal";
       } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "workspace ${n}" ] ++ switch_mode "normal" );
 
       mode.relocate.binding = {
