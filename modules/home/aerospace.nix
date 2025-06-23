@@ -130,37 +130,37 @@ in {
 
         j = [ "workspace next --wrap-around" ] ++ switch_mode "normal";
         k = [ "workspace previous --wrap-around" ] ++ switch_mode "normal";
-      } // lib.genAttrs [ 1 2 3 4 5 6 7 8 9] (n: [ "workspace ${n}" ] ++ switch_mode "normal" );
+      } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "workspace ${n}" ] ++ switch_mode "normal" );
 
-      # relocate.bindings = {
-      #   escape = switch_mode "normal";
-      #   f18 = switch_mode "normal";
-      #   backspace = switch_mode "normal";
+      relocate.bindings = {
+        escape = switch_mode "normal";
+        f18 = switch_mode "normal";
+        backspace = switch_mode "normal";
 
-      #   j = [ "move-node-to-workspace next --wrap-around --focus-follows-window" ] ++ switch_mode "normal";
-      #   k = [ "move-node-to-workspace prev --wrap-around --focus-follows-window" ] ++ switch_mode "normal";
-      # } // lib.genAttrs [ 1 2 3 4 5 6 7 8 9] (n: [ "move-node-to-workspace ${n} --focus-follows-window" ] ++ switch_mode "normal" );
+        j = [ "move-node-to-workspace next --wrap-around --focus-follows-window" ] ++ switch_mode "normal";
+        k = [ "move-node-to-workspace prev --wrap-around --focus-follows-window" ] ++ switch_mode "normal";
+      } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n} --focus-follows-window" ] ++ switch_mode "normal" );
 
-      # send.bindings = {
-      #   escape = switch_mode "normal";
-      #   f18 = switch_mode "normal";
-      #   backspace = switch_mode "normal";
+      send.bindings = {
+        escape = switch_mode "normal";
+        f18 = switch_mode "normal";
+        backspace = switch_mode "normal";
 
-      #   j = [ "move-node-to-workspace next --wrap-around" ] ++ switch_mode "normal";
-      #   k = [ "move-node-to-workspace prev --wrap-around" ] ++ switch_mode "normal";
-      # } // lib.genAttrs [ 1 2 3 4 5 6 7 8 9] (n: [ "move-node-to-workspace ${n}" ] ++ switch_mode "normal" );
+        j = [ "move-node-to-workspace next --wrap-around" ] ++ switch_mode "normal";
+        k = [ "move-node-to-workspace prev --wrap-around" ] ++ switch_mode "normal";
+      } // lib.genAttrs ["1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n}" ] ++ switch_mode "normal" );
 
 
-      # config.bindings = {
-      #   escape = switch_mode "normal";
-      #   f18 = switch_mode "normal";
-      #   backspace = switch_mode "normal";
+      config.bindings = {
+        escape = switch_mode "normal";
+        f18 = switch_mode "normal";
+        backspace = switch_mode "normal";
 
-      #   r = [ "reload-config" ] ++ switch_mode "normal";
-      #   a = [ "layout accordion horizontal vertical" ] ++ switch_mode "normal";
-      #   t = [ "layout tiles horizontal vertical" ] ++ switch_mode "normal";
-      #   s = [ "exec-and-forget sketchybar --reload" ] ++ switch_mode "normal";
-      # };
+        r = [ "reload-config" ] ++ switch_mode "normal";
+        a = [ "layout accordion horizontal vertical" ] ++ switch_mode "normal";
+        t = [ "layout tiles horizontal vertical" ] ++ switch_mode "normal";
+        s = [ "exec-and-forget sketchybar --reload" ] ++ switch_mode "normal";
+      };
     };
   };
 }
