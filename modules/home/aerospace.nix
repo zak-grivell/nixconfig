@@ -80,35 +80,35 @@ in {
         s = switch_mode "send";
         c = switch_mode "config";
 
-        h = "focus left";
-        j = "focus down";
-        k = "focus up";
-        l = "focus right";
+        h = [ "focus left" ] ++ switch_mode "main";
+        j = [ "focus down" ] ++ switch_mode "main";
+        k = [ "focus up" ] ++ switch_mode "main";
+        l = [ "focus right" ] ++ switch_mode "main";
 
-        t = "exec-and-forget open -a 'Ghostty.app'";
-        b = "exec-and-forget open -a 'Zen.app'";
-        d = "exec-and-forget open -a 'Finder.app'";
-        e = "exec-and-forget open -a 'Zed.app'";
+        t = [ "exec-and-forget open -a 'Ghostty.app'" ] ++ switch_mode "main";
+        b = [ "exec-and-forget open -a 'Zen.app'" ] ++ switch_mode "main";
+        d = [ "exec-and-forget open -a 'Finder.app'" ] ++ switch_mode "main";
+        e = [ "exec-and-forget open -a 'Zed.app'" ] ++ switch_mode "main";
 
-        shift-t = "exec-and-forget open -a 'Ghostty.app' -n";
-        shift-b = "exec-and-forget open -a 'Zen.app' -n";
-        shift-d = "exec-and-forget open -a 'Finder.app' -n";
-        shift-e = "exec-and-forget open -a 'Zed.app' -n";
+        shift-t = [ "exec-and-forget open -a 'Ghostty.app' -n" ] ++ switch_mode "main";
+        shift-b = [ "exec-and-forget open -a 'Zen.app' -n" ] ++ switch_mode "main";
+        shift-d = [ "exec-and-forget open -a 'Finder.app' -n" ] ++ switch_mode "main";
+        shift-e = [ "exec-and-forget open -a 'Zed.app' -n" ] ++ switch_mode "main";
 
-        u = "layout floating tiling";
-        f = "fullscreen";
+        u = [ "layout floating tiling" ] ++ switch_mode "main";
+        f = [ "fullscreen" ] ++ switch_mode "main";
 
-        a = "exec-and-forget open -a 'Launchpad.app'";
-        p = [''
+        a = [ "exec-and-forget open -a 'Launchpad.app'" ] ++ switch_mode "main";
+        p = [ ''
         exec-and-forget osascript -e 'tell application "System Events" to key code 49 using {command down}' -e 'delay 1' -e 'tell application "System Events" to key code 21 using {command down}'
         '' ] ++ switch_mode "main";
         g = [ ''
         exec-and-forget osascript -e 'tell application "System Events" to key code 49 using {command down}' -e 'delay 1' -e 'tell application "System Events" to key code 19 using {command down}'
-        ''] + switch_mode "main";
+        ''] ++ switch_mode "main";
 
 
-        minus = "resize smart -100";
-        equal = "resize smart +100";
+        minus = [ "resize smart -100" ] ++ switch_mode "main";
+        equal = [ "resize smart +100" ] ++ switch_mode "main";
       };
 
       mode.move.binding = {
@@ -116,10 +116,10 @@ in {
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
-        j = [ "move down" ] ++ switch_mode "normal";
-        k = [ "move up "] ++ switch_mode "normal";
-        h = [ "move left "] ++ switch_mode "normal";
-        l = [ "move right "] ++ switch_mode "normal";
+        j = [ "move down" ] ++ switch_mode "main";
+        k = [ "move up" ] ++ switch_mode "main";
+        h = [ "move left" ] ++ switch_mode "main";
+        l = [ "move right" ] ++ switch_mode "main";
       };
 
       mode.workspace.binding = {
@@ -127,27 +127,27 @@ in {
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
-        j = [ "workspace next --wrap-around" ] ++ switch_mode "normal";
-        k = [ "workspace prev --wrap-around" ] ++ switch_mode "normal";
-      } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "workspace ${n}" ] ++ switch_mode "normal" );
+        j = [ "workspace next --wrap-around" ] ++ switch_mode "main";
+        k = [ "workspace prev --wrap-around" ] ++ switch_mode "main";
+      } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "workspace ${n}" ] ++ switch_mode "main" );
 
       mode.relocate.binding = {
         esc = switch_mode "main";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
-        j = [ "move-node-to-workspace next --wrap-around --focus-follows-window" ] ++ switch_mode "normal";
-        k = [ "move-node-to-workspace prev --wrap-around --focus-follows-window" ] ++ switch_mode "normal";
-      } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n} --focus-follows-window" ] ++ switch_mode "normal" );
+        j = [ "move-node-to-workspace next --wrap-around --focus-follows-window" ] ++ switch_mode "main";
+        k = [ "move-node-to-workspace prev --wrap-around --focus-follows-window" ] ++ switch_mode "main";
+      } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n} --focus-follows-window" ] ++ switch_mode "main");
 
       mode.send.binding = {
         esc = switch_mode "main";
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
-        j = [ "move-node-to-workspace next --wrap-around" ] ++ switch_mode "normal";
-        k = [ "move-node-to-workspace prev --wrap-around" ] ++ switch_mode "normal";
-      } // lib.genAttrs ["1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n}" ] ++ switch_mode "normal" );
+        j = [ "move-node-to-workspace next --wrap-around" ] ++ switch_mode "main";
+        k = [ "move-node-to-workspace prev --wrap-around" ] ++ switch_mode "main";
+      } // lib.genAttrs ["1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n}" ] ++ switch_mode "main" );
 
 
       mode.config.binding = {
@@ -155,10 +155,10 @@ in {
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
-        r = [ "reload-config" ] ++ switch_mode "normal";
-        a = [ "layout accordion horizontal vertical" ] ++ switch_mode "normal";
-        t = [ "layout tiles horizontal vertical" ] ++ switch_mode "normal";
-        s = [ "exec-and-forget sketchybar --reload" ] ++ switch_mode "normal";
+        r = [ "reload-config" ] ++ switch_mode "main";
+        a = [ "layout accordion horizontal vertical" ] ++ switch_mode "main";
+        t = [ "layout tiles horizontal vertical" ] ++ switch_mode "main";
+        s = [ "exec-and-forget sketchybar --reload" ] ++ switch_mode "main";
       };
   };
 }
