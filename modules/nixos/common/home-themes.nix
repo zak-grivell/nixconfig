@@ -1,21 +1,18 @@
-{ pkgs, ... } : {
-  # Create a script that listens for NSNotifications
-  environment.systemPackages = with pkgs; [
-    (writeShellScriptBin "notification-listener" ''
-        #!/bin/bash
+{ pkgs, config, ... } : {
+    # Create a derivation for the Swift notification listener
+    # This will compile the Swift code into the Nix store
+    swift-notification-listener = pkgs.stdenv.mkDerivation {
+      pname = "notification-listener";
+      version = "0.1.0";
 
-        realpath /Users/zakgrivell/.local/state/nix/profiles/home-manager/specialisation > /tmp/home_path
-
-        # Swift script to listen for NSNotifications
-        cat > /tmp/notification_listener.swift << 'EOF'
-        // filename: listen_theme_change.swift
-
+      # The Swift source code
+      src = pkgs.writeText "notification_listener.swift" ''
         import Foundation
 
-        import Foundation
+        let filePath = "/Users/zakgrivell/.local/state/nix/profiles/home-manager/specialisation"
 
-        let filePath = "/tmp/home_path"
-
+        // Read the real path of the home-manager specialisation symlink
+        // This ensures we're always pointing to the active generation
         let fileContents = try! String(contentsOfFile: filePath, encoding: .utf8)
         let path = fileContents.trimmingCharacters(in: .whitespacesAndNewlines)
 
@@ -25,21 +22,6 @@
             return type == "Dark" ? "Dark" : "Light"
         }
 
-        func resolveSymlink(_ path: String) -> String? {
-            // Get the absolute path first
-            let absolutePath = (path as NSString).expandingTildeInPath
-
-            // Use realpath(3) for canonicalization
-            if let resolved = absolutePath.withCString({ realpath($0, nil) }) {
-                let result = String(cString: resolved)
-                free(resolved)
-                return result
-            } else {
-                // realpath returns nil if the file doesn't exist or can't be resolved
-                return nil
-            }
-        }
-
         func shell(_ command: String) -> String {
             let task = Process()
             let pipe = Pipe()
@@ -47,7 +29,7 @@
             task.standardOutput = pipe
             task.standardError = pipe
             task.arguments = ["-c", command]
-            task.launchPath = "/bin/zsh"
+            task.launchPath = "/bin/zsh" // Or /bin/bash, ensure it's available
             task.standardInput = nil
             task.launch()
 
@@ -56,7 +38,6 @@
 
             return output
         }
-
 
         func switch_theme() {
             let mode = currentAppearance()
@@ -67,23 +48,31 @@
 
             process.standardOutput = pipe
 
+            // Construct the full path to the activate scripts based on the resolved home-manager path
             if mode == "Dark" {
                 process.executableURL = URL(fileURLWithPath: path + "/dark/activate")
             } else if mode == "Light" {
                 process.executableURL = URL(fileURLWithPath: path + "/light/activate")
             }
 
-            // helix reload
-            try! process.run()
+            // Ensure the executableURL is valid before trying to run
+            if let url = process.executableURL {
+                print("Attempting to run: \(url.path)")
+                do {
+                    try process.run()
+                    process.waitUntilExit()
+                    print("Script exited with status: \(process.terminationStatus)")
+                } catch {
+                    print("Error running script: \(error)")
+                }
+            } else {
+                print("Executable URL not set for mode: \(mode)")
+            }
 
-            process.waitUntilExit()
-
-
-            shell("pkill -USR1 hx")
-
+            shell("pkill -USR1 hx") // Ensure hx is in launchd's PATH if this needs to work
         }
 
-        print("path:", path)
+        print("Nix Home Manager Path: \(path)")
         switch_theme()
 
         // Listen for theme changes
@@ -98,25 +87,31 @@
             switch_theme()
         }
 
-
         // Keep the script running
         RunLoop.main.run()
+      '';
 
-        EOF
-
-        # Compile and run the Swift script
-        swiftc -o /tmp/notification_listener /tmp/notification_listener.swift
-    '')
-  ];
-
-  # Create a LaunchAgent to run the notification listener
-  launchd.user.agents.notification-handler = {
-    serviceConfig = {
-      ProgramArguments = ["/tmp/notification_listener" ];
-      RunAtLoad = true;
-      KeepAlive = true;
-      StandardErrorPath = "/tmp/notification-listener.err";
-      StandardOutPath = "/tmp/notification-listener.out";
+      # Build steps
+      nativeBuildInputs = [ pkgs.swift ]; # Ensure Swift compiler is available
+      buildPhase = ''
+        swiftc "$src" -o "$out/bin/notification_listener"
+      '';
     };
-  };
+
+    # Make the Swift program available as a system package (optional, but good practice)
+    environment.systemPackages = with pkgs; [
+      config.swift-notification-listener # Refer to the derivation defined above
+    ];
+
+    # Create a LaunchAgent to run the notification listener
+    launchd.user.agents.notification-handler = {
+      serviceConfig = {
+        # Refer to the output path of the Nix derivation
+        ProgramArguments = ["${config.swift-notification-listener}/bin/notification_listener"];
+        RunAtLoad = true;
+        KeepAlive = true;
+        StandardErrorPath = "/tmp/notification-listener.err";
+        StandardOutPath = "/tmp/notification-listener.out";
+      };
+    };
 }
