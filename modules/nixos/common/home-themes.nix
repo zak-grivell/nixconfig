@@ -112,7 +112,7 @@ in {
     launchd.user.agents.notification-handler = {
       serviceConfig = {
         # Refer to the output path of the Nix derivation
-        ProgramArguments = ["${config.swift-notification-listener}/bin/notification_listener"];
+        ProgramArguments = ["${swift-notification-listener}/bin/notification_listener"];
         RunAtLoad = true;
         KeepAlive = true;
         StandardErrorPath = "/tmp/notification-listener.err";
