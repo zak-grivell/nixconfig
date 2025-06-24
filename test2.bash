@@ -4,10 +4,6 @@ realpath /Users/zakgrivell/.local/state/nix/profiles/home-manager/specialisation
 
 # Swift script to listen for NSNotifications
 cat > /tmp/notification_listener.swift << 'EOF'
-// filename: listen_theme_change.swift
-
-import Foundation
-
 import Foundation
 
 let filePath = "/tmp/home_path"
@@ -88,17 +84,6 @@ let notificationName = Notification.Name("AppleInterfaceThemeChangedNotification
 
 center.addObserver(
     forName: notificationName,
-    object: nil,
-    queue: .main
-) { _ in
-    switch_theme()
-}
-
-// Listen for system wake
-let powercenter = NSWorkspace.shared.notificationCenter
-
-powercenter.addObserver(
-    forName: NSWorkspace.didWakeNotification,
     object: nil,
     queue: .main
 ) { _ in
