@@ -99,12 +99,12 @@ in {
         f = "fullscreen";
 
         a = "exec-and-forget open -a 'Launchpad.app'";
-        p = ''
+        p = [''
         exec-and-forget osascript -e 'tell application "System Events" to key code 49 using {command down}' -e 'delay 1' -e 'tell application "System Events" to key code 21 using {command down}'
-        '';
-        g = ''
+        '' ] ++ switch_mode "main";
+        g = [ ''
         exec-and-forget osascript -e 'tell application "System Events" to key code 49 using {command down}' -e 'delay 1' -e 'tell application "System Events" to key code 19 using {command down}'
-        '';
+        ''] + switch_mode "main";
 
 
         minus = "resize smart -100";
