@@ -5,7 +5,6 @@
 
   # Search for packages here: https://search.nixos.org/packages
   home.packages = with pkgs; [
-    helix
     pokeget-rs
     fastfetch
     uv
