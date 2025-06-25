@@ -25,8 +25,6 @@ in {
     plist-watcher
   ];
 
-  a.fake.option = "fake value";
-
   # system.activationScripts.init_theme.text = "${plist-watcher}/bin/plist-watcher";
 
   system.activationScripts.set_theme_path = {

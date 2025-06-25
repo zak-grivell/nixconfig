@@ -25,7 +25,7 @@ in {
           "exec-and-forget sketchybar --trigger aerospace_focus_change"
       ];
 
-      start-at-login = true;
+      start-at-login = false;
 
       enable-normalization-flatten-containers = true;
       enable-normalization-opposite-orientation-for-nested-containers = true;
