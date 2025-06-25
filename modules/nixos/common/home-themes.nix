@@ -93,7 +93,7 @@ swift-notification-listener = pkgs.stdenv.mkDerivation {
 
   dontUnpack = true; # <--- Add this line!
   # Build steps
-  nativeBuildInputs = [ pkgs.swift ]; # Ensure Swift compiler is available
+  nativeBuildInputs = [  pkgs.darwin.apple_sdk.swift ]; # Ensure Swift compiler is available
   installPhase = ''
         mkdir -p $out/bin
         swiftc "$src" -o "$out/bin/notification_listener"
