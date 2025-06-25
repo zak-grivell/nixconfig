@@ -90,11 +90,14 @@ swift-notification-listener = pkgs.stdenv.mkDerivation {
     // Keep the script running
     RunLoop.main.run()
   '';
+
+  dontUnpack = true; # <--- Add this line!
   # Build steps
   nativeBuildInputs = [ pkgs.swift ]; # Ensure Swift compiler is available
-  buildPhase = ''
-    swiftc "$src" -o "$out/bin/notification_listener"
-  '';
+  installPhase = ''
+        mkdir -p $out/bin
+        swiftc "$src" -o "$out/bin/notification_listener"
+      '';
 };
 in {
     # Create a derivation for the Swift notification listener
