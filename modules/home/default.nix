@@ -11,6 +11,6 @@
     ./nix.nix
     ./packages.nix
     ./zed.nix
-    ./aerospace.nix
+    # ./aerospace.nix
   ];
 }
