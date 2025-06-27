@@ -13,7 +13,7 @@ in
   me = {
     username = "zakgrivell";
     fullname = "Zak Grivell";
-    email = "johndoe@zakbook.com";
+    email = "zak@grivell.uk";
   };
 
 

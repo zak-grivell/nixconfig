@@ -1,6 +1,6 @@
 { ... }: {
   services.jankyborders = {
-    enable = true;
+    enable = false;
     blur_radius = 5.0;
     active_color = "0xffca9ee6";
     inactive_color = "0x00494d64";

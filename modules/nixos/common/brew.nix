@@ -4,7 +4,7 @@
       homebrew.masApps = {
       };
       homebrew.taps = [
-        "FelixKratz/formulae"
+        # "FelixKratz/formulae"
       ];
       homebrew.brews = [
           # "FelixKratz/formulae/borders"
@@ -16,5 +16,6 @@
         "ghostty@tip"
         "sf-symbols"
         "zen"
+        "openscad"
       ];
 }

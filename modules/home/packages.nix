@@ -31,6 +31,8 @@
     fish
 
     mkalias
+
+    manix
   ];
 
   # Programs natively supported by home-manager.
