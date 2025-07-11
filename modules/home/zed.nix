@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  home.packages = [ pkgs.zed-editor ];
+  # home.packages = [ pkgs.zed-editor ];
 
   home.file.".config/zed/settings.json".text = builtins.toJSON {
     icon_theme = {
@@ -12,12 +12,13 @@
       dark = "Catppuccin Frappé";
       mode = "system";
     };
-    vim_mode = true;
-    ui_font_size = 16;
-    buffer_font_size = 16;
-    vim = {
-      default_mode = "helix_normal";
-    };
+    # vim_mode = true;
+    helix_mode = true;
+    ui_font_size = 14;
+    buffer_font_size = 14;
+    # vim = {
+    #   default_mode = "helix_normal";
+    # };
     toolbar = {
       agent_review = false;
       breadcrumbs = false;
@@ -29,14 +30,15 @@
       catppuccin_icons = true;
       nix = true;
     };
-    auto_save = "on_focus_change";
     tab_bar =  {
       show = true;
       show_nav_history_buttons = false;
-      show_tab_bar_buttons = false;
+      show_tab_bar_buttons = true;
     };
     diagnostics.inline.enabled = true;
     terminal.toolbar.breadcrumbs = false;
+
+    debugger.dock = "right";
     inline_code_actions = false;
     scrollbar.show = "never";
     terminal.dock = "right";

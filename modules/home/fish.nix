@@ -15,6 +15,13 @@ in {
       enable = true;
 
       interactiveShellInit = ''
+          function fish_prompt
+            set_color yellow
+            echo -n (prompt_pwd)
+            set_color normal
+            echo -n ' > '
+          end
+
           set fish_greeting # Disable greeting
           pokeget random --hide-name | fastfetch --file-raw -
       '';
@@ -44,4 +51,17 @@ in {
           '';
     };
 
+
+
+  # programs.starship = {
+  #   enable = true;
+  #   settings = {
+  #     add_newline = false;
+  #     format = "$directory\$character";
+  #     character = {
+  #       success_symbol = "[➜](bold green) ";
+  #       error_symbol = "[✗](bold red) ";
+  #     };
+  #   };
+  # };
 }

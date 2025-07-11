@@ -15,10 +15,10 @@
       dock = {
         # autohide = true;
         # customize Hot Corners
-        wvous-tl-corner = 2; # top-left - Mission Control
+        # wvous-tl-corner = 2; # top-left - Mission Control
         # wvous-tr-corner = 13; # top-right - Lock Screen
-        wvous-bl-corner = 3; # bottom-left - Application Windows
-        wvous-br-corner = 4; # bottom-right - Desktop
+        # wvous-bl-corner = 3; # bottom-left - Application Windows
+        # wvous-br-corner = 4; # bottom-right - Desktop
       };
 
       finder = {
@@ -28,6 +28,17 @@
         QuitMenuItem = true; # enable quit menu item
         ShowPathbar = true; # show path bar
         ShowStatusBar = true; # show status bar
+      };
+
+      NSGlobalDomain = {
+        InitialKeyRepeat = 15;
+        KeyRepeat = 3;
+        NSAutomaticCapitalizationEnabled = false;
+        NSAutomaticDashSubstitutionEnabled = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled = false;
+        NSAutomaticSpellingCorrectionEnabled = false;
+        NSNavPanelExpandedStateForSaveMode = true;
       };
     };
 
@@ -40,7 +51,6 @@
 
   users.knownUsers = [ "zakgrivell" ];
   users.users.zakgrivell.uid = 501;
-
 
   environment.shells = [
     pkgs.fish

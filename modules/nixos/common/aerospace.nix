@@ -1,16 +1,17 @@
 { lib, ... }:
-
 let
   switch_mode = mode: [
     "mode ${mode}"
-    # "exec-and-forget sketchybar --trigger aerospace_mode_change MODE=${mode}"
+    "exec-and-forget sketchybar --trigger aerospace_mode_change MODE=${mode}"
   ];
 in {
+
+
   services.aerospace = {
     enable = true;
     settings = {
       after-startup-command = [
-          # "exec-and-forget sketchybar"
+          "exec-and-forget sketchybar"
           # "exec-and-forget borders"
           "exec-and-forget cd aerospace-swipe; make uninstall; make install"
       ];
@@ -42,7 +43,7 @@ in {
         inherit-env-vars = true;
 
         env-vars = {
-          PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:\${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:\${PATH}:/etc/profiles/per-user/zakgrivell/bin";
+          PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:\${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:\${PATH}:/etc/profiles/per-user/zakgrivell/bin:/nix/var/nix/profiles/system/sw/bin/";
         };
       };
 
@@ -124,8 +125,8 @@ in {
           f18 = switch_mode "normal";
           backspace = switch_mode "normal";
 
-          j = [ "workspace next --wrap-around" ] ++ switch_mode "main";
-          k = [ "workspace prev --wrap-around" ] ++ switch_mode "main";
+          k = [ "workspace next --wrap-around" ] ++ switch_mode "main";
+          j = [ "workspace prev --wrap-around" ] ++ switch_mode "main";
         } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "workspace ${n}" ] ++ switch_mode "main" );
 
         mode.relocate.binding = {
@@ -133,8 +134,8 @@ in {
           f18 = switch_mode "normal";
           backspace = switch_mode "normal";
 
-          j = [ "move-node-to-workspace next --wrap-around --focus-follows-window" ] ++ switch_mode "main";
-          k = [ "move-node-to-workspace prev --wrap-around --focus-follows-window" ] ++ switch_mode "main";
+          k = [ "move-node-to-workspace next --wrap-around --focus-follows-window" ] ++ switch_mode "main";
+          j = [ "move-node-to-workspace prev --wrap-around --focus-follows-window" ] ++ switch_mode "main";
         } // lib.genAttrs [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n} --focus-follows-window" ] ++ switch_mode "main");
 
         mode.send.binding = {
@@ -142,8 +143,8 @@ in {
           f18 = switch_mode "normal";
           backspace = switch_mode "normal";
 
-          j = [ "move-node-to-workspace next --wrap-around" ] ++ switch_mode "main";
-          k = [ "move-node-to-workspace prev --wrap-around" ] ++ switch_mode "main";
+          k = [ "move-node-to-workspace next --wrap-around" ] ++ switch_mode "main";
+          j = [ "move-node-to-workspace prev --wrap-around" ] ++ switch_mode "main";
         } // lib.genAttrs ["1" "2" "3" "4" "5" "6" "7" "8" "9" ] (n: [ "move-node-to-workspace ${n}" ] ++ switch_mode "main" );
 
 

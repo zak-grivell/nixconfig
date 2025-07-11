@@ -7,6 +7,6 @@
   ];
 
   services.sketchybar = {
-    enable = false;
+    enable = true;
   };
 }

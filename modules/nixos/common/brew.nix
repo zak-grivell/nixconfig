@@ -1,4 +1,4 @@
-{
+{ ... }: {
     homebrew.enable = true;
       homebrew.onActivation.cleanup = "uninstall";
       homebrew.masApps = {
@@ -14,8 +14,10 @@
         "font-jetbrains-mono"
         "font-jetbrains-mono-nerd-font"
         "ghostty@tip"
+        "zed"
         "sf-symbols"
         "zen"
         "openscad"
+        "visual-studio-code"
       ];
 }

@@ -9,12 +9,25 @@ let
 
     [[ -z "$HM_PATH" ]] && { echo "Error: Cannot read specialisation path"; exit 1; }
 
-    mode=$(defaults read -g AppleInterfaceStyle 2>/dev/null || echo "Light")
+    theme=$(osascript <<EOF
+    tell application "System Events"
+        tell appearance preferences
+            set dark_mode to dark mode
+        end tell
+    end tell
 
-    if [[ "$mode" == "Dark" ]]; then
-        exec "$HM_PATH/dark/activate"
+    if dark_mode then
+        return "Dark"
     else
-        exec "$HM_PATH/light/activate"
+        return "Light"
+    end if
+    EOF
+    )
+
+    if [ "$theme" == "Dark" ]; then
+        "$HM_PATH/dark/activate"
+    else
+        "$HM_PATH/light/activate"
     fi
 
     # Signal helix
@@ -27,12 +40,10 @@ in {
 
   # system.activationScripts.init_theme.text = "${plist-watcher}/bin/plist-watcher";
 
-  system.activationScripts.set_theme_path = {
+  system.activationScripts.postActivation = {
     enable = true;
     text = ''
-      echo "Setting PATH..." >> /tmp/debug_activation.log
       realpath /Users/zakgrivell/.local/state/nix/profiles/home-manager/specialisation > /tmp/specialisation_path
-      echo "Done." >> /tmp/debug_activation.log
     '';
   };
 
