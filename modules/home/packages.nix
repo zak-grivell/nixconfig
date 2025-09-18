@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   # Nix packages to install to $HOME
   fonts.fontconfig.enable = true;
@@ -33,11 +38,30 @@
     mkalias
 
     manix
+
+    ollama
+
+    jdk24
+
+    # for gudev site
+    ruby
+    jekyll
+
+    yazi
   ];
+
+  services.ollama = {
+    enable = true;
+    port = 11434; # optional, default is 11434
+  };
 
   # Programs natively supported by home-manager.
   # They can be configured in `programs.*` instead of using home.packages.
   programs = {
     fzf.enable = true;
+    zoxide.enable = true;
+    ripgrep.enable = true;
+    fd.enable = true;
+    zellij.enable = true;
   };
 }

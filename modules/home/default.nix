@@ -11,6 +11,10 @@
     ./nix.nix
     ./packages.nix
     ./zed.nix
-    # ./aerospace.nix
+    ./ghostty.nix
+    #./aerospace.nix
+    # zoom.nix
+    # orcacad.nix
+    # zen.nix
   ];
 }

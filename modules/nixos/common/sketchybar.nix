@@ -4,6 +4,7 @@
       ps.cjson
       (ps.callPackage ./hidden/luaposix.nix {})
     ]))
+    pkgs.sketchybar
   ];
 
   services.sketchybar = {

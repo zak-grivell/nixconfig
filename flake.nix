@@ -12,21 +12,14 @@
     nixos-unified.url = "github:srid/nixos-unified";
     nix-std.url = "github:chessai/nix-std";
 
-    # Software inputs
-    nix-index-database.url = "github:nix-community/nix-index-database";
-    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
-    nixvim.url = "github:nix-community/nixvim";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
-    nixvim.inputs.flake-parts.follows = "flake-parts";
-
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
   };
 
   # Wired using https://nixos-unified.org/autowiring.html
-  outputs = inputs:
-    inputs.nixos-unified.lib.mkFlake
-      {
-        inherit inputs;
-        root = ./.; # This makes `nix-std` available to all your config modules
-      };
+  outputs =
+    inputs:
+    inputs.nixos-unified.lib.mkFlake {
+      inherit inputs;
+      root = ./.; # This makes `nix-std` available to all your config modules
+    };
 }

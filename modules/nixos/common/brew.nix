@@ -1,23 +1,20 @@
-{ ... }: {
-    homebrew.enable = true;
-      homebrew.onActivation.cleanup = "uninstall";
-      homebrew.masApps = {
-      };
-      homebrew.taps = [
-        # "FelixKratz/formulae"
-      ];
-      homebrew.brews = [
-          # "FelixKratz/formulae/borders"
-          # "FelixKratz/formulae/sketchybar"
-      ];
-      homebrew.casks = [
-        "font-jetbrains-mono"
-        "font-jetbrains-mono-nerd-font"
-        "ghostty@tip"
-        "zed"
-        "sf-symbols"
-        "zen"
-        "openscad"
-        "visual-studio-code"
-      ];
+{ config, lib, ... }:
+
+{
+  options = {
+    home.programs.homebrewApps = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "List of Homebrew casks to install via nix-darwin.";
+    };
+  };
+
+  config = {
+    homebrew = {
+      enable = true;
+      onActivation.cleanup = "uninstall";
+      masApps = { };
+      casks = config.home.programs.homebrewApps;
+    };
+  };
 }
