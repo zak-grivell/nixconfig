@@ -35,6 +35,8 @@
     less
     fish
 
+    clang
+
     mkalias
 
     manix

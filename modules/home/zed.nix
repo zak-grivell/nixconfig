@@ -1,5 +1,7 @@
 { pkgs, ... }:
 {
+  programs.fish.shellAliases.zed = "zeditor";
+
   programs.zed-editor = {
     enable = true;
 
@@ -43,6 +45,8 @@
       };
       diagnostics.inline.enabled = true;
       terminal.toolbar.breadcrumbs = false;
+
+      autosave = "on_focus_change";
 
       debugger.dock = "right";
       inline_code_actions = false;
