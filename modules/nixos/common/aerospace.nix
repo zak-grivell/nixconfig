@@ -6,7 +6,6 @@ let
   ];
 in
 {
-
   services.aerospace = {
     enable = true;
     settings = {
@@ -24,7 +23,7 @@ in
 
       on-focus-changed = [
         "exec-and-forget sketchybar --trigger aerospace_focus_change"
-        ''exec-and-forget bash -c [ "$(aerospace list-windows --focused --format '%{workspace}')" = "temp" ] && aerospace move-node-to-workspace "$(aerospace list-windows --focused --format '%{id}')" --focus-follows-window''
+        "exec-and-forget bash .config/aerospace.move-from-temp.bash"
       ];
 
       on-window-detected = [
@@ -103,6 +102,7 @@ in
         b = [ "exec-and-forget open -a 'Zen.app'" ] ++ switch_mode "main";
         d = [ "exec-and-forget open -a 'Finder.app'" ] ++ switch_mode "main";
         e = [ "exec-and-forget open -a 'Zed.app'" ] ++ switch_mode "main";
+        n = [ "exec-and-forget open -a 'Obsidian.app'" ] ++ switch_mode "main";
 
         shift-t = [ "exec-and-forget open -a 'Ghostty.app' -n" ] ++ switch_mode "main";
         shift-b = [ "exec-and-forget open -a 'Zen.app' -n" ] ++ switch_mode "main";
@@ -110,21 +110,17 @@ in
         shift-e = [ "exec-and-forget open -a 'Zed.app' -n" ] ++ switch_mode "main";
 
         u = [ "layout floating tiling" ] ++ switch_mode "main";
-        f = [ "fullscreen" ] ++ switch_mode "main";
+        f = [
+          "fullscreen"
+        ]
+        ++ switch_mode "main";
+
+        p = [
+          ''exec-and-forget bash -c '[ "$(aerospace list-windows --focused --format '%{workspace}')" = "temp" ] && aerospace move-node-to-workspace "$(aerospace list-windows --focused --format '%{window-id}')" --focus-follows-window' ''
+        ]
+        ++ switch_mode "main";
 
         a = [ "exec-and-forget open -a 'Launchpad.app'" ] ++ switch_mode "main";
-        p = [
-          ''
-            exec-and-forget osascript -e 'tell application "System Events" to key code 49 using {command down}' -e 'delay 1' -e 'tell application "System Events" to key code 21 using {command down}'
-          ''
-        ]
-        ++ switch_mode "main";
-        g = [
-          ''
-            exec-and-forget osascript -e 'tell application "System Events" to key code 49 using {command down}' -e 'delay 1' -e 'tell application "System Events" to key code 19 using {command down}'
-          ''
-        ]
-        ++ switch_mode "main";
 
         minus = [ "resize smart -100" ] ++ switch_mode "main";
         equal = [ "resize smart +100" ] ++ switch_mode "main";
@@ -149,17 +145,26 @@ in
         k = [ "workspace next --wrap-around" ] ++ switch_mode "main";
         j = [ "workspace prev --wrap-around" ] ++ switch_mode "main";
       }
-      // lib.genAttrs [
-        "1"
-        "2"
-        "3"
-        "4"
-        "5"
-        "6"
-        "7"
-        "8"
-        "9"
-      ] (n: [ "workspace ${n}" ] ++ switch_mode "main");
+      //
+        lib.genAttrs
+          [
+            "1"
+            "2"
+            "3"
+            "4"
+            "5"
+            "6"
+            "7"
+            "8"
+            "9"
+          ]
+          (
+            n:
+            [
+              ''exec-and-forget bash .config/aerospace/workspace.bash ''
+            ]
+            ++ switch_mode "main"
+          );
 
       mode.relocate.binding = {
         esc = switch_mode "main";
@@ -169,17 +174,26 @@ in
         k = [ "move-node-to-workspace next --wrap-around --focus-follows-window" ] ++ switch_mode "main";
         j = [ "move-node-to-workspace prev --wrap-around --focus-follows-window" ] ++ switch_mode "main";
       }
-      // lib.genAttrs [
-        "1"
-        "2"
-        "3"
-        "4"
-        "5"
-        "6"
-        "7"
-        "8"
-        "9"
-      ] (n: [ "move-node-to-workspace ${n} --focus-follows-window" ] ++ switch_mode "main");
+      //
+        lib.genAttrs
+          [
+            "1"
+            "2"
+            "3"
+            "4"
+            "5"
+            "6"
+            "7"
+            "8"
+            "9"
+          ]
+          (
+            n:
+            [
+              ''exec-and-forget bash .config/aerospace/relocate.bash ''
+            ]
+            ++ switch_mode "main"
+          );
 
       mode.send.binding = {
         esc = switch_mode "main";
@@ -189,17 +203,26 @@ in
         k = [ "move-node-to-workspace next --wrap-around" ] ++ switch_mode "main";
         j = [ "move-node-to-workspace prev --wrap-around" ] ++ switch_mode "main";
       }
-      // lib.genAttrs [
-        "1"
-        "2"
-        "3"
-        "4"
-        "5"
-        "6"
-        "7"
-        "8"
-        "9"
-      ] (n: [ "move-node-to-workspace ${n}" ] ++ switch_mode "main");
+      //
+        lib.genAttrs
+          [
+            "1"
+            "2"
+            "3"
+            "4"
+            "5"
+            "6"
+            "7"
+            "8"
+            "9"
+          ]
+          (
+            n:
+            [
+              ''exec-and-forget bash .config/aerospace/send.bash ''
+            ]
+            ++ switch_mode "main"
+          );
 
       mode.config.binding = {
         esc = switch_mode "main";

@@ -19,6 +19,7 @@ in
 
   nixpkgs.hostPlatform = "aarch64-darwin";
   networking.hostName = "zakbook";
+  nixpkgs.config.allowUnfree = true;
 
   system.primaryUser = "zakgrivell";
   #

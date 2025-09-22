@@ -50,6 +50,8 @@
     jekyll
 
     yazi
+
+    nerd-fonts.jetbrains-mono
   ];
 
   services.ollama = {

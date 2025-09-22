@@ -16,6 +16,5 @@ in
     email = "zak@grivell.uk";
   };
 
-
   home.stateVersion = "24.11";
 }
