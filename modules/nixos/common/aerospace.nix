@@ -6,6 +6,63 @@ let
   ];
 in
 {
+  environment.etc = {
+    "aerospace/move-from-temp.bash".text = ''
+      # Get the workspace of the currently focused window
+      current_workspace=$(aerospace list-windows --focused --format '%{workspace}')
+
+      # Get the window ID of the currently focused window
+      focused_window_id=$(aerospace list-windows --focused --format '%{window-id}')
+
+      # If the current workspace is "temp", move the focused window to its workspace
+      if [ "$current_workspace" = "temp" ]; then
+        aerospace move-node-to-workspace "$focused_window_id" --focus-follows-window
+      fi
+    '';
+
+    "aerospace/relocate.bash".text = ''
+      n="$1"
+
+      workspace="$(aerospace list-workspaces --monitor focused | sed "$(echo $n)q;d")"
+
+      # If no workspace at that index, define a fallback name and let move create it
+      if [ -z "$workspace" ]; then
+          workspace=$(aerospace list-windows --focused --format '%{window-id}')
+      fi
+
+      # Move focused window to target workspace, focus follows
+      aerospace move-node-to-workspace $workspace --focus-follows-window
+    '';
+
+    "aerospace/send.bash".text = ''
+      n="$1"
+
+      workspace="$(aerospace list-workspaces --monitor focused | sed "$(echo $n)q;d")"
+
+      # If no workspace at that index, define a fallback name and let move create it
+      if [ -z "$workspace" ]; then
+          workspace=$(aerospace list-windows --focused --format '%{window-id}')
+      fi
+
+      # Move focused window to target workspace, focus follows
+      aerospace move-node-to-workspace $workspace
+    '';
+
+    "aerospace/workspace.bash".text = ''
+      n="$1"
+
+      workspace="$(aerospace list-workspaces --monitor focused | sed "$(echo $n)q;d")"
+
+      # If no workspace at that index, define a fallback name and let move create it
+      if [ -z "$workspace" ]; then
+          workspace=$(aerospace list-windows --focused --format '%{window-id}')
+      fi
+
+      # Move focused window to target workspace, focus follows
+      aerospace workspace $workspace
+    '';
+  };
+
   services.aerospace = {
     enable = true;
     settings = {
@@ -23,7 +80,7 @@ in
 
       on-focus-changed = [
         "exec-and-forget sketchybar --trigger aerospace_focus_change"
-        "exec-and-forget bash .config/aerospace.move-from-temp.bash"
+        "exec-and-forget bash /etc/aerospace/move-from-temp.bash"
       ];
 
       on-window-detected = [
@@ -115,11 +172,6 @@ in
         ]
         ++ switch_mode "main";
 
-        p = [
-          ''exec-and-forget bash -c '[ "$(aerospace list-windows --focused --format '%{workspace}')" = "temp" ] && aerospace move-node-to-workspace "$(aerospace list-windows --focused --format '%{window-id}')" --focus-follows-window' ''
-        ]
-        ++ switch_mode "main";
-
         a = [ "exec-and-forget open -a 'Launchpad.app'" ] ++ switch_mode "main";
 
         minus = [ "resize smart -100" ] ++ switch_mode "main";
@@ -161,7 +213,7 @@ in
           (
             n:
             [
-              ''exec-and-forget bash .config/aerospace/workspace.bash ''
+              ''exec-and-forget bash /etc/aerospace/workspace.bash ${n}''
             ]
             ++ switch_mode "main"
           );
@@ -173,6 +225,9 @@ in
 
         k = [ "move-node-to-workspace next --wrap-around --focus-follows-window" ] ++ switch_mode "main";
         j = [ "move-node-to-workspace prev --wrap-around --focus-follows-window" ] ++ switch_mode "main";
+
+        r = [ ''exec-and-forget bash /etc/aerospace/relocate.bash 0'' ] + switch_mode "main";
+
       }
       //
         lib.genAttrs
@@ -190,7 +245,7 @@ in
           (
             n:
             [
-              ''exec-and-forget bash .config/aerospace/relocate.bash ''
+              ''exec-and-forget bash /etc/aerospace/relocate.bash ${n}''
             ]
             ++ switch_mode "main"
           );
@@ -202,6 +257,8 @@ in
 
         k = [ "move-node-to-workspace next --wrap-around" ] ++ switch_mode "main";
         j = [ "move-node-to-workspace prev --wrap-around" ] ++ switch_mode "main";
+
+        r = [ ''exec-and-forget bash /etc/aerospace/send.bash 0'' ] + switch_mode "main";
       }
       //
         lib.genAttrs
@@ -219,7 +276,7 @@ in
           (
             n:
             [
-              ''exec-and-forget bash .config/aerospace/send.bash ''
+              ''exec-and-forget bash /etc/aerospace/send.bash ${n}''
             ]
             ++ switch_mode "main"
           );

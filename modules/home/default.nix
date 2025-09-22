@@ -13,7 +13,6 @@
     ./zed.nix
     ./ghostty.nix
     ./obsidian.nix
-    ./aerospace.nix
     # zoom.nix
     # orcacad.nix
   ];

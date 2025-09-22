@@ -6,6 +6,7 @@
     ./aerospace.nix
     ./borders.nix
     ./sketchybar.nix
+    ./borders.nix
     ./pkgs
   ];
 }
