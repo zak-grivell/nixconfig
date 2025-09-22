@@ -14,7 +14,7 @@
       fi
     '';
 
-    ".config/aerospace/relocate.bash'.text" = ''
+    ".config/aerospace/relocate.bash".text = ''
       n="$1"
 
       workspace="$(aerospace list-workspaces --monitor focused | sed "$nq;d")"
@@ -28,7 +28,7 @@
       aerospace move-node-to-workspace $workspace --focus-follows-window
     '';
 
-    ".config/aerospace/send.bash'.text" = ''
+    ".config/aerospace/send.bash".text = ''
       n="$1"
 
       workspace="$(aerospace list-workspaces --monitor focused | sed "$nq;d")"
