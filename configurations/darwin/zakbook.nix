@@ -47,7 +47,7 @@ in
       Hour = 0;
       Minute = 0;
     };
-    options = "--delete-older-than 7d";
+    options = "--delete-older-than 1d";
   };
 
   nix.optimise.automatic = true;

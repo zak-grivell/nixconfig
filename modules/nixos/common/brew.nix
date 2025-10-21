@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-
+{ ... }:
 {
 
   homebrew = {
@@ -10,6 +9,12 @@
       "ghostty"
       "zen"
       "orcaslicer"
+      "ghdl"
+      "zed"
+      "figma"
+      "alt-tab"
+      "kicad"
+      "ltspice"
     ];
   };
 }

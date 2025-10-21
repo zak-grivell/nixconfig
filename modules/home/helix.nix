@@ -1,4 +1,5 @@
-{ ...} : {
+{ ...}:
+{
   programs = {
     helix = {
       enable = true;
@@ -6,7 +7,7 @@
       settings = {
         editor = {
           cursor-shape = {
-          insert = "bar";
+            insert = "bar";
           };
           inline-diagnostics = {
             cursor-line = "hint";
@@ -16,23 +17,29 @@
             after-delay.enable = true;
           };
           soft-wrap.enable = true;
-          line-number="relative";
+          line-number = "relative";
           end-of-line-diagnostics = "hint";
           bufferline = "always";
         };
-          keys.normal = {
-            esc = [
-              "collapse_selection"
-              "keep_primary_selection"
-            ];
-          };
+        keys.normal = {
+          esc = [
+            "collapse_selection"
+            "keep_primary_selection"
+          ];
+        };
       };
     };
   };
+  home.file.".config/helix/color".text = ''
 
-    specialisation = {
-      light.configuration.programs.helix.settings.theme = "catppuccin_latte";
-      dark.configuration.programs.helix.settings.theme = "catppuccin_frappe";
-    };
 
+  '';
+
+
+  programs.fish.shellAliases.helix = ".config/helix/color";
+
+  # specialisation = {
+  #   light.configuration.programs.helix.settings.theme = "catppuccin_latte";
+  #   dark.configuration.programs.helix.settings.theme = "catppuccin_frappe";
+  # };
 }

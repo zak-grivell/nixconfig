@@ -86,9 +86,9 @@ in
       on-window-detected = [
         {
           check-further-callbacks = true;
-          # "if" = {
-          #   during-aerospace-startup = true;
-          # };
+          "if" = {
+            app-name-regex-substring = "^(?!Security Agent$).+$";
+          };
           run = [
             "move-node-to-workspace temp --focus-follows-window"
           ];
@@ -144,22 +144,27 @@ in
         esc = switch_mode "main";
         backspace = switch_mode "main";
 
-        m = switch_mode "move";
-        w = switch_mode "workspace";
         r = switch_mode "relocate";
         s = switch_mode "send";
         c = switch_mode "config";
+
+        x = [ "close --quit-if-last-window" ] ++ switch_mode "main";
 
         h = [ "focus left" ] ++ switch_mode "main";
         j = [ "focus down" ] ++ switch_mode "main";
         k = [ "focus up" ] ++ switch_mode "main";
         l = [ "focus right" ] ++ switch_mode "main";
 
+        shift-j = [ "move down" ] ++ switch_mode "main";
+        shift-k = [ "move up" ] ++ switch_mode "main";
+        shift-h = [ "move left" ] ++ switch_mode "main";
+        shift-l = [ "move right" ] ++ switch_mode "main";
+
         t = [ "exec-and-forget open -a 'Ghostty.app'" ] ++ switch_mode "main";
         b = [ "exec-and-forget open -a 'Zen.app'" ] ++ switch_mode "main";
         d = [ "exec-and-forget open -a 'Finder.app'" ] ++ switch_mode "main";
         e = [ "exec-and-forget open -a 'Zed.app'" ] ++ switch_mode "main";
-        n = [ "exec-and-forget open -a 'Obsidian.app'" ] ++ switch_mode "main";
+        o = [ "exec-and-forget open -a 'Obsidian.app'" ] ++ switch_mode "main";
 
         shift-t = [ "exec-and-forget open -a 'Ghostty.app' -n" ] ++ switch_mode "main";
         shift-b = [ "exec-and-forget open -a 'Zen.app' -n" ] ++ switch_mode "main";
@@ -176,26 +181,9 @@ in
 
         minus = [ "resize smart -100" ] ++ switch_mode "main";
         equal = [ "resize smart +100" ] ++ switch_mode "main";
-      };
 
-      mode.move.binding = {
-        esc = switch_mode "main";
-        f18 = switch_mode "normal";
-        backspace = switch_mode "normal";
-
-        j = [ "move down" ] ++ switch_mode "main";
-        k = [ "move up" ] ++ switch_mode "main";
-        h = [ "move left" ] ++ switch_mode "main";
-        l = [ "move right" ] ++ switch_mode "main";
-      };
-
-      mode.workspace.binding = {
-        esc = switch_mode "main";
-        f18 = switch_mode "normal";
-        backspace = switch_mode "normal";
-
-        k = [ "workspace next --wrap-around" ] ++ switch_mode "main";
-        j = [ "workspace prev --wrap-around" ] ++ switch_mode "main";
+        n = [ "workspace next --wrap-around" ] ++ switch_mode "main";
+        shift-n = [ "workspace prev --wrap-around" ] ++ switch_mode "main";
       }
       //
         lib.genAttrs
@@ -223,10 +211,13 @@ in
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
-        k = [ "move-node-to-workspace next --wrap-around --focus-follows-window" ] ++ switch_mode "main";
-        j = [ "move-node-to-workspace prev --wrap-around --focus-follows-window" ] ++ switch_mode "main";
+        n = [ "move-node-to-workspace next --wrap-around --focus-follows-window" ] ++ switch_mode "main";
+        shift-n = [
+          "move-node-to-workspace prev --wrap-around --focus-follows-window"
+        ]
+        ++ switch_mode "main";
 
-        r = [ ''exec-and-forget bash /etc/aerospace/relocate.bash 0'' ] + switch_mode "main";
+        r = [ ''exec-and-forget bash /etc/aerospace/relocate.bash 0'' ] ++ switch_mode "main";
 
       }
       //
@@ -255,10 +246,10 @@ in
         f18 = switch_mode "normal";
         backspace = switch_mode "normal";
 
-        k = [ "move-node-to-workspace next --wrap-around" ] ++ switch_mode "main";
-        j = [ "move-node-to-workspace prev --wrap-around" ] ++ switch_mode "main";
+        n = [ "move-node-to-workspace next --wrap-around" ] ++ switch_mode "main";
+        shift-n = [ "move-node-to-workspace prev --wrap-around" ] ++ switch_mode "main";
 
-        r = [ ''exec-and-forget bash /etc/aerospace/send.bash 0'' ] + switch_mode "main";
+        r = [ ''exec-and-forget bash /etc/aerospace/send.bash 0'' ] ++ switch_mode "main";
       }
       //
         lib.genAttrs

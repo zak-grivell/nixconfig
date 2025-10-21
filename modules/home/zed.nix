@@ -1,9 +1,9 @@
 { pkgs, ... }:
 {
-  programs.fish.shellAliases.zed = "zeditor";
+  # programs.fish.shellAliases.zed = "zeditor";
 
   programs.zed-editor = {
-    enable = true;
+    enable = false;
 
     extensions = [
       "html"
@@ -49,7 +49,7 @@
       autosave = "on_focus_change";
 
       debugger.dock = "right";
-      inline_code_actions = false;
+      # inline_code_actions = false;
       scrollbar.show = "never";
       terminal.dock = "right";
     };

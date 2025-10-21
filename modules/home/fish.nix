@@ -43,16 +43,16 @@ in
     };
   };
 
-  # Use specialization to set theme flavor
-  specialisation = {
-    dark.configuration.programs.fish.interactiveShellInit = ''
-      fish_config theme choose "Catppuccin Frappe"
-    '';
+  # # Use specialization to set theme flavor
+  # specialisation = {
+  #   dark.configuration.programs.fish.interactiveShellInit = ''
+  #     fish_config theme choose "Catppuccin Frappe"
+  #   '';
 
-    light.configuration.programs.fish.interactiveShellInit = ''
-      fish_config theme choose "Catppuccin Latte"
-    '';
-  };
+  #   light.configuration.programs.fish.interactiveShellInit = ''
+  #     fish_config theme choose "Catppuccin Latte"
+  #   '';
+  # };
 
   # programs.starship = {
   #   enable = true;

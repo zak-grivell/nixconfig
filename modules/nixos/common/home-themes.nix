@@ -33,7 +33,8 @@ let
     # Signal helix
     pkill -USR1 hx 2>/dev/null || true
   '';
-in {
+in
+{
   environment.systemPackages = [
     plist-watcher
   ];
@@ -47,17 +48,15 @@ in {
     '';
   };
 
-
-  # Option 2: Ultra-lightweight using launchd's WatchPaths (most efficient)
-  launchd.user.agents.plist-watcher = {
-    serviceConfig = {
-      ProgramArguments = ["${plist-watcher}/bin/plist-watcher"];
-      WatchPaths = [
-        "/Users/zakgrivell/Library/Preferences/.GlobalPreferences.plist"
-      ];
-      RunAtLoad = true;
-      StandardErrorPath = "/tmp/plist-watcher.err";
-      StandardOutPath = "/tmp/plist-watcher.out";
-    };
-  };
+  # launchd.user.agents.plist-watcher = {
+  #   serviceConfig = {
+  #     ProgramArguments = ["${plist-watcher}/bin/plist-watcher"];
+  #     WatchPaths = [
+  #       "/Users/zakgrivell/Library/Preferences/.GlobalPreferences.plist"
+  #     ];
+  #     RunAtLoad = true;
+  #     StandardErrorPath = "/tmp/plist-watcher.err";
+  #     StandardOutPath = "/tmp/plist-watcher.out";
+  #   };
+  # };
 }

@@ -29,6 +29,10 @@
     nix-info
     nixpkgs-fmt
 
+    libiconv
+
+    pkg-config
+     
     nixd
     # On ubuntu, we need this less for `man home-configuration.nix`'s pager to
     # work.
@@ -43,11 +47,7 @@
 
     ollama
 
-    jdk24
-
-    # for gudev site
-    ruby
-    jekyll
+    jdk25
 
     yazi
 
