@@ -39,33 +39,40 @@
             pname = "helix";
             version = "latest";
 
+            dontCheckForBrokenSymlinks = true;
+
             src = pkgs.fetchFromGitHub {
               owner = "helix-editor";
               repo = "helix";
               rev = "master";
               # Replace this with an actual hash after first build:
-              sha256 = pkgs.lib.fakeSha256;
+              sha256 = "sha256-tL2I302ZrTeo13D99vg4v/VajVCSHdOx5RncpMcjqa0=";
             };
 
             nativeBuildInputs = [
               rustToolchain
               pkgs.pkg-config
               pkgs.lld
+              pkgs.cacert
+              pkgs.git
+              pkgs.makeWrapper
             ];
 
             buildPhase = ''
               export RUSTFLAGS="-C target-cpu=native"
+              export CARGO_HOME=$TMPDIR/cargo
+
+              mkdir -p $out/lib
+
+              mkdir -p $CARGO_HOME
               cargo install \
                 --profile opt \
                 --config 'build.rustflags="-C target-cpu=native"' \
                 --path helix-term \
                 --locked \
                 --root $out
-            '';
 
-            installPhase = ''
-              mkdir -p $out/bin
-              mv $out/bin/hx $out/bin/helix
+                cp -r runtime $out/lib
             '';
 
             meta = with pkgs.lib; {

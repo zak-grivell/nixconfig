@@ -10,10 +10,14 @@
       "zen"
       "orcaslicer"
       "ghdl"
-      "zed"
       "figma"
       "alt-tab"
       "kicad"
+      "ltspice"
+      "godot"
+      "visual-studio-code"
+      "discord"
+      "thebrowsercompany-dia"
       "ltspice"
     ];
   };

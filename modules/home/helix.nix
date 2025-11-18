@@ -1,10 +1,23 @@
-{ ...}:
+{ flake, system, ... }:
+
+let
+  inherit (flake) inputs;
+in
 {
+  # home.packages = [ inputs.helix-cargo.packages.aarch64-darwin.default ];
+
+  home.sessionVariables.HELIX_RUNTIME = "${inputs.helix-cargo.packages.aarch64-darwin.default}/lib/runtime";
+
   programs = {
     helix = {
       enable = true;
+      package = inputs.helix-cargo.packages.aarch64-darwin.default;
       defaultEditor = true;
       settings = {
+        theme = {
+          light = "catppuccin_latte";
+          dark = "catppuccin_frappe";
+        };
         editor = {
           cursor-shape = {
             insert = "bar";
@@ -30,16 +43,4 @@
       };
     };
   };
-  home.file.".config/helix/color".text = ''
-
-
-  '';
-
-
-  programs.fish.shellAliases.helix = ".config/helix/color";
-
-  # specialisation = {
-  #   light.configuration.programs.helix.settings.theme = "catppuccin_latte";
-  #   dark.configuration.programs.helix.settings.theme = "catppuccin_frappe";
-  # };
 }

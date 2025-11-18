@@ -12,11 +12,17 @@ mkdir -p "$toDir"
 (
   cd "$fromDir"
   for app in *.app; do
-    /usr/bin/osacompile -o "$toDir/$app" -e "do shell script \"open '$fromDir/$app'\""
+    /usr/bin/osacompile -o "/tmp/$app" -e "do shell script \"open '$fromDir/$app'\""
+
+    chown -R "$USER":staff "/tmp/$app"
+
+    rm -f "/tmp/$app/Contents/Resources/appicon.icns"
 
     # Just clobber the applet icon laid down by osacompile rather than do
     # surgery on the plist.
-    cp "$fromDir/$app/Contents/Resources"/*.icns "$toDir/$app/Contents/Resources/applet.icns"
+    cp "$fromDir/$app/Contents/Resources"/*.icns "/tmp/$app/Contents/Resources/appicon.icns"
+
+    mv "/tmp/$app" "$toDir/$app"
   done
 )
 

@@ -51,6 +51,8 @@
 
     yazi
 
+    platformio
+
     nerd-fonts.jetbrains-mono
   ];
 

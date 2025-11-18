@@ -29,6 +29,39 @@ in
         pokeget random --hide-name | fastfetch --file-raw -
       '';
 
+      functions = {
+        system_config = ''
+          set config_dir ~/SystemConfig
+
+          # Open config first
+          hx $config_dir
+
+          # Run nix — only continue if it succeeds
+          if nix run $config_dir
+            echo "nix run succeeded — committing changes…"
+
+            if test -d $config_dir/.git
+              cd $config_dir
+              git add -A
+
+              # Only commit if there are actual changes
+              if not git diff --cached --quiet
+                set msg "Update: "(date "+%Y-%m-%d %H:%M:%S")
+                git commit -m "$msg"
+                git push
+              else
+                echo "No changes to commit."
+              end
+            else
+              echo "No git repo in $config_dir"
+            end
+
+          else
+            echo "nix run failed — NOT committing or pushing."
+          end
+        '';
+      };
+
       plugins = [
         {
           name = "catppuccin/fish";
@@ -42,27 +75,4 @@ in
       ];
     };
   };
-
-  # # Use specialization to set theme flavor
-  # specialisation = {
-  #   dark.configuration.programs.fish.interactiveShellInit = ''
-  #     fish_config theme choose "Catppuccin Frappe"
-  #   '';
-
-  #   light.configuration.programs.fish.interactiveShellInit = ''
-  #     fish_config theme choose "Catppuccin Latte"
-  #   '';
-  # };
-
-  # programs.starship = {
-  #   enable = true;
-  #   settings = {
-  #     add_newline = false;
-  #     format = "$directory\$character";
-  #     character = {
-  #       success_symbol = "[➜](bold green) ";
-  #       error_symbol = "[✗](bold red) ";
-  #     };
-  #   };
-  # };
 }
