@@ -2,10 +2,8 @@
 {
   programs.sketchybar = {
     enable = true;
-    config = {
-      source = ./config;
-      recursive = true;
-    };
+    config = ./config;
+
     configType = "lua";
     extraLuaPackages = luaPkgs: with luaPkgs; [ cjson ];
   };

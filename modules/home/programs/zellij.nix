@@ -1,6 +1,6 @@
 { ... }:
 {
-  home.programs.zellij = {
+  programs.zellij = {
     enable = true;
     # enableFishIntegration = true;
     settings = {

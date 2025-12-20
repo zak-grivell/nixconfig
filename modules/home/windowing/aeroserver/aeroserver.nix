@@ -2,23 +2,24 @@
 let
   aeroServer = pkgs.writeScriptBin "aero-server" ''
     #!${pkgs.python311}/bin/python3 -u
-    ${builtins.readFile scripts/areo-manager.py}
+    ${builtins.readFile ./areo-manager.py}
   '';
 in
 {
   home.packages = [ aeroServer ];
 
   launchd.agents.aero-manager = {
-    serviceConfig = {
+    enable = true;
+    config = {
       ProgramArguments = [
         "/bin/sh"
         "-c"
         "echo 'Starting ${aeroServer}' && ${aeroServer}/bin/aero-server"
       ];
-      RunAtLoad = true;
       KeepAlive = true;
-      StandardOutPath = "/tmp/aeroserver.log";
-      StandardErrorPath = "/tmp/aeroserver.err";
+      RunAtLoad = true;
+      StandardOutPath = "/tmp/aero-manager.log";
+      StandardErrorPath = "/tmp/aero-manager.error.log";
     };
   };
 }
