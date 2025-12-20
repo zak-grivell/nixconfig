@@ -1,29 +1,22 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}:
+{ pkgs, lib, ... }:
 let
   switch_mode = mode: [
     "mode ${mode}"
     "exec-and-forget sketchybar --trigger aerospace_mode_change MODE=${mode}"
   ];
 
-  python_path = "/Users/zakgrivell/workspacing.py";
-
-  banned_apps = [
-    "com.apple.keychainaccess"
-    "com.apple.systempreferences"
-    "com.apple.UserNotificationCenter"
-    "com.apple.LocalAuthentication.UIAgent"
-    "com.apple.SecurityAgent"
-    "com.apple.ActivityMonitor"
+  aeroserver = command: [
+    ''exec-and-forget /bin/bash -c "echo "${command}" | socat - UNIX-CONNECT:/tmp/aeroserver.sock"''
   ];
 in
 {
-  services.aerospace = {
+  home.packages = with pkgs; [ socat ];
+
+  programs.aerospace = {
     enable = true;
+
+    launchd.enable = true;
+
     settings = {
       exec-on-workspace-change = [
         "/bin/bash"
@@ -33,14 +26,12 @@ in
 
       on-focus-changed = [
         "exec-and-forget sketchybar --trigger aerospace_focus_change"
-        ''exec-and-forget fish -c 'python3 ${python_path} process' ''
-      ];
+      ]
+      ++ aeroserver "process";
 
       on-window-detected = [
         {
-          run = [
-            ''exec-and-forget fish -c "python3 ${python_path} new-window"''
-          ];
+          run = aeroserver "new-window";
         }
       ];
 
@@ -98,7 +89,7 @@ in
         backspace = switch_mode "main";
 
         # reset workspace
-        r = [ ''exec-and-forget fish -c 'exec-and-forget python3 ${python_path} new-window' '' ];
+        r = aeroserver "new-window" ++ switch_mode "main";
         # close apps
         x = [ "close --quit-if-last-window" ] ++ switch_mode "main";
 
@@ -109,8 +100,8 @@ in
         l = [ "focus right" ] ++ switch_mode "main";
 
         # moving windows between workspaces
-        y = [ ''exec-and-forget fish -c 'python3 ${python_path} yank'  '' ] ++ switch_mode "main";
-        p = [ ''exec-and-forget fish -c 'python3 ${python_path} paste'  '' ] ++ switch_mode "main";
+        y = aeroserver "yank" ++ switch_mode "main";
+        p = aeroserver "paste" ++ switch_mode "main";
 
         # relocating in workspace
         shift-j = [ "move down" ] ++ switch_mode "main";
@@ -170,9 +161,4 @@ in
           );
     };
   };
-
-  environment.systemPackages = [
-    pkgs.socat
-  ];
-
 }

@@ -13,8 +13,6 @@
     nix-std.url = "github:chessai/nix-std";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-
-    helix-cargo.url = "path:./modules/packages/helix";
   };
 
   # Wired using https://nixos-unified.org/autowiring.html

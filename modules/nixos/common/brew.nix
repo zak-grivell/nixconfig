@@ -6,6 +6,7 @@
     onActivation.cleanup = "uninstall";
     masApps = { };
     casks = [
+      "tabtab"
       "ghostty"
       "zen"
       "orcaslicer"

@@ -1,23 +1,17 @@
-{ flake, system, pkgs, ... }:
-
-let
-  inherit (flake) inputs;
-in
+{ pkgs, ... }:
 {
-  home.sessionVariables.HELIX_RUNTIME =
-    "${inputs.helix-cargo.packages.aarch64-darwin.default}/lib/runtime";
 
   programs = {
     helix = {
       enable = true;
-      package = inputs.helix-cargo.packages.aarch64-darwin.default;
+      # package = inputs.helix-cargo.packages.aarch64-darwin.default;
       defaultEditor = true;
 
       settings = {
-        theme = {
-          light = "catppuccin_latte";
-          dark = "catppuccin_frappe";
-        };
+        theme = "catppuccin_frappe";
+        #   light = "catppuccin_latte";
+        #   dark = "catppuccin_frappe";
+        # };
         editor = {
           cursor-shape.insert = "bar";
           inline-diagnostics.cursor-line = "hint";

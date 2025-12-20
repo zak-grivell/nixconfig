@@ -29,6 +29,10 @@
         dark = "Catppuccin Frappé";
         mode = "system";
       };
+      features = {
+        edit_prediction_provider = "zed";
+      };
+
       helix_mode = true;
       ui_font_size = 14;
       buffer_font_size = 14;
