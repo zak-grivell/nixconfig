@@ -1,30 +1,26 @@
-{ flake, system, ... }:
+{ flake, system, pkgs, ... }:
 
 let
   inherit (flake) inputs;
 in
 {
-  # home.packages = [ inputs.helix-cargo.packages.aarch64-darwin.default ];
-
-  home.sessionVariables.HELIX_RUNTIME = "${inputs.helix-cargo.packages.aarch64-darwin.default}/lib/runtime";
+  home.sessionVariables.HELIX_RUNTIME =
+    "${inputs.helix-cargo.packages.aarch64-darwin.default}/lib/runtime";
 
   programs = {
     helix = {
       enable = true;
       package = inputs.helix-cargo.packages.aarch64-darwin.default;
       defaultEditor = true;
+
       settings = {
         theme = {
           light = "catppuccin_latte";
           dark = "catppuccin_frappe";
         };
         editor = {
-          cursor-shape = {
-            insert = "bar";
-          };
-          inline-diagnostics = {
-            cursor-line = "hint";
-          };
+          cursor-shape.insert = "bar";
+          inline-diagnostics.cursor-line = "hint";
           auto-save = {
             focus-lost = true;
             after-delay.enable = true;
@@ -39,6 +35,17 @@ in
             "collapse_selection"
             "keep_primary_selection"
           ];
+        };
+      };
+
+      languages = {
+        language-server = {
+          elixir-ls = {
+            command = "${pkgs.elixir-ls}/bin/elixir-ls";
+            environment = {
+              ELIXIRLS_SKIP_HOST_ELIXIR = "1";
+            };
+          };
         };
       };
     };
