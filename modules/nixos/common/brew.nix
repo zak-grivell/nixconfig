@@ -11,6 +11,10 @@
       "zen"
       "figma"
       "ltspice"
+      "godot"
+      "kicad"
+      "ghdl"
+      "orcaslicer"
     ];
   };
 }
