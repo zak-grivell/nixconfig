@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ pkgs, ... }:
 {
   # programs.homebrew-apps = [ "ghostty " ];
 
@@ -7,6 +7,6 @@
     window-padding-color=background
     resize-overlay=never
     font-family = "JetBrainsMono Nerd Font"
-    command=nu
+    command=${pkgs.nushell}
   '';
 }
