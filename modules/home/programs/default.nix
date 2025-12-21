@@ -7,5 +7,6 @@
     ./misc.nix
     ./yazi.nix
     ./zellij.nix
+    ./nushell.nix
   ];
 }
