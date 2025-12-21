@@ -1,16 +1,15 @@
 { pkgs, ... }:
+
 {
   home.packages = [ pkgs.sbarlua ];
 
+  xdg.configFile."sketchybar" = {
+    source = ./config;
+    recursive = true;
+  };
+
   programs.sketchybar = {
     enable = true;
-    config = {
-      source = builtins.path {
-        path = ./config;
-        name = "sketchybar-config";
-      };
-      recursive = true;
-    };
 
     sbarLuaPackage = pkgs.sbarlua;
 
