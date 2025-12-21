@@ -2,8 +2,6 @@
 # This file is just *top-level* configuration.
 {
   flake,
-  lib,
-  pkgs,
   ...
 }:
 
