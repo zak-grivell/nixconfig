@@ -7,5 +7,6 @@
     window-padding-color=background
     resize-overlay=never
     font-family = "JetBrainsMono Nerd Font"
+    command=nu
   '';
 }
