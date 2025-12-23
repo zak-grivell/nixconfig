@@ -54,6 +54,7 @@
 
   environment.shells = [
     pkgs.fish
+    pkgs.nushell
   ];
   # users.defaultUserShell = pkgs.fish;
   programs.fish.enable = true;

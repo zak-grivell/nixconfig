@@ -7,6 +7,6 @@
     window-padding-color=background
     resize-overlay=never
     font-family = "JetBrainsMono Nerd Font"
-    command=${pkgs.nushell}
   '';
+    # command=${pkgs.nushell}/bin/nu -l
 }
