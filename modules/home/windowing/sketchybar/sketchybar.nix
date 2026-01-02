@@ -3,11 +3,6 @@
 {
   home.packages = [ pkgs.sbarlua ];
 
-  # xdg.configFile."sketchybar" = {
-  #   source = ./config;
-  #   recursive = true;
-  # };
-
   programs.sketchybar = {
     enable = true;
 
@@ -19,6 +14,9 @@
     };
 
     configType = "lua";
-    extraLuaPackages = luaPkgs: with luaPkgs; [ cjson ];
+    extraLuaPackages = luaPkgs: with luaPkgs; [
+      cjson
+      (callPackage ./packages/luaposix.nix {})
+    ];
   };
 }
