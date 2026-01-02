@@ -15,6 +15,7 @@
       "kicad"
       "ghdl"
       "orcaslicer"
+      "font-sf-pro"
     ];
   };
 }

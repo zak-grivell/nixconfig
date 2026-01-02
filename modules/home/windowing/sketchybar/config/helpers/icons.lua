@@ -1,4 +1,4 @@
-local settings = require("settings")
+local settings = require("helpers.settings")
 
 local icons = {
   sf_symbols = {

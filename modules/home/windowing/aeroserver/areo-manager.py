@@ -1,14 +1,8 @@
-# Nix will embed your script content right here
-
-#!/usr/bin/env python3
-
-from socket import socket, AF_UNIX, SOCK_STREAM
-import os
-import subprocess
-from dataclasses import dataclass, field
-from collections import defaultdict
 import json
+import os
 import traceback
+from dataclasses import dataclass
+from socket import AF_UNIX, SOCK_STREAM, socket
 
 
 @dataclass
@@ -50,7 +44,7 @@ def new_valid_space(nums: set):
 
 def aerospace_send_command(client_sock: socket, args: list[str]):
     """Helper to send command and return stdout string."""
-    print(args)
+    print(f"----------- [{args}] ---------- \n\n")
     payload = {"command": "", "args": args, "stdin": ""}
 
     client_sock.sendall((json.dumps(payload) + "\n").encode("utf-8"))
@@ -68,11 +62,16 @@ def aerospace_send_command(client_sock: socket, args: list[str]):
 
     response_json = json.loads(response_data.decode("utf-8"))
 
-    # print("res: ", response_json)
-    data_json = json.loads(response_json["stdout"])
-    print("data: ", data_json)
+    print("res: ", response_json)
+    if response_json["stdout"]:
+        data_json = json.loads(response_json["stdout"])
+        print("data: ", data_json)
 
-    return data_json
+        print("\n" * 5)
+
+        return data_json
+
+    return None
 
 
 def list_windows(
@@ -146,7 +145,8 @@ def reset_window(client_sock: socket):
 
     gen = new_valid_space(valid)
 
-    move_node_to_workspace(client_sock, str(next(gen)), focused_window, True)
+    if focused_window:
+        move_node_to_workspace(client_sock, str(next(gen)), focused_window, True)
 
 
 def process(client_sock: socket):

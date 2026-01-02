@@ -1,4 +1,4 @@
-local colors = require("colors")
+local colors = require("helpers.colors")
 
 -- Equivalent to the --bar domain
 sbar.bar({
@@ -8,11 +8,10 @@ sbar.bar({
     padding_right = 5,
     padding_left = 5,
     margin = -2,
-    -- font_smoothing=true,
+    font_smoothing=true,
     shadow = {
         drawing = true,
         angle = 0,
         distance = 200,
     }
-    -- blur_radius = 80,
 })

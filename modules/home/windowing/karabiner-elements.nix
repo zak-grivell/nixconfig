@@ -21,10 +21,6 @@
 
         simple_modifications = [
           {
-            from.apple_vendor_top_case_key_code = "keyboard_fn";
-            to = [ { key_code = "f18"; } ];
-          }
-          {
             from.key_code = "caps_lock";
             to = [ { key_code = "escape"; } ];
           }

@@ -1,7 +1,6 @@
-local settings = require("settings")
-local colors = require("colors")
+local settings = require("helpers.settings")
+local colors = require("helpers.colors")
 
--- Equivalent to the --default domain
 sbar.default({
     updates = "when_shown",
     icon = {
