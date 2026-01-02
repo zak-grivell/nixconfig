@@ -4,17 +4,20 @@ import traceback
 from dataclasses import dataclass
 from socket import AF_UNIX, SOCK_STREAM, socket
 
+ban_list = {"SecurityAgent"}
+
 
 @dataclass
 class Window:
     id: str
     focused: bool
+    name: str
 
 
 @dataclass
 class Workspace:
     id: str
-    windows: list[Window]
+    windows: dict[str, Window]
     focused: bool
 
 
@@ -84,7 +87,13 @@ def list_windows(
 
     workspaces = aerospace_send_command(
         client_sock,
-        ["list-windows", "--all", "--json", "--format", "%{workspace} %{window-id}"],
+        [
+            "list-windows",
+            "--all",
+            "--json",
+            "--format",
+            "%{workspace} %{window-id} %{app-name}",
+        ],
     )
 
     res = aerospace_send_command(
@@ -106,11 +115,12 @@ def list_windows(
     for entry in workspaces:
         wid = entry["window-id"]
         workspace = entry["workspace"]
+        name = entry["app-name"]
 
         output.setdefault(
-            workspace, Workspace(workspace, [], workspace == focused_workspace)
+            workspace, Workspace(workspace, {}, workspace == focused_workspace)
         )
-        output[workspace].windows.append(Window(wid, wid == focused_window))
+        output[workspace].windows[wid] = Window(wid, wid == focused_window, name)
 
     return output, focused_window, focused_workspace
 
@@ -145,7 +155,12 @@ def reset_window(client_sock: socket):
 
     gen = new_valid_space(valid)
 
-    if focused_window:
+    if (
+        focused_window
+        and focused_workspace
+        and data[focused_workspace].windows[focused_window].name not in ban_list
+    ):
+        print(data[focused_workspace].windows[focused_window].name)
         move_node_to_workspace(client_sock, str(next(gen)), focused_window, True)
 
 
@@ -161,7 +176,7 @@ def process(client_sock: socket):
     while (n := next(gen)) != len(valid) + 1:
         spot = next_valid_spot(valid, n)
 
-        for window in data[str(spot)].windows:
+        for window in data[str(spot)].windows.values():
             move_node_to_workspace(client_sock, n, window.id, window.focused)
 
         valid.remove(spot)

@@ -9,7 +9,7 @@ sbar.default({
             style = settings.font.style_map["Bold"],
             size = 14.0
         },
-        color = colors.foreground,
+        color = colors.text,
         padding_left = settings.paddings,
         padding_right = settings.paddings,
         background = { image = { corner_radius = 9 } },
@@ -20,7 +20,7 @@ sbar.default({
             style = settings.font.style_map["Semibold"],
             size = 14.0
         },
-        color = colors.foreground,
+        color = colors.text,
         padding_left = settings.paddings,
         padding_right = settings.paddings,
     },

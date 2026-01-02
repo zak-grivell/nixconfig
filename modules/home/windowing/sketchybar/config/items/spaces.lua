@@ -174,10 +174,10 @@ local function workspaceAppList(apps)
     return app_workspaces
 end
 
-local function create_divider(workspace_id)
+local function create_divider(workspace_id, show_divider)
     spacer_items[workspace_id] = sbar.add("item", "spacer." .. workspace_id, {
         drawing = false,
-        icon = '|',
+        icon = show_divider and '|' or '',
         padding_left = 5,
         padding_right = 1,
     })
@@ -227,7 +227,7 @@ local function updateWorkspaces()
 end
 
 for i = 1, 20, 1 do
-  create_divider(tostring(i))
+  create_divider(tostring(i), i~=1)
 end
 
 updateWorkspaces()
