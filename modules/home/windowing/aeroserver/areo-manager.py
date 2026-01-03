@@ -4,7 +4,7 @@ import traceback
 from dataclasses import dataclass
 from socket import AF_UNIX, SOCK_STREAM, socket
 
-ban_list = {"SecurityAgent"}
+ban_list = {"SecurityAgent", "coreautha"}
 
 
 @dataclass
