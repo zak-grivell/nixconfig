@@ -5,17 +5,11 @@ local colors = require("helpers.colors")
 
 local cal = sbar.add("item", {
     icon = {
-        color = colors.foreground,
         padding_left = 15,
-        -- font = {
-        --     -- style = settings.font.text,
-        -- },
     },
     label = {
-        color = colors.foreground,
         padding_right = 20,
         align = "right",
-        -- font = { family = settings.font.numbers },
     },
     position = "right",
     update_freq = 30,

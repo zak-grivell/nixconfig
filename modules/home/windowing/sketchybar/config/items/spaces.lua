@@ -92,7 +92,6 @@ local function addApp(app)
             drawing = false,
             padding_left = 40,
             padding_right = 5,
-            color = colors.foreground,
             width = 0
         },
         background = {
