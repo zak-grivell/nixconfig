@@ -16,6 +16,8 @@
       "ghdl"
       "orcaslicer"
       "font-sf-pro"
+      "helium-browser"
+      "whatsapp"
     ];
   };
 }

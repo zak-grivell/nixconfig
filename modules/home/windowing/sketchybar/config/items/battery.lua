@@ -1,5 +1,14 @@
 local icons = require("helpers.icons")
 
+sbar.add("item", "battery-divider", {
+    drawing = true,
+    icon = '|',
+    position = "right",
+    padding_left = 5,
+    padding_right = 1,
+})
+
+
 local battery = sbar.add("item", {
   position = "right",
   icon = {
@@ -10,6 +19,8 @@ local battery = sbar.add("item", {
   },
   label = { drawing = false },
   update_freq = 120,
+  padding_left = 0,
+  padding_right = 0,
 })
 
 local function battery_update()
@@ -41,12 +52,6 @@ local function battery_update()
   end)
 end
 
-sbar.add("item", "battery-divider.", {
-    drawing = true,
-    icon = '|',
-    padding_left = 5,
-    padding_right = 1,
-})
 
 
 battery:subscribe({"routine", "power_source_change", "system_woke"}, battery_update)

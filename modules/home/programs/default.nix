@@ -8,5 +8,6 @@
     ./yazi.nix
     ./zellij.nix
     ./nushell.nix
+    ./nvim.nix
   ];
 }
