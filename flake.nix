@@ -20,12 +20,6 @@
     };
   };
 
-  overlays = [
-    (final: prev: {
-      aerospace = final.callPackage ./modules/pkgs/aerospace/default.nix { };
-    })
-  ];
-
   # Wired using https://nixos-unified.org/autowiring.html
   outputs =
     inputs:

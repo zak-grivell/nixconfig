@@ -21,7 +21,7 @@ stdenv.mkDerivation {
     sha256 = "sha256-bPcVgTPvskit0/LeqmWoOOnlwwyzPoa48P8Vooaqlig=";
   };
 
-  nativeBuildInputs = [ installShellFiles ];
+  nativeBuildInputs = [ nix eval .#packages.aarch64-darwin.aerospace.pnameinstallShellFiles ];
 
   installPhase = ''
     runHook preInstall
