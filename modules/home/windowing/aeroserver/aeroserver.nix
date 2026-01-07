@@ -19,6 +19,7 @@ in
 
   launchd.agents.aero-manager = {
     enable = true;
+    package = pkgs.aerospace.${pkgs.system}.default;
     config = {
       ProgramArguments = [
         "/bin/sh"

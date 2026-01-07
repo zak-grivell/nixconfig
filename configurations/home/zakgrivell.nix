@@ -1,4 +1,4 @@
-{ flake, ... }:
+{ flake, pkgs, ... }:
 let
   inherit (flake) inputs;
   inherit (inputs) self;
@@ -6,6 +6,8 @@ in
 {
   imports = [
     self.homeModules.default
+    inputs.nixvim.homeModules.nixvim
+    inputs.aerospace.${pkgs.system}.default
   ];
 
   # Defined by /modules/home/me.nix

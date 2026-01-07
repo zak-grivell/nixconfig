@@ -1,4 +1,4 @@
-{
+{ inputs, ... }: {
   imports = [
     ./windowing
     ./programs/default.nix

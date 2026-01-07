@@ -13,6 +13,16 @@
     nix-std.url = "github:chessai/nix-std";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    aerospace = {
+      url = "path:./modules/programs/aerospace";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Wired using https://nixos-unified.org/autowiring.html

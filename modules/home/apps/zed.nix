@@ -78,6 +78,18 @@
           ctrl-o = "projects::OpenRecent";
         };
       }
+      {
+        context = "Editor";
+        bindings = {
+          alt-tab = "editor::AcceptEditPrediction";
+        };
+      }
+      {
+        "context" = "Editor && inline_completion";
+        "bindings" = {
+          "tab" = null;
+        };
+      }
     ];
   };
 }
