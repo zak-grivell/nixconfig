@@ -19,10 +19,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    aerospace = {
-      url = "path:./modules/programs/aerospace";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   # Wired using https://nixos-unified.org/autowiring.html
