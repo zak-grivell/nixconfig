@@ -1,14 +1,19 @@
 { pkgs, ... }:
+let
+  my-aero = (pkgs.callPackage ../../../packages/aerospace/default.nix { });
+in
 {
   home.packages = with pkgs; [
     socat
-    aerospace
+    my-aero
   ];
 
   programs.aerospace = {
     enable = true;
 
     launchd.enable = true;
+
+    package = my-aero;
 
     settings = {
       exec-on-workspace-change = [

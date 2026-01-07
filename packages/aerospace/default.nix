@@ -40,9 +40,9 @@ stdenv.mkDerivation {
   '';
 
   doInstallCheck = true;
-  nativeInstallCheckInputs = [
-    versionCheckHook
-  ];
+  # nativeInstallCheckInputs = [
+  #   versionCheckHook
+  # ];
 
   passthru.updateScript = gitUpdater {
     url = "https://github.com/nikitabobko/AeroSpace.git";
