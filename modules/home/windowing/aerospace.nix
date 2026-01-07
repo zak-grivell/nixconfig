@@ -7,8 +7,6 @@
   programs.aerospace = {
     enable = true;
 
-    package = pkgs.my-aerospace;
-
     launchd.enable = true;
 
     settings = {
