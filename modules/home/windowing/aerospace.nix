@@ -1,19 +1,13 @@
 { pkgs, ... }:
-let
-
-  aerospace = pkgs.callPackage ../../pkgs/aerospace.nix { };
-
-in
 {
   home.packages = with pkgs; [
     socat
-    aerospace
   ];
 
   programs.aerospace = {
     enable = true;
 
-    package = aerospace;
+    package = pkgs.my-aerospace;
 
     launchd.enable = true;
 

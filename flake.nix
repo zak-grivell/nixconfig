@@ -19,6 +19,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    my-aerospace = {
+      url = "path:./modules/pkgs/aerospace";
+      inputs.nixpkgs.follows = "nixpkgs"; # Ensure it uses your system's nixpkgs
+    };
+
   };
 
   # Wired using https://nixos-unified.org/autowiring.html

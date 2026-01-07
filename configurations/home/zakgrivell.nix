@@ -7,6 +7,7 @@ in
   imports = [
     self.homeModules.default
     inputs.nixvim.homeModules.nixvim
+    inputs.my-aerospace.packages.${pkgs.system}.default
   ];
 
   # Defined by /modules/home/me.nix
