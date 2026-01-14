@@ -1,19 +1,13 @@
 { pkgs, ... }:
-let
-  my-aero = (pkgs.callPackage ../../../packages/aerospace/default.nix { });
-in
 {
   home.packages = with pkgs; [
     socat
-    my-aero
   ];
 
   programs.aerospace = {
     enable = true;
 
     launchd.enable = true;
-
-    package = my-aero;
 
     settings = {
       exec-on-workspace-change = [
@@ -116,7 +110,7 @@ in
         alt-o = "workspace next --wrap-around";
         alt-i = "workspace prev --wrap-around";
 
-        alt-s = "exec-and-forget sketchybar --reload";
+        alt-m = "exec-and-forget sketchybar --reload";
         alt-c = "reload-config";
         alt-a = "layout accordion horizontal vertical";
         alt-g = "layout tiles horizontal vertical";

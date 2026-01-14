@@ -65,6 +65,23 @@
             "..."
           ];
         };
+
+        Django = {
+          formatter = [
+            {
+              external = {
+                command = "uv";
+                arguments = [
+                  "run"
+                  "djlint"
+                  "-"
+                  "--reformat"
+                  "{buffer_path}"
+                ];
+              };
+            }
+          ];
+        };
       };
     };
 

@@ -5,11 +5,13 @@
     pkg-config
     gnumake
     libiconv
+
+    zlib
   ];
 
   home.sessionVariables = {
-    NIX_LDFLAGS = "-L${pkgs.zlib}/lib";
-    NIX_CFLAGS_COMPILE = "-I${pkgs.zlib}/include";
+    LDFLAGS = "-L${pkgs.zlib}/lib";
+    CFLAGS_COMPILE = "-I${pkgs.zlib}/include";
+    CPPFLAGS = "-I${pkgs.zlib}/include";
   };
-
 }

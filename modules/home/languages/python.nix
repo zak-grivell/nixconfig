@@ -4,5 +4,6 @@
     uv
     ty
     ruff
+    python314
   ];
 }

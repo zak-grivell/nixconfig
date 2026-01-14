@@ -18,6 +18,7 @@
       "font-sf-pro"
       "helium-browser"
       "whatsapp"
+      "utm"
     ];
   };
 }
