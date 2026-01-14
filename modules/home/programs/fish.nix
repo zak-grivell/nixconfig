@@ -30,11 +30,25 @@ in
       '';
 
       functions = {
-        system_config = ''
+        system-config = ''
           set config_dir ~/SystemConfig
 
           # Open config first
           hx $config_dir
+
+          darwin_run
+        '';
+
+        system-update = ''
+          set config_dir ~/SystemConfig
+
+          nix flake update $config_dir
+
+          darwin_run
+        '';
+
+        darwin-run = ''
+          set config_dir ~/SystemConfig
 
           # Run nix — only continue if it succeeds
           if nix run $config_dir
@@ -59,6 +73,9 @@ in
           else
             echo "nix run failed — NOT committing or pushing."
           end
+
+          echo "collecting garbage"
+          nix-collect-garbage -d
         '';
       };
 

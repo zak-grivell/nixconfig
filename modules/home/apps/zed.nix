@@ -33,20 +33,12 @@
         edit_prediction_provider = "zed";
       };
 
+      which_key.enabled = true;
+
       helix_mode = true;
       ui_font_size = 14;
       buffer_font_size = 14;
-      # toolbar = {
-      #   agent_review = false;
-      #   breadcrumbs = false;
-      #   quick_actions = false;
-      #   selections_menu = false;
-      # };
-      # tab_bar = {
-      #   show = false;
-      #   show_nav_history_buttons = false;
-      #   show_tab_bar_buttons = false;
-      # };
+
       diagnostics.inline.enabled = true;
       terminal.toolbar.breadcrumbs = false;
 
