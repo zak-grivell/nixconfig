@@ -10,5 +10,6 @@
     ./rust.nix
     ./typst.nix
     ./vhdl.nix
+    ./mbed.nix
   ];
 }
