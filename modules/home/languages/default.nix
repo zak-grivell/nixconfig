@@ -11,5 +11,6 @@
     ./typst.nix
     ./vhdl.nix
     ./mbed.nix
+    ./haskell.nix
   ];
 }

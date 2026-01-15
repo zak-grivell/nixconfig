@@ -6,11 +6,8 @@ in
 {
   imports = [
     self.homeModules.default
-    inputs.nixvim.homeModules.nixvim
   ];
 
-  # Defined by /modules/home/me.nix
-  # And used all around in /modules/home/*
   me = {
     username = "zakgrivell";
     fullname = "Zak Grivell";

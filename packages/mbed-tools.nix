@@ -1,17 +1,16 @@
 {
   lib,
-  buildPythonPackage,
   fetchPypi,
   python3Packages,
 }:
 
-buildPythonPackage rec {
+python3Packages.buildPythonPackage rec {
   pname = "mbed-tools";
   version = "7.58.0"; # example
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    sha256 = "sha256-tFMpKkb1z86eYboQxPGbhVLBrUzx5xOVwXCieeXYHB0==";
   };
 
   propagatedBuildInputs = with python3Packages; [
@@ -21,6 +20,20 @@ buildPythonPackage rec {
     prettytable
     packaging
     cmsis-pack-manager
+    python-dotenv
+    gitpython
+    tqdm
+    tabulate
+    requests
+    jinja2
+    setuptools
+  ];
+
+  pyproject = true;
+
+  build-system = [
+    python3Packages.setuptools
+    python3Packages.setuptools-scm
   ];
 
   doCheck = false;

@@ -48,11 +48,7 @@ in
     options = "--delete-older-than 1d";
   };
 
-  # due to hm not working
-  # services.skhd.enable = true;
-
   nix.optimise.automatic = true;
 
-  # Set nixbld group GID to match actual system value
   ids.gids.nixbld = 350;
 }

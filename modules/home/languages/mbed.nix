@@ -1,9 +1,18 @@
-{ pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    python313Packages.cmake
-    python313Packages.pip
-    python313Packages.ninja
-    gcc-arm-embedded
+  flake,
+  pkgs,
+  ...
+}:
+let
+  inherit (flake) inputs;
+  inherit (inputs) self;
+in
+{
+  home.packages = [
+    pkgs.python313Packages.cmake
+    pkgs.python313Packages.pip
+    pkgs.python313Packages.ninja
+    pkgs.gcc-arm-embedded
+    self.packages.${pkgs.system}.mbed-tools
   ];
 }
