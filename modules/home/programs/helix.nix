@@ -1,5 +1,10 @@
 { pkgs, ... }:
 {
+  # for editiing basic md files
+  home.packages = with pkgs; [
+    rumdl
+    markdown-oxide
+  ];
 
   programs = {
     helix = {

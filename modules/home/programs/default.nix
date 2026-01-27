@@ -9,7 +9,6 @@
     ./zellij.nix
     ./nushell.nix
     ./nvim.nix
-    ./direnv.nix
     ./devenv.nix
   ];
 
