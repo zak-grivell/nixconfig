@@ -1,5 +1,5 @@
 { ... }: {
-   flake.modules.homeManager.zakbook = { pkgs, ...}: {
+   flake.modules.homeManager.home = { pkgs, ...}: {
      programs.fish.shellAliases.zed = "zeditor";
 
      programs.zed-editor = {

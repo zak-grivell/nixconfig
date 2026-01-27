@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.homeManager.zakbook = { lib, ...}: {
+  flake.modules.homeManager.home = { lib, ...}: {
     home.activation = {
       copyNixApps = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
         # Create directory for the applications

@@ -1,5 +1,5 @@
-{ ... }: {
-  flake-file.inputs.nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+{ inputs, ... }: {
+  flake-file.inputs.nix-homebrew.ul = "github:zhaofengli/nix-homebrew";
 
   flake.modules.darwin.zakbook = { ... }: {
     nix-homebrew.user = "zakgrivell";

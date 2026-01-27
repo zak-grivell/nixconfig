@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.flake-file.flakeModules.default
+    inputs.flake-parts.flakeModules.modules
   ];
 }

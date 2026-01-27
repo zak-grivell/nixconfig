@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.darwin.zakbook.gc = {
+  flake.modules.darwin.system.gc = {
     nix.gc = {
       automatic = true;
       interval = {

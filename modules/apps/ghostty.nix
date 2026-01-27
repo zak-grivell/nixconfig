@@ -1,9 +1,9 @@
 {
-  flake.darwin.zakbook = {
+  flake.darwin.system = {
     homebrew.casks = [ "ghostty" ];
   };
 
-  flake.modules.homeManager.zakbook = {
+  flake.modules.homeManager.home = {
     home.file.".config/ghostty/config".text = ''
       theme = dark:Catppuccin Frappe,light:Catppuccin Latte
       window-padding-color=background

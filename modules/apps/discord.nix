@@ -1,5 +1,5 @@
 { ... }: {
-   flake.modules.homeManager.zakbook = { pkgs, ...}: {
+   flake.modules.homeManager.home = { pkgs, ...}: {
      home.packages = with pkgs; [
       discord
     ];
