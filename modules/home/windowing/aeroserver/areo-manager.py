@@ -2,6 +2,7 @@ import json
 import os
 import traceback
 from dataclasses import dataclass
+from json.decoder import JSONDecodeError
 from socket import AF_UNIX, SOCK_STREAM, socket
 
 ban_list = {"SecurityAgent", "coreautha"}
@@ -16,9 +17,17 @@ class Window:
 
 @dataclass
 class Workspace:
-    id: str
+    number: int
     windows: dict[str, Window]
     focused: bool
+
+
+@dataclass
+class AeroSpaceState:
+    workspaces: dict[int, Workspace]
+    focused_workspace: int | None
+    focused_window: str | None
+    mode: str
 
 
 SOCKET_PATH = "/tmp/aeroserver.sock"
@@ -67,13 +76,8 @@ class AerospaceSocket:
 
         sock.sendall((json.dumps(payload) + "\n").encode("utf-8"))
 
-        # Receive response
         response_data = b""
-        # while not response_data.endswith(b"\n"):
         chunk = sock.recv(4096)
-        # print("CHUNK:", repr(chunk))
-        # if not chunk:
-        #     break
         response_data += chunk
 
         print(response_data)
@@ -82,7 +86,11 @@ class AerospaceSocket:
 
         print("res: ", response_json)
         if response_json["stdout"]:
-            data_json = json.loads(response_json["stdout"])
+            try:
+                data_json = json.loads(response_json["stdout"])
+            except JSONDecodeError:
+                return response_json["stdout"]
+
             print("data: ", data_json)
 
             print("\n" * 5)
@@ -101,7 +109,7 @@ def next_valid_spot(nums: set, start: int):
     return candidate
 
 
-def new_valid_space(nums: set):
+def new_valid_space(nums: dict[int, Workspace]):
     candidate = 1
 
     while True:
@@ -111,14 +119,7 @@ def new_valid_space(nums: set):
         candidate += 1
 
 
-def list_windows(
-    aerospace_socket: AerospaceSocket,
-) -> tuple[dict[str, Workspace], str | None, str | None]:
-    """
-    Runs list-windows with the specific format:
-    %{workspace} %{window-id} %{workspace-is-focused}
-    """
-
+def query_state(aerospace_socket: AerospaceSocket) -> AeroSpaceState:
     workspaces = aerospace_socket.send(
         [
             "list-windows",
@@ -140,9 +141,9 @@ def list_windows(
     )
 
     focused_window = res[0]["window-id"] if len(res) > 0 else None
-    focused_workspace = res[0]["workspace"] if len(res) > 0 else None
+    focused_workspace = int(res[0]["workspace"]) if len(res) > 0 else None
 
-    output: dict[str, Workspace] = {}
+    output: dict[int, Workspace] = {}
 
     for entry in workspaces:
         wid = entry["window-id"]
@@ -150,87 +151,81 @@ def list_windows(
         name = entry["app-name"]
 
         output.setdefault(
-            workspace, Workspace(workspace, {}, workspace == focused_workspace)
+            int(workspace), Workspace(workspace, {}, workspace == focused_workspace)
         )
-        output[workspace].windows[wid] = Window(wid, wid == focused_window, name)
+        output[int(workspace)].windows[wid] = Window(wid, wid == focused_window, name)
 
-    return output, focused_window, focused_workspace
+    mode = aerospace_socket.send(["list-modes", "--current"])
+
+    return AeroSpaceState(output, focused_workspace, focused_window, mode)
 
 
 def move_node_to_workspace(
     aerospace_socket: AerospaceSocket,
-    workspace_name: str,
+    workspace_number: int,
     window_id: str,
-    focused: bool,
+    follow: bool,
 ):
-    """
-    Moves a specific window node to a target workspace.
-    """
-
-    print(f"moving wid({window_id}) to workspace({workspace_name})")
-
     aerospace_socket.send(
         [
             "move-node-to-workspace",
-            str(workspace_name),
+            str(workspace_number),
             "--window-id",
             str(window_id),
         ]
-        + (["--focus-follows-window"] if focused else []),
+        + (["--focus-follows-window"] if follow else []),
     )
 
 
-def reset_window(aerospace_socket: AerospaceSocket):
-    data, focused_window, focused_workspace = list_windows(aerospace_socket)
+def reset_window(aerospace_socket: AerospaceSocket, new_window: bool):
+    state = query_state(aerospace_socket)
 
-    workspaces = data.keys()
-
-    valid = {int(workspace) for workspace in workspaces if workspace.isdigit()}
-
-    gen = new_valid_space(valid)
+    if state.focused_window is None or state.focused_workspace is None:
+        raise ValueError("No focused window or workspace")
 
     if (
-        focused_window
-        and focused_workspace
-        and data[focused_workspace].windows[focused_window].name not in ban_list
+        state.workspaces[state.focused_workspace].windows[state.focused_window].name
+        in ban_list
     ):
-        print(data[focused_workspace].windows[focused_window].name)
-        move_node_to_workspace(aerospace_socket, str(next(gen)), focused_window, True)
+        raise ValueError("Window is in ban list")
+
+    to_merge = new_window and state.mode == "merge"
+
+    if to_merge:
+        return
+
+    next_workspace = next(new_valid_space(state.workspaces))
+
+    move_node_to_workspace(aerospace_socket, next_workspace, state.focused_window, True)
 
 
 def process(aerospace_socket: AerospaceSocket):
-    data, focused_window, focused_workspace = list_windows(aerospace_socket)
+    state = query_state(aerospace_socket)
 
-    workspaces = data.keys()
+    for i, (old_workspace, workspace) in enumerate(sorted(state.workspaces.items())):
+        new_workspace = i + 1
 
-    valid = {int(workspace) for workspace in workspaces if workspace.isdigit()}
-
-    gen = new_valid_space(valid)
-
-    while (n := next(gen)) != len(valid) + 1:
-        spot = next_valid_spot(valid, n)
-
-        for window in data[str(spot)].windows.values():
-            move_node_to_workspace(aerospace_socket, n, window.id, window.focused)
-
-        valid.remove(spot)
-        valid.add(n)
+        if new_workspace != old_workspace:
+            for _, window in workspace.windows.items():
+                move_node_to_workspace(
+                    aerospace_socket, new_workspace, window.id, window.focused
+                )
 
 
 def yank(aerospace_socket: AerospaceSocket):
-    data, focused_window, focused_workspace = list_windows(aerospace_socket)
+    state = query_state(aerospace_socket)
     with open("/tmp/aerospace_window", "w") as f:
-        if focused_window:
-            f.write(str(focused_window))
+        if state.focused_window:
+            f.write(str(state.focused_window))
 
 
 def paste(aerospace_socket: AerospaceSocket):
     with open("/tmp/aerospace_window") as f:
-        data, focused_window, focused_workspace = list_windows(aerospace_socket)
+        state = query_state(aerospace_socket)
 
-        if focused_workspace:
+        if state.focused_workspace:
             move_node_to_workspace(
-                aerospace_socket, str(focused_workspace), f.readline(), False
+                aerospace_socket, state.focused_workspace, f.readline(), False
             )
 
 
@@ -262,7 +257,10 @@ with socket(AF_UNIX, SOCK_STREAM) as server_sock:
                     process(aerospace_socket)
                     conn.sendall(b"OK")
                 case "new-window":
-                    reset_window(aerospace_socket)
+                    reset_window(aerospace_socket, new_window=True)
+                    conn.sendall(b"OK")
+                case "reset":
+                    reset_window(aerospace_socket, new_window=False)
                     conn.sendall(b"OK")
                 case "yank":
                     yank(aerospace_socket)

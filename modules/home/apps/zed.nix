@@ -33,7 +33,10 @@
         edit_prediction_provider = "zed";
       };
 
-      which_key.enabled = true;
+      which_key = {
+        enabled = true;
+        delay_ms = 100;
+      };
 
       helix_mode = true;
       ui_font_size = 14;
@@ -58,21 +61,8 @@
           ];
         };
 
-        Django = {
-          formatter = [
-            {
-              external = {
-                command = "uv";
-                arguments = [
-                  "run"
-                  "djlint"
-                  "-"
-                  "--reformat"
-                  "{buffer_path}"
-                ];
-              };
-            }
-          ];
+        Java = {
+          "format_on_save" = "off";
         };
       };
     };
@@ -85,6 +75,12 @@
           ctrl-s = "workspace::ToggleBottomDock";
           ctrl-d = "workspace::ToggleRightDock";
           ctrl-o = "projects::OpenRecent";
+        };
+      }
+      {
+        context = "(VimControl && !menu)";
+        bindings = {
+          space = null;
         };
       }
       {

@@ -1,6 +1,5 @@
 {
   imports = [
-    ./cpp.nix
     ./elxixir.nix
     ./embedded.nix
     ./java.nix
@@ -10,7 +9,6 @@
     ./rust.nix
     ./typst.nix
     ./vhdl.nix
-    ./mbed.nix
     ./haskell.nix
   ];
 }

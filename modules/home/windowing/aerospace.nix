@@ -1,4 +1,62 @@
 { pkgs, ... }:
+let
+
+  key_bindings = {
+    alt-r = "exec-and-forget aero-client reset";
+    alt-x = "close --quit-if-last-window";
+
+    alt-h = "focus left";
+    alt-j = "focus down";
+    alt-k = "focus up";
+    alt-l = "focus right";
+
+    shift-alt-h = "move left";
+    shift-alt-j = "move down";
+    shift-alt-k = "move up";
+    shift-alt-l = "move right";
+
+    alt-p = "exec-and-forget aero-client paste";
+    alt-y = "exec-and-forget aero-client yank";
+
+    alt-t = ''exec-and-forget open -a "Ghostty.app" '';
+    alt-b = ''exec-and-forget open -a "Zen.app" '';
+    alt-d = ''exec-and-forget open -a "Finder.app" '';
+    alt-e = ''exec-and-forget open -a "Zed.app" '';
+
+    alt-shift-t = ''exec-and-forget open -a "Ghostty.app" -n '';
+    alt-shift-b = ''exec-and-forget open -a "Zen.app" -n '';
+    alt-shift-d = ''exec-and-forget open -a "Finder.app" -n '';
+    alt-shift-e = ''exec-and-forget open -a "Zed.app" -n '';
+
+    alt-u = "layout floating tiling";
+    alt-f = "fullscreen";
+
+    alt-minus = "resize smart -100";
+    alt-equal = "resize smart +100";
+
+    alt-o = "workspace next --wrap-around";
+    alt-i = "workspace prev --wrap-around";
+
+    alt-m = "exec-and-forget sketchybar --reload";
+    alt-c = "reload-config";
+    alt-a = "layout accordion horizontal vertical";
+    alt-g = "layout tiles horizontal vertical";
+
+    alt-1 = "workspace 1";
+    alt-2 = "workspace 2";
+    alt-3 = "workspace 3";
+    alt-4 = "workspace 4";
+    alt-5 = "workspace 5";
+    alt-6 = "workspace 6";
+    alt-7 = "workspace 7";
+    alt-8 = "workspace 8";
+    alt-9 = "workspace 9";
+
+    alt-shift-n = "mode main";
+    alt-shift-m = "mode merge";
+  };
+
+in
 {
   home.packages = with pkgs; [
     socat
@@ -72,59 +130,8 @@
         };
       };
 
-      mode.main.binding = {
-        alt-r = "exec-and-forget aero-client new-window";
-        alt-x = "close --quit-if-last-window";
-
-        alt-h = "focus left";
-        alt-j = "focus down";
-        alt-k = "focus up";
-        alt-l = "focus right";
-
-        shift-alt-h = "move left";
-        shift-alt-j = "move down";
-        shift-alt-k = "move up";
-        shift-alt-l = "move right";
-
-        alt-p = "exec-and-forget aero-client paste";
-        alt-y = "exec-and-forget aero-client yank";
-
-        alt-t = ''exec-and-forget open -a "Ghostty.app" '';
-        alt-b = ''exec-and-forget open -a "Zen.app" '';
-        alt-d = ''exec-and-forget open -a "Finder.app" '';
-        alt-e = ''exec-and-forget open -a "Zed.app" '';
-        alt-n = ''exec-and-forget open -a "Obsidian.app" '';
-
-        alt-shift-t = ''exec-and-forget open -a "Ghostty.app" -n '';
-        alt-shift-b = ''exec-and-forget open -a "Zen.app" -n '';
-        alt-shift-d = ''exec-and-forget open -a "Finder.app" -n '';
-        alt-shift-e = ''exec-and-forget open -a "Zed.app" -n '';
-        alt-shift-n = ''exec-and-forget open -a "Obsidian.app" -n '';
-
-        alt-u = "layout floating tiling";
-        alt-f = "fullscreen";
-
-        alt-minus = "resize smart -100";
-        alt-equal = "resize smart +100";
-
-        alt-o = "workspace next --wrap-around";
-        alt-i = "workspace prev --wrap-around";
-
-        alt-m = "exec-and-forget sketchybar --reload";
-        alt-c = "reload-config";
-        alt-a = "layout accordion horizontal vertical";
-        alt-g = "layout tiles horizontal vertical";
-
-        alt-1 = "workspace 1";
-        alt-2 = "workspace 2";
-        alt-3 = "workspace 3";
-        alt-4 = "workspace 4";
-        alt-5 = "workspace 5";
-        alt-6 = "workspace 6";
-        alt-7 = "workspace 7";
-        alt-8 = "workspace 8";
-        alt-9 = "workspace 9";
-      };
+      mode.main.binding = key_bindings;
+      mode.merge.binding = key_bindings;
     };
   };
 }
