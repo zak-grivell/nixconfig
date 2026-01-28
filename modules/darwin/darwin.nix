@@ -1,24 +1,10 @@
-{ inputs, ... }: let
-  user = "zakgrivell";
-  name = "zakbook";
-in {
-  flake-file.inputs.nix-darwin.url = "github:LnL7/nix-darwin";
-
-
-  flake.darwinConfigurations.zakbook = inputs.nix-darwin.lib.darwinSystem {
-    modules = [
-      inputs.self.modules.darwin.zakbook
-    ];
-  };
-
+{ inputs, config, ... }: {
   flake.modules.darwin.system = {
     nixpkgs.hostPlatform = "aarch64-darwin";
-    networking.hostName = name;
+    networking.hostName = "zakbook";
     nixpkgs.config.allowUnfree = true;
 
-    system.primaryUser = user;
+    system.primaryUser = "zakgrivell";
     system.stateVersion = 6;
-
   };
-
 }

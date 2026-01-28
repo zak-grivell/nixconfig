@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.homeManager.zakbook = { pkgs, ... }: {
+  flake.modules.homeManager.home = { pkgs, ... }: {
     fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [

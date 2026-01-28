@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.zakbook = {
+  flake.modules.homeManager.home = {
     programs = {
       helix = {
         enable = true;

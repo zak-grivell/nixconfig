@@ -1,4 +1,13 @@
-{ ... }: {
-  flake-file.inputs.home-manager.url = "github:nix-community/home-manager";
+{...}:{
+  flake.modules.homeManager.home = {config, ...}: {
+      programs.home-manager.enable = true;
 
+      services = {
+        home-manager.autoExpire = {
+          enable = true;
+          frequency = "weekly";
+          store.cleanup = true;
+        };
+      };
+    };
 }

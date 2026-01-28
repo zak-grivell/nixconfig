@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.darwin.system.gc = {
+  flake.modules.darwin.system = {
     nix.gc = {
       automatic = true;
       interval = {
@@ -11,5 +11,13 @@
     };
 
     nix.optimise.automatic = true;
+
+    nix.settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      warn-dirty = false;
+    };
   };
 }

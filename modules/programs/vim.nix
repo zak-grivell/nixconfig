@@ -1,8 +1,6 @@
 { ... }:
 {
-  flake-file.inputs.nixvim.url = "github:nix-community/nixvim";
-
-  flake.modules.homeManager.zakbook = {
+  flake.modules.homeManager.home = {
     programs.nixvim = {
       enable = true;
 
