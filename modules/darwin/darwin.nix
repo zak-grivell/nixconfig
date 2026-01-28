@@ -1,4 +1,4 @@
-{ inputs, config, ... }: {
+{
   flake.modules.darwin.system = {
     nixpkgs.hostPlatform = "aarch64-darwin";
     networking.hostName = "zakbook";

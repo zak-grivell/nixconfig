@@ -1,15 +1,15 @@
-{ pkgs, ... }:
-let
-  aero_server = pkgs.writeScriptBin "aero-server" ''
-    #!${pkgs.python311}/bin/python3 -u
-    ${builtins.readFile ./areo-manager.py}
-  '';
+{}: {
+  flake.homeModules.default = { pkgs, ... }: let
+aero_server = pkgs.writeScriptBin "aero-server" ''
+  #!${pkgs.python311}/bin/python3 -u
+  ${builtins.readFile ./areo-manager.py}
+'';
 
-  aero_client = pkgs.writeScriptBin "aero-client" ''
-    #!/bin/bash
+aero_client = pkgs.writeScriptBin "aero-client" ''
+  #!/bin/bash
 
-    echo $1 | socat - UNIX-CONNECT:/tmp/aeroserver.sock
-  '';
+  echo $1 | socat - UNIX-CONNECT:/tmp/aeroserver.sock
+'';
 in
 {
   home.packages = [

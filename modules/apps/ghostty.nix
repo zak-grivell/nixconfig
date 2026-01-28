@@ -1,5 +1,5 @@
-{pkgs, ...}:{
-  flake.modules.homeManager.home = {
+{
+  flake.homeModules.default = { pkgs, ... }:{
     home.packages = with pkgs; [
       ghostty-bin
     ];

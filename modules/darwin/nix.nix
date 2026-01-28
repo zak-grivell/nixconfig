@@ -1,4 +1,4 @@
-{ ... }: {
+{
   flake.modules.darwin.system = {
     nix.gc = {
       automatic = true;

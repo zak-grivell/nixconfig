@@ -1,5 +1,5 @@
-{ ... }: {
-  flake.modules.homeManager.home = { pkgs, ... }: {
+{
+  flake.homeModules.default = { pkgs, ... }: {
     fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [

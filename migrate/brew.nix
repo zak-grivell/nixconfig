@@ -7,12 +7,7 @@
     masApps = { };
     casks = [
       "tabtab"
-      "ghostty"
-      "zen"
-      "figma"
       "ltspice"
-      "godot"
-      "kicad"
       "orcaslicer"
       "helium-browser"
       "whatsapp"

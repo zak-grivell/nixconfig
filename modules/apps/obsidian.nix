@@ -1,5 +1,5 @@
-{ ... }: {
-   flake.modules.homeManager.home = { pkgs, ...}: {
+{
+   flake.homeModules.default = { pkgs, ...}: {
      home.packages = with pkgs; [
        obsidian
     ];
