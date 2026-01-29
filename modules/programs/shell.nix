@@ -9,22 +9,20 @@
         shell = pkgs.zsh;
       };
 
-
+      programs.zsh.interactiveShellInit = ''
+          if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
+            exec nu
+          fi
+      '';
   };
 
   flake.homeModules.default = {
     programs.nushell = {
       enable = true;
 
-      configFile.text = ''
-        $env.PATH = ($env.PATH | split row (char esep))
-      '';
+      envFile.text = ''
+          $env.PATH = ($env.PATH | split row (char esep) | append '($home)/.nix-profile/bin' | uniq)
+        '';
     };
-
-    programs.zsh.interactiveShellInit = ''
-        if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
-          exec nu
-        fi
-    '';
   };
 }
