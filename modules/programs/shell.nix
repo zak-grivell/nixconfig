@@ -2,12 +2,14 @@
   flake.modules.darwin.system = { pkgs, ... }: {
       environment.shells = [
         pkgs.nushell
-        pkgs.bash
+        pkgs.zsh
       ];
 
       users.users.zakgrivell = {
-        shell = pkgs.nushell;
+        shell = pkgs.zsh;
       };
+
+
   };
 
   flake.homeModules.default = {
@@ -18,5 +20,11 @@
         $env.PATH = ($env.PATH | split row (char esep))
       '';
     };
+
+    programs.zsh.interactiveShellInit = ''
+        if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
+          exec nu
+        fi
+    '';
   };
 }

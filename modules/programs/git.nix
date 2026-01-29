@@ -1,12 +1,10 @@
 {
-  flake.homeModules.default = { config, ... }:
-  {
+  flake.homeModules.default = {
     home.shellAliases = {
       g = "git";
       lg = "lazygit";
     };
 
-    # https://nixos.asia/en/git
     programs = {
       git = {
         enable = true;
@@ -24,7 +22,7 @@
       lazygit.enable = true;
     };
 
-  }
+  };
 
 
 }

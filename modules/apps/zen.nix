@@ -1,7 +1,7 @@
 {
-  imports = [
-    inputs.zen-browser.homeModules.beta
-  ];
+  flake.homeModules.default = {inputs, ... }:{
+
 
   programs.zen-browser.enable = true;
+};
 }

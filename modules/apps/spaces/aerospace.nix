@@ -1,4 +1,3 @@
-{ }:
 let
   key_bindings = {
     alt-r = "exec-and-forget aero-client reset";
@@ -134,5 +133,5 @@ in
         mode.merge.binding = key_bindings;
       };
     };
-  }
+  };
 }
