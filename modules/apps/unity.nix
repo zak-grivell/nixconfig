@@ -1,6 +1,7 @@
 
+
 {
     flake.modules.darwin.disabled = {
-      homebrew.casks = [ "godot" ];
+      homebrew.casks = [ "unity" ];
     };
 }
