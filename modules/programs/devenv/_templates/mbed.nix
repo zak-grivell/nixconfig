@@ -1,6 +1,7 @@
-{ pkgs, system, ... }: let
-  tool_chain = "ARM_GCC";
+{ pkgs, ... }: let
+  tool_chain = "gcc_arm";
   mbed_target = "LPC1768";
+  system = pkgs.stdenv.hostPlatform.system;
 in {
 
   overlays = [
@@ -119,6 +120,7 @@ in {
 
     mbed-tools
     gcc-arm-embedded
+    cmake
   ];
 
   files.".clangd".yaml = {
@@ -134,6 +136,14 @@ in {
     };
   };
 
+  files.".mbedignore".text = ''
+      .devenv
+      .direnv
+      .nix
+      result
+      .git
+    '';
+
   env.CLANGD_FLAGS = "--query-driver=${pkgs.gcc-arm-embedded}/bin/arm-none-eabi-*";
 
   scripts.build.exec = ''
@@ -142,5 +152,22 @@ in {
 
   scripts.flash.exec = ''
     mbed-tools compile -t ${tool_chain} -m ${mbed_target} -f
+  '';
+
+  scripts.compile-db.exec = ''
+    set -e
+
+    # 1. Normal mbed-tools build (creates the CMake tree)
+    mbed-tools compile -t ${tool_chain} -m ${mbed_target}
+
+    BUILD_DIR="cmake_build/${mbed_target}/develop/GCC_ARM/"
+
+    # 2. Ask CMake to export compile_commands.json
+    cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON "$BUILD_DIR"
+
+    # 3. Symlink into project root for clangd
+    ln -sf "$BUILD_DIR/compile_commands.json" compile_commands.json
+
+    echo "✔ compile_commands.json ready"
   '';
 }

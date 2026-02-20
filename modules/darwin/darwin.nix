@@ -1,4 +1,11 @@
 {
+  flake-file.inputs = {
+      nix-darwin.url = "github:LnL7/nix-darwin";
+      nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+      nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+  };
+    
   flake.modules.darwin.system = {
     nixpkgs.hostPlatform = "aarch64-darwin";
     networking.hostName = "zakbook";
@@ -12,5 +19,7 @@
     users.users.zakgrivell = {
       home = "/Users/zakgrivell";
     };
+
+    homebrew.onActivation.cleanup = "uninstall";
   };
 }

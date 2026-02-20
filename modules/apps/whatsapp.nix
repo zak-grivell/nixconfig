@@ -1,7 +1,5 @@
 {
-   flake.homeModules.default = { pkgs, ...}: {
-     home.packages = with pkgs; [
-       # whatsapp-for-mac
-    ];
+   flake.modules.darwin.system = {
+    homebrew.casks = [ "kicad" ];
   };
 }

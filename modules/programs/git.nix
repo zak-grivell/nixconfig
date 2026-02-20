@@ -19,9 +19,13 @@
           };
         };
       };
-      lazygit.enable = true;
-    };
+      lazygit = {
+        enable = true;
+        enableNushellIntegration = true;
+      };
 
+      gh.enable = true;
+    };
   };
 
 

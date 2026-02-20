@@ -1,5 +1,5 @@
 { pkgs,... }: {
-  language.nix.enable = true;
+  languages.nix.enable = true;
 
   packages = with pkgs; [
     omnix
@@ -7,5 +7,6 @@
     nix-info
     nixpkgs-fmt
     manix
+    nixfmt
   ];
 }

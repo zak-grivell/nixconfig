@@ -1,7 +1,7 @@
 {
   flake.homeModules.default = { pkgs, ... }: let
   aero_server = pkgs.writeScriptBin "aero-server" ''
-    #!${pkgs.python311}/bin/python3 -u
+    #!${pkgs.python3}/bin/python3 -u
     ${builtins.readFile ./areo-manager.py}
   '';
 

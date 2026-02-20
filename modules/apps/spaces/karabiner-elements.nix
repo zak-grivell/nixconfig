@@ -26,6 +26,25 @@
               to = [ { key_code = "escape"; } ];
             }
           ];
+
+          complex_modifications.rules = [
+              {
+                  description = "restart_aerospace";
+                  manipulators = [
+                      {
+                          type = "basic";
+                          from = {
+                              key_code = "q";
+                              modifiers = {
+                                  mandatory = ["option"];
+                                  optional = [];
+                              };
+                          };
+                          to = [{ shell_command = "pkill areospace"; }];
+                      }
+                  ];
+              }
+          ];
         }
       ];
     };

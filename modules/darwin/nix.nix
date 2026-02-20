@@ -18,6 +18,7 @@
         "flakes"
       ];
       warn-dirty = false;
+      trusted-users = [ "root" "zakgrivell" ];
     };
   };
 }
