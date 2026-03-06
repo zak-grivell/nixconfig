@@ -10,6 +10,9 @@
   ];
 
   scripts.run.exec = ''
+    git add .
+    git commit --allow-empty --allow-empty-message -m ""
+    git push
     nix run .#write-flake
     sudo darwin-rebuild switch --flake .
   '';

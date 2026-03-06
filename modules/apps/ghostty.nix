@@ -16,6 +16,7 @@
         window-padding-color="background";
         resize-overlay="never";
         font-family = "JetBrainsMono Nerd Font";
+        font-size = 20;
       };
     };
   };

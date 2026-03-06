@@ -1,5 +1,5 @@
 {
-  flake.homeModules.default = { pkgs, ... }: let
+  flake.homeModules.disabled = { pkgs, ... }: let
   aero_server = pkgs.writeScriptBin "aero-server" ''
     #!${pkgs.python3}/bin/python3 -u
     ${builtins.readFile ./areo-manager.py}
