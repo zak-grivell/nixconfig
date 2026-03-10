@@ -8,9 +8,6 @@
 
         settings = {
           theme = "catppuccin_frappe";
-          #   light = "catppuccin_latte";
-          #   dark = "catppuccin_frappe";
-          # };
           editor = {
             cursor-shape.insert = "bar";
             inline-diagnostics.cursor-line = "hint";
@@ -30,6 +27,9 @@
             ];
           };
         };
+          languages = {
+            language-server.rust-analyzer.config.check.command = "clippy";            
+          };
       };
     };
   };
