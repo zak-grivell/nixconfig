@@ -3,14 +3,18 @@
 {
   flake.homeModules.default = { pkgs, ... }: {
     home.packages = [
-      pkgs.devenv
-
       (
         pkgs.writeScriptBin "template" ''
-          #!${pkgs.python3}/bin/python3 -u
-          
-          TEMPLATES_PATH  = "${./_templates}"
-          ${builtins.readFile ./templates.py}
+          #!${pkgs.bash}/bin/bash
+          set -e
+
+          nix flake init -t github:zak-grivell/templates#$1
+
+          git init
+          git add .
+          git commit -m "init shell"
+
+          direnv allow          
         ''
       )
     ];
