@@ -8,7 +8,7 @@
     programs = {
       git = {
         enable = true;
-          ignores = [ "*~" "*.swp" ".DS_store" ".devenv" ".settings" ".devenv.flake.nix" ".envrc"];
+          ignores = [ "*~" "*.swp" ".DS_store" ".devenv" ".settings" ".devenv.flake.nix" ".envrc" ".direnv"];
         settings = {
           user = {
             name = "zak grivell";

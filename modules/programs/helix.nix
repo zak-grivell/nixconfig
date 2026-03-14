@@ -27,9 +27,17 @@
             ];
           };
         };
-          languages = {
-            language-server.rust-analyzer.config.check.command = "clippy";            
-          };
+        languages = {
+          language-server.rust-analyzer.config.check.command = "clippy";
+          language = [
+            {
+              name = "nix";
+              formatter = {
+                command = "alejandra";
+              };
+            }
+          ];
+        };
       };
     };
   };
