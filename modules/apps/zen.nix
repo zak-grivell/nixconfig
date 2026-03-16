@@ -14,6 +14,6 @@
   #   programs.zen-browser.enable = true;
   # };
     flake.modules.darwin.system = {
-      homebrew.casks = [ "zen" ];
+      homebrew.casks = [ "zen" "helium-browser" ];
     };
 }

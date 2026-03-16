@@ -4,11 +4,11 @@
       name = "deploy";
       runtimeInputs = [pkgs.git];
       text = ''
+        nix run .#write-flake
         nix flake update
         git add .
         git commit --allow-empty --allow-empty-message -m ""
         git push
-        nix run .#write-flake
         sudo darwin-rebuild switch --flake .
         nix-collect-garbage -d
       '';
