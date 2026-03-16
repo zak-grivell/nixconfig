@@ -5,10 +5,6 @@
       lg = "lazygit";
     };
 
-    # home.sessionVariables = {
-    #   GITHUB_TOKEN = githubToken;
-    # };
-
     programs = {
       git = {
         enable = true;
