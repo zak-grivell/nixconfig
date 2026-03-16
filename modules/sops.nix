@@ -7,18 +7,25 @@
     # modules = [ inputs.sops-nix.darwinModules.sops ];
     sops = {
       defaultSopsFile = ../secrets/github.yaml;
-      age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+      age.keyFile = "/Users/zakgrivell/.config/sops/age/keys.txt";
       secrets.github_token = {};
     };
 
-    home.sessionVariables = {
-      GITHUB_TOKEN = "$(cat ${config.sops.secrets.github_token.path})";
-    };
+    # launchd.user.envVariables = {
+    #   GITHUB_TOKEN = builtins.readFile /"config.sops.secrets.github_token.path";
+    # };
   };
 
-  flake.homeModules.default = {pkgs, ...}: {
+  flake.homeModules.default = {pkgs, config, ...}: {
     home.packages = with pkgs; [
       sops
     ];
+    home.sessionVariables = {
+      GITHUB_TOKEN = "$(cat /run/secrets/github_token)";
+    };
+
+    programs.nushell.environmentVariables= {
+      GITHUB_TOKEN = "$(cat /run/secrets/github_token)";
+    };
   };
 }
