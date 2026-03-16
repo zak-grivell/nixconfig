@@ -4,6 +4,7 @@
       inputs.self.modules.darwin.system
       inputs.stylix.darwinModules.stylix
       inputs.home-manager.darwinModules.home-manager
+      inputs.sops-nix.darwinModules.sops
       {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
