@@ -1,15 +1,13 @@
 {
-  flake.homeModules.default = let
-    githubToken = builtins.replaceStrings ["\n"] [""] (builtins.readFile /Users/zakgrivell/config/secrets/github);
-  in {
+  flake.homeModules.default = {
     home.shellAliases = {
       g = "git";
       lg = "lazygit";
     };
 
-    home.sessionVariables = {
-      GITHUB_TOKEN = githubToken;
-    };
+    # home.sessionVariables = {
+    #   GITHUB_TOKEN = githubToken;
+    # };
 
     programs = {
       git = {
