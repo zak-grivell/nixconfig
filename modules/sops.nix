@@ -7,4 +7,10 @@
     flake.modules.darwin.system = {inputs, ...}: {
       # modules = [ inputs.sops-nix.darwinModules.sops ];
     };
+
+  flake.homeModules.default = { pkgs, ... }: {
+    home.packages = with pkgs; [
+      sops
+    ];
+  };
 }
