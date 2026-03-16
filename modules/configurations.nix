@@ -10,8 +10,6 @@
 
         home-manager.users.zakgrivell.imports = [
           inputs.self.homeModules.default
-          inputs.zen-browser.homeModules.beta
-          inputs.paneru.homeModules.paneru
         ];
       }
         inputs.nix-homebrew.darwinModules.nix-homebrew
