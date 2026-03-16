@@ -7,6 +7,7 @@
         name = "deploy";
         runtimeInputs = [ pkgs.git ];
         text = ''
+          nix flake update
           git add .
           git commit --allow-empty --allow-empty-message -m ""
           git push
