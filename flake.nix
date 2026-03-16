@@ -9,32 +9,31 @@
     flake-file.url = "github:vic/flake-file";
     flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
     nix-darwin = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     paneru = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:karinushka/paneru";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     systems.url = "github:nix-systems/default";
     zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
       inputs = {
         home-manager.follows = "home-manager";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:0xc000022070/zen-browser-flake";
     };
   };
-
 }

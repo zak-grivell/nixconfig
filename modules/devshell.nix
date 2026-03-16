@@ -3,7 +3,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.deploy = pkgs.writeShellApplication {
+      packages.default = pkgs.writeShellApplication {
         name = "deploy";
         runtimeInputs = [ pkgs.git ];
         text = ''
