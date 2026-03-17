@@ -11,8 +11,10 @@
     };
 
     nix.optimise.automatic = true;
-
-    nix.settings = {
+#     nix.settings.access-tokens = [
+#   "github.com=$(cat /run/secrets/github_token)"
+# ];
+nix.settings = {
       experimental-features = [
         "nix-command"
         "flakes"

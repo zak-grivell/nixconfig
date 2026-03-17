@@ -8,7 +8,10 @@
     sops = {
       defaultSopsFile = ../secrets/github.yaml;
       age.keyFile = "/Users/zakgrivell/.config/sops/age/keys.txt";
-      secrets.github_token = {};
+      secrets.github_token = {
+        owner="zakgrivell";
+  mode = "0444";  # world readable
+      };
     };
 
     # launchd.user.envVariables = {
@@ -20,12 +23,13 @@
     home.packages = with pkgs; [
       sops
     ];
-    home.sessionVariables = {
-      GITHUB_TOKEN = "$(cat /run/secrets/github_token)";
-    };
+    # home.sessionVariables = {
+    #   GITHUB_TOKEN = "$(cat /run/secrets/github_token)";
+    # };
 
-    programs.nushell.environmentVariables= {
-      GITHUB_TOKEN = "$(cat /run/secrets/github_token)";
-    };
+    # programs.nushell.envFile.text = ''
+    #   $env.GITHUB_TOKEN = (open /run/secrets/github_token | str trim)
+    #   $env.SOPS_AGE_KEY_FILE = "/Users/zakgrivell/.config/sops/age/keys.txt";
+    # '';
   };
 }
