@@ -110,21 +110,22 @@ in
 
         persistent-workspaces = [ ];
 
-        gaps = {
-          inner = {
-            horizontal = 25;
-            vertical = 25;
-          };
-          outer = {
-            left = 25;
-            bottom = 25;
-            top = [
-              { monitor."Built-in Retina Display" = 15; }
-              25
-            ];
-            right = 25;
-          };
-        };
+        # gaps = {
+        #   inner = {
+        #     horizontal = 25;
+        #     vertical = 25;
+        #   };
+        #   outer = {
+        #     left = 25;
+        #     bottom = 25;
+        #     top = [
+        #       { monitor."Built-in Retina Display" = 15; }
+        #       25
+        #     ];
+        #     right = 25;
+        #   };
+        # };
+        gaps = 0;
 
         mode.main.binding = key_bindings;
       };
