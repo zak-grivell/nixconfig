@@ -125,7 +125,18 @@ in
         #     right = 25;
         #   };
         # };
-        gaps = 0;
+        gaps = {
+          inner = {
+            horizontal = 0;
+            vertical = 0;
+          };
+          outer = {
+            left = 0;
+            bottom = 0;
+            top = 0;
+            right = 0;
+          };
+        };
 
         mode.main.binding = key_bindings;
       };
