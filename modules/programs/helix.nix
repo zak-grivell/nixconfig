@@ -1,5 +1,5 @@
 {
-  flake.homeModules.default = {
+  flake.homeModules.default = {lib, ...}: {
     programs = {
       helix = {
         enable = true;
@@ -7,7 +7,7 @@
         defaultEditor = true;
 
         settings = {
-          theme = "catppuccin_frappe";
+          theme = lib.mkForce "catppuccin_frappe";
           editor = {
             cursor-shape.insert = "bar";
             inline-diagnostics.cursor-line = "hint";
@@ -25,6 +25,8 @@
               "collapse_selection"
               "keep_primary_selection"
             ];
+            space.f = "file_picker_in_current_directory";
+            space.F = "file_picker";
           };
         };
         languages = {

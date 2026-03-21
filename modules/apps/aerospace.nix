@@ -40,19 +40,23 @@ let
     # alt-a = "layout accordion horizontal vertical";
     # alt-g = "layout tiles horizontal vertical";
 
-    # alt-1 = "workspace 1";
-    # alt-2 = "workspace 2";
-    # alt-3 = "workspace 3";
-    # alt-4 = "workspace 4";
-    # alt-5 = "workspace 5";
-    # alt-6 = "workspace 6";
-    # alt-7 = "workspace 7";
-    # alt-8 = "workspace 8";
-    # alt-9 = "workspace 9";
+    alt-1 = "workspace 1";
+    alt-2 = "workspace 2";
+    alt-3 = "workspace 3";
+    alt-4 = "workspace 4";
+    alt-5 = "workspace 5";
+    alt-6 = "workspace 6";
+    alt-7 = "workspace 7";
+    alt-8 = "workspace 8";
+    alt-9 = "workspace 9";
   };
 
 in
 {
+    flake.modules.darwin.system = {
+      homebrew.casks = [ "alt-tab" ];
+    };
+
   flake.homeModules.default = { pkgs, ... }: {
     home.packages = with pkgs; [
       socat
@@ -64,22 +68,22 @@ in
       launchd.enable = true;
 
       settings = {
-        exec-on-workspace-change = [
-          "/bin/bash"
-          "-c"
-          "sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE"
-        ];
+        # exec-on-workspace-change = [
+        #   "/bin/bash"
+        #   "-c"
+        #   "sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE"
+        # ];
 
-        on-focus-changed = [
-          "exec-and-forget sketchybar --trigger aerospace_focus_change"
-          "exec-and-forget aero-client process"
-        ];
+        # on-focus-changed = [
+        #   "exec-and-forget sketchybar --trigger aerospace_focus_change"
+        #   "exec-and-forget aero-client process"
+        # ];
 
-        on-window-detected = [
-          {
-            run = "exec-and-forget aero-client new-window";
-          }
-        ];
+        # on-window-detected = [
+        #   {
+        #     run = "exec-and-forget aero-client new-window";
+        #   }
+        # ];
 
         config-version = 2;
 
