@@ -1,5 +1,5 @@
 {
-   flake.homeModules.disabled = { pkgs, ...}: {
+   flake.homeModules.enabled= { pkgs, ...}: {
      programs.fish.shellAliases.zed = "zeditor";
 
      programs.zed-editor = {
