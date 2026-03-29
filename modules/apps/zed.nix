@@ -24,11 +24,11 @@
            dark = "Catppuccin Frappé";
            mode = "system";
          };
-         theme = {
-           light = "Catppuccin Latte";
-           dark = "Catppuccin Frappé";
-           mode = "system";
-         };
+         # theme = {
+         #   light = "Catppuccin Latte";
+         #   dark = "Catppuccin Frappé";
+         #   mode = "system";
+         # };
          features = {
            edit_prediction_provider = "zed";
          };
@@ -39,8 +39,8 @@
          };
 
          helix_mode = true;
-         ui_font_size = 14;
-         buffer_font_size = 14;
+         # ui_font_size = 14;
+         # buffer_font_size = 14;
 
          diagnostics.inline.enabled = true;
          terminal.toolbar.breadcrumbs = false;
