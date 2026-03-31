@@ -49,6 +49,16 @@ let
     alt-7 = "workspace 7";
     alt-8 = "workspace 8";
     alt-9 = "workspace 9";
+
+    alt-shift-1 = "move-node-to-workspace 1 --focus-follows-window";
+    alt-shift-2 = "move-node-to-workspace 2 --focus-follows-window";
+    alt-shift-3 = "move-node-to-workspace 3 --focus-follows-window";
+    alt-shift-4 = "move-node-to-workspace 4 --focus-follows-window";
+    alt-shift-5 = "move-node-to-workspace 5 --focus-follows-window";
+    alt-shift-6 = "move-node-to-workspace 6 --focus-follows-window";
+    alt-shift-7 = "move-node-to-workspace 7 --focus-follows-window";
+    alt-shift-8 = "move-node-to-workspace 8 --focus-follows-window";
+    alt-shift-9 = "move-node-to-workspace 9 --focus-follows-window";
   };
 
 in
