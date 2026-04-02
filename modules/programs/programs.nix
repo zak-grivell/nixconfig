@@ -15,8 +15,4 @@
       opencode
     ];
   };
-
-   flake.modules.darwin.system = {
-    homebrew.brews = [ "gemini-cli" ];
-  };
 }
