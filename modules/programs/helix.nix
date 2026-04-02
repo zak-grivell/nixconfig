@@ -1,5 +1,9 @@
 {
-  flake.homeModules.default = {lib, pkgs, ...}: let
+  flake.homeModules.default = {
+    lib,
+    pkgs,
+    ...
+  }: let
     helixBundle = pkgs.runCommand "HelixOpen" {} ''
       mkdir -p $out/Applications/HelixOpen.app/Contents/MacOS
 
@@ -36,18 +40,25 @@
   in {
     home.packages = [pkgs.duti helixBundle];
 
-    home.activation.setHelixDefaults = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        # Let LaunchServices discover the new app bundle
-        /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
-          -f ~/.nix-profile/Applications/HelixOpen.app
+    home.activation.setHelixDefaults = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      # Resolve the real store path (not the symlink)
+      APP_SRC="${helixBundle}/Applications/HelixOpen.app"
+      APP_DEST="$HOME/Applications/HelixOpen.app"
 
-        # Set as default for common text types
-        $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open public.plain-text all
-        $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open public.source-code all
-        $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .md all
-        $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .txt all
-        $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .typ all
-      '';
+      # Copy fresh each activation so it stays in sync
+      rm -rf "$APP_DEST"
+      cp -r "$APP_SRC" "$APP_DEST"
+
+      # Register the real directory — no more -43
+      /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+        -f "$APP_DEST"
+
+      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open public.plain-text all
+      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open public.source-code all
+      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .md all
+      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .txt all
+      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .typ all
+    '';
 
     programs = {
       helix = {

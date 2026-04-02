@@ -19,6 +19,11 @@
   flake.homeModules.default = {pkgs, ...}: {
     home.packages = [ pkgs.pokeget-rs pkgs.fastfetch ];
 
+    programs.carapace = {
+        enable = true;
+        enableNushellIntegration = true;
+    };
+
     programs.nushell = {
       enable = true;
 

@@ -9,7 +9,7 @@ in {
   flake.homeModules.default = { pkgs, inputs, ...}: {
     home.username = "zakgrivell";
     # home.homeDirectory = /Users/zakgrivell;
-    home.stateVersion = "24.05";
+    home.stateVersion = "26.05";
     # programs.home-manager.enable = true;
     # programs.zsh.enable = true;
   };
