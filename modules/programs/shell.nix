@@ -10,7 +10,7 @@
       };
 
       programs.zsh.interactiveShellInit = ''
-          if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
+        if [[ -o interactive && -t 0 && -z "$NU_VERSION" ]]; then
             exec nu
           fi
       '';
@@ -35,7 +35,7 @@
       extraConfig = ''
         $env.config = ($env.config | upsert hooks.env_change.PWD [{|before, after| ls }])
       '';
-        
+
 
       shellAliases = {
         gcm = "git commit -m";
@@ -44,7 +44,7 @@
         gp = "git push";
       };
 
-      
+
       envFile.text = ''
           if $nu.is-interactive {
             pokeget random --hide-name | fastfetch --file-raw -
