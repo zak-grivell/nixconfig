@@ -1,5 +1,5 @@
 {
-   flake.homeModules.default= { pkgs, ...}: {
+   flake.homeModules.default= { pkgs, lib, ...}: {
      programs.fish.shellAliases.zed = "zeditor";
 
      programs.zed-editor = {
@@ -20,15 +20,15 @@
 
        userSettings = {
          icon_theme = {
+           light = lib.mkForce "Catppuccin Latte";
+           dark = lib.mkForce "Catppuccin Frappé";
+           mode = lib.mkForce "system";
+         };
+         theme = {
            light = "Catppuccin Latte";
            dark = "Catppuccin Frappé";
            mode = "system";
          };
-         # theme = {
-         #   light = "Catppuccin Latte";
-         #   dark = "Catppuccin Frappé";
-         #   mode = "system";
-         # };
          features = {
            edit_prediction_provider = "zed";
          };
