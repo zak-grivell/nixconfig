@@ -28,7 +28,7 @@
           dark = lib.mkForce "Catppuccin Frappé";
           mode = lib.mkForce "system";
         };
-        theme = {
+        theme = lib.mkForce {
           light = lib.mkForce "Catppuccin Latte";
           dark = lib.mkForce "Catppuccin Frappé";
           mode = lib.mkForce "system";
