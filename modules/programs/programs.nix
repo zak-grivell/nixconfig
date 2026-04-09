@@ -12,8 +12,6 @@
     home.packages = with pkgs; [
       tree
 
-      opencode
-
         nixd # Nix LSP with flake support
         alejandra # Opinionated Nix formatter
     ];

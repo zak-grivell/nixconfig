@@ -90,13 +90,22 @@
           };
         };
         languages = {
+          language-server.copilot = {
+            command = "copilot-language-server";
+            args = ["--stdio"];
+          };
           language-server.rust-analyzer.config.check.command = "clippy";
+
           language = [
             {
               name = "nix";
               formatter = {
                 command = "alejandra";
               };
+            }
+            {
+              name = "*";
+              language-servers = ["copilot"];
             }
           ];
         };
