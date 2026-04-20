@@ -1,16 +1,21 @@
-{
+{inputs, ...}: {
   flake-file.inputs = {
     sops-nix.url = "github:Mic92/sops-nix";
   };
 
   flake.modules.darwin.system = {config, ...}: {
+    imports = [
+      inputs.sops-nix.darwinModules.sops
+    ];
+    
+    
     # modules = [ inputs.sops-nix.darwinModules.sops ];
     sops = {
       defaultSopsFile = ../secrets/github.yaml;
       age.keyFile = "/Users/zakgrivell/.config/sops/age/keys.txt";
       secrets.github_token = {
-        owner="zakgrivell";
-  mode = "0444";  # world readable
+        owner = "zakgrivell";
+        mode = "0444"; # world readable
       };
     };
 
@@ -19,7 +24,11 @@
     # };
   };
 
-  flake.homeModules.default = {pkgs, config, ...}: {
+  flake.homeModules.default = {
+    pkgs,
+    config,
+    ...
+  }: {
     home.packages = with pkgs; [
       sops
     ];

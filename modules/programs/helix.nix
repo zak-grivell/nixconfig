@@ -103,10 +103,6 @@
                 command = "alejandra";
               };
             }
-            {
-              name = "*";
-              language-servers = ["copilot"];
-            }
           ];
         };
       };
