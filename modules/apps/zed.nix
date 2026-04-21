@@ -1,5 +1,5 @@
 {
-  flake.homeModules.default = {
+  flake.homeModules.disabled= {
     pkgs,
     lib,
     ...
