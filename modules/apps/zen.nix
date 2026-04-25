@@ -15,6 +15,6 @@
   };
 
     flake.modules.darwin.system = {
-      homebrew.casks = [ "zen" "helium-browser" ];
+      homebrew.casks = [ "zen" "helium-browser" "chatgpt" ];
     };
 }
