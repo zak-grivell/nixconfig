@@ -41,14 +41,16 @@ let
   };
 in {
   flake.modules.darwin.system = {
-    homebrew.casks = ["alt-tab" "numi"];
-    taps = [
-      "sadiksaifi/tap"
-    ];
+    homebrew = {
+      casks = ["alt-tab" "numi"];
+      taps = [
+        "sadiksaifi/tap"
+      ];
 
-    brews = [
-      "mac-menu"
-    ];
+      brews = [
+        "mac-menu"
+      ];
+    };
   };
 
   flake.homeModules.default = {pkgs, ...}: {
