@@ -35,17 +35,49 @@ let
     alt-shift-7 = "move-node-to-workspace 7 --focus-follows-window";
     alt-shift-8 = "move-node-to-workspace 8 --focus-follows-window";
     alt-shift-9 = "move-node-to-workspace 9 --focus-follows-window";
+
+    cmd-space = "exec-and-forget app-menu";
+    alt-space = "exec-and-forget window-menu";
+  };
+in {
+  flake.modules.darwin.system = {
+    homebrew.casks = ["alt-tab" "numi"];
+    taps = [
+      "sadiksaifi/tap"
+    ];
+
+    brews = [
+      "mac-menu"
+    ];
   };
 
-in
-{
-    flake.modules.darwin.system = {
-      homebrew.casks = [ "alt-tab" ];
-    };
-
-  flake.homeModules.default = { pkgs, ... }: {
+  flake.homeModules.default = {pkgs, ...}: {
     home.packages = with pkgs; [
       socat
+      (pkgs.writeShellScriptBin "app-menu" ''
+        app=$(
+          find /Applications "$HOME/Applications" -maxdepth 1 -name "*.app" 2>/dev/null \
+            | sed 's|.*/||; s|\.app$||' \
+            | mac-menu
+        )
+
+        [ -z "$app" ] && exit 0
+
+        open -a "$app"
+      '')
+      (pkgs.writeShellScriptBin "window-menu" ''
+        selected=$(
+          aerospace list-windows --all \
+            --format '%{window-id} %{app-name} — %{window-title}' \
+            | mac-menu
+        )
+
+        [ -z "$selected" ] && exit 0
+
+        window_id=$(printf '%s\n' "$selected" | awk '{print $1}')
+
+        aerospace focus --window-id "$window_id"
+      '')
     ];
 
     programs.aerospace = {
@@ -60,7 +92,7 @@ in
         enable-normalization-opposite-orientation-for-nested-containers = true;
 
         accordion-padding = 0;
-        
+
         default-root-container-layout = "accordion";
         default-root-container-orientation = "auto";
         automatically-unhide-macos-hidden-apps = false;
@@ -77,7 +109,7 @@ in
           preset = "qwerty";
         };
 
-        persistent-workspaces = [ ];
+        persistent-workspaces = [];
 
         gaps = {
           inner = {

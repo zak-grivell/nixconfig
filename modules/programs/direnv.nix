@@ -1,7 +1,5 @@
-{ ... }:
-
-{
-  flake.homeModules.default = { pkgs, ... }: {
+{...}: {
+  flake.homeModules.default = {pkgs, ...}: {
     home.packages = [
       (
         pkgs.writeScriptBin "template" ''
@@ -14,13 +12,16 @@
           git add .
           git commit -m "init shell"
 
-          direnv allow          
+          direnv allow
         ''
       )
     ];
-    
+
     programs.direnv = {
       enable = true;
+      package = pkgs.direnv.overrideAttrs (_: {
+        doCheck = false;
+      });
       enableNushellIntegration = true;
       silent = true;
       nix-direnv.enable = true;
