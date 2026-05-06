@@ -13,6 +13,7 @@
         resize-overlay="never";
         font-family = "JetBrainsMono Nerd Font";
         font-size = 20;
+        macos-titlebar-style = "tabs";
       };
     };
   };

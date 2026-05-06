@@ -36,19 +36,22 @@ let
     alt-shift-8 = "move-node-to-workspace 8 --focus-follows-window";
     alt-shift-9 = "move-node-to-workspace 9 --focus-follows-window";
 
-    cmd-space = "exec-and-forget app-menu";
-    alt-space = "exec-and-forget window-menu";
+    # cmd-space = "exec-and-forget app-menu";
+    # alt-space = "exec-and-forget window-menu";
   };
 in {
   flake.modules.darwin.system = {
     homebrew = {
       casks = ["alt-tab" "numi"];
       taps = [
-        "sadiksaifi/tap"
+        {
+          name = "sadiksaifi/tap";
+          clone_target = "https://github.com/sadiksaifi/homebrew-tap";
+        }
       ];
 
       brews = [
-        "mac-menu"
+        "sadiksaifi/tap/mac-menu"
       ];
     };
   };
