@@ -3,6 +3,7 @@
       environment.shells = [
         pkgs.nushell
         pkgs.zsh
+        pkgs.xonsh
       ];
 
       users.users.zakgrivell = {
@@ -10,8 +11,8 @@
       };
 
       programs.zsh.interactiveShellInit = ''
-        if [[ -o interactive && -t 0 && -z "$NU_VERSION" ]]; then
-            exec nu
+        if [[ -o interactive && -t 0 ]]; then
+            exec xonsh
           fi
       '';
   };

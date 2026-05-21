@@ -79,6 +79,12 @@
             line-number = "relative";
             end-of-line-diagnostics = "hint";
             bufferline = "always";
+            file-picker = {
+              hidden = false;
+              git-ignore = true;
+              git-global = true;
+              git-exclude = true;
+            };
           };
           keys.normal = {
             esc = [
