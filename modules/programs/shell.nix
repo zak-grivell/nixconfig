@@ -12,13 +12,13 @@
 
       programs.zsh.interactiveShellInit = ''
         if [[ -o interactive && -t 0 ]]; then
-            exec xonsh
+            exec nu
           fi
       '';
   };
 
   flake.homeModules.default = {pkgs, ...}: {
-    home.packages = [ pkgs.pokeget-rs pkgs.fastfetch ];
+    home.packages = [ pkgs.pokeget-rs pkgs.fastfetch pkgs.xonsh ];
 
     programs.carapace = {
         enable = true;
