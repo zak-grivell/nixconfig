@@ -17,7 +17,7 @@
 
       colorschemes.catppuccin.enable = true;
       plugins.lualine.enable = true;
-   plugins.lspconfig.enable = true;plugins.lspconfig.autoLoad = true;
+   # plugins.lspconfig.enable = true;plugins.lspconfig.autoLoad = true;
     };
   };
 }
