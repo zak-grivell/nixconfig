@@ -1,7 +1,6 @@
+
 {
-   flake.homeModules.default = { pkgs, ...}: {
-     home.packages = with pkgs; [
-      discord
-    ];
-  };
+    flake.modules.darwin.disabled = {
+      homebrew.casks = [ "discord" ];
+    };
 }

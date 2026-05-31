@@ -1,42 +1,62 @@
-{ ... }: {
-  flake.modules.darwin.system = { pkgs, ... }: {
-      environment.shells = [
-        pkgs.nushell
-        pkgs.zsh
-        pkgs.xonsh
-      ];
+{...}: {
+  flake.modules.darwin.system = {pkgs, ...}: {
+    environment.shells = [
+      pkgs.nushell
+      pkgs.zsh
+      pkgs.xonsh
+    ];
 
-      users.users.zakgrivell = {
-        shell = pkgs.zsh;
-      };
+    users.users.zakgrivell = {
+      shell = pkgs.zsh;
+    };
 
-      programs.zsh.interactiveShellInit = ''
-        if [[ -o interactive && -t 0 ]]; then
-            exec nu
-          fi
-      '';
+    programs.zsh.interactiveShellInit = ''
+      if [[ -o interactive && -t 0 ]]; then
+          exec nu
+        fi
+    '';
   };
 
   flake.homeModules.default = {pkgs, ...}: {
-    home.packages = [ pkgs.pokeget-rs pkgs.fastfetch pkgs.xonsh ];
+    home.packages = [pkgs.pokeget-rs pkgs.fastfetch pkgs.xonsh];
 
     programs.carapace = {
-        enable = true;
-        enableNushellIntegration = true;
+      enable = true;
+      enableNushellIntegration = true;
+    };
+
+    programs.starship = {
+      enable = true;
+      enableNushellIntegration = true;
     };
 
     programs.nushell = {
       enable = true;
 
-      environmentVariables= {
+      environmentVariables = {
         EDITOR = "hx";
         VISUAL = "hx";
       };
 
       extraConfig = ''
+        def start_zellij [] {
+          if "ZELLIJ" not-in $env and $nu.is-interactive {
+            if ("ZELLIJ_AUTO_ATTACH" in $env) and ($env.ZELLIJ_AUTO_ATTACH == "true") {
+              zellij attach -c
+            } else {
+              zellij
+            }
+
+            if ("ZELLIJ_AUTO_EXIT" in $env) and ($env.ZELLIJ_AUTO_EXIT == "true") {
+              exit
+            }
+          }
+        }
+
+        start_zellij
+
         $env.config = ($env.config | upsert hooks.env_change.PWD [{|before, after| ls }])
       '';
-
 
       shellAliases = {
         gcm = "git commit -m";
@@ -44,7 +64,6 @@
         gs = "git status";
         gp = "git push";
       };
-
 
       envFile.text = ''
           if $nu.is-interactive {

@@ -63,7 +63,6 @@
     programs = {
       helix = {
         enable = true;
-        # package = inputs.helix-cargo.packages.aarch64-darwin.default;
         defaultEditor = true;
 
         settings = {
