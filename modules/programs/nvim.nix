@@ -3,7 +3,7 @@
     nixvim.url = "github:nix-community/nixvim";
   };
 
-  flake.homeModules.default = {
+  flake.homeModules.disabled = {
     pkgs,
     config,
     ...

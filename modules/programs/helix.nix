@@ -38,27 +38,27 @@
       EOF
     '';
   in {
-    home.packages = [pkgs.duti helixBundle];
+    # home.packages = [pkgs.duti helixBundle];
 
-    home.activation.setHelixDefaults = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      # Resolve the real store path (not the symlink)
-      APP_SRC="${helixBundle}/Applications/HelixOpen.app"
-      APP_DEST="$HOME/Applications/HelixOpen.app"
+    # home.activation.setHelixDefaults = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    #   # Resolve the real store path (not the symlink)
+    #   APP_SRC="${helixBundle}/Applications/HelixOpen.app"
+    #   APP_DEST="$HOME/Applications/HelixOpen.app"
 
-      # Copy fresh each activation so it stays in sync
-      rm -rf "$APP_DEST"
-      cp -r "$APP_SRC" "$APP_DEST"
+    #   # Copy fresh each activation so it stays in sync
+    #   rm -rf "$APP_DEST"
+    #   cp -r "$APP_SRC" "$APP_DEST"
 
-      # Register the real directory — no more -43
-      /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
-        -f "$APP_DEST"
+    #   # Register the real directory — no more -43
+    #   /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+    #     -f "$APP_DEST"
 
-      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open public.plain-text all
-      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open public.source-code all
-      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .md all
-      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .txt all
-      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .typ all
-    '';
+    #   $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open public.plain-text all
+    #   $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open public.source-code all
+    #   $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .md all
+    #   $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .txt all
+    #   $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s com.helix.open .typ all
+    # '';
 
     programs = {
       helix = {

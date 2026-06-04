@@ -1,5 +1,5 @@
 {
-  flake.homeModules.disabled= {
+  flake.homeModules.default = {
     pkgs,
     lib,
     ...
@@ -20,8 +20,6 @@
         "lua"
       ];
 
-      extraPackages = [pkgs.nixd];
-
       userSettings = {
         icon_theme = {
           light = lib.mkForce "Catppuccin Latte";
@@ -41,10 +39,15 @@
           enabled = true;
           delay_ms = 100;
         };
+        toolbar = {
+          breadcrumbs = false;
+          quick_actions = false;
+          selections_menu = false;
+          agent_review = false;
+          code_actions = false;
+        };
 
         helix_mode = true;
-        # ui_font_size = 14;
-        # buffer_font_size = 14;
 
         diagnostics.inline.enabled = true;
         terminal.toolbar.breadcrumbs = false;
@@ -52,7 +55,7 @@
         autosave = "on_focus_change";
 
         debugger.dock = "right";
-        # inline_code_actions = false;
+
         scrollbar.show = "never";
         terminal.dock = "right";
 
@@ -63,10 +66,6 @@
               "!basedpyright"
               "..."
             ];
-          };
-
-          Java = {
-            "format_on_save" = "off";
           };
         };
       };

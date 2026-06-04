@@ -1,5 +1,5 @@
 {
    flake.modules.darwin.system = {
-    homebrew.casks = [ "kicad" ];
+    homebrew.casks = [ "kicad" "whatsapp" "orcaslicer"];
   };
 }

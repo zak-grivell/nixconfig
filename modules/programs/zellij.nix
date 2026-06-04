@@ -7,7 +7,8 @@
         theme = "catppuccin-frappe";
         default_layout = "extra-compact";
         pane_frames = false;
-
+        default_shell = "nu";
+    
         plugins = {
           compact-bar = {
             location = "zellij:compact-bar";

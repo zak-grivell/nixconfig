@@ -1,6 +1,6 @@
 
 {
-    flake.modules.darwin.disabled = {
+    flake.modules.darwin.system = {
       homebrew.casks = [ "discord" ];
     };
 }
