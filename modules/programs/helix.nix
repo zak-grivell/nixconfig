@@ -92,6 +92,13 @@
             ];
             space.f = "file_picker_in_current_directory";
             space.F = "file_picker";
+            X = ["extend_line_up" "extend_to_line_bounds"];
+            A-x = "extend_to_line_bounds";
+          };
+
+          keys.select = {
+            X = ["extend_line_up" "extend_to_line_bounds"];
+            A-x = "extend_to_line_bounds";
           };
         };
         languages = {

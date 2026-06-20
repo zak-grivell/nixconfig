@@ -18,9 +18,12 @@
           macos-titlebar-style = "hidden";
           window-padding-x = 0;
           window-padding-y = 0;
-          window-padding-balance = true;
-          command = "zellij -l welcome";
+          window-padding-balance = false;
+          command = "${pkgs.zsh}/bin/zsh -l -c 'zellij -l welcome'";
         };
       };
+    };
+    flake.modules.darwin.system = {
+      homebrew.casks = [ "cmux" ];
     };
 }

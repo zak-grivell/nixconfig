@@ -8,12 +8,12 @@
         default_layout = "extra-compact";
         pane_frames = false;
         default_shell = "nu";
-    
+
         plugins = {
-          compact-bar = {
-            location = "zellij:compact-bar";
-            tooltip = "Ctrl b";
-          };
+          # compact-bar = {
+          #   location = "zellij:compact-bar";
+          #   tooltip = "Ctrl b";
+          # };
         };
         keybinds = {
           normal = {
@@ -44,6 +44,22 @@
             "bind \"Ctrl 9\"" = {
               GoToTab = 9;
             };
+            "bind \"Ctrl t\"" = {
+              NewTab = {};
+            };
+            "bind \"Ctrl n\"" = {
+              GoToNextTab = {};
+            };
+            "bind \"Ctrl p\"" = {
+              GoToPreviousTab = {};
+            };
+            "bind \"Ctrl w\"" = {
+              LaunchOrFocusPlugin = {
+                _args = ["zellij:session-manager"];
+                floating = true;
+                move_to_focused_tab = true;
+              };
+            };
           };
         };
       };
@@ -52,13 +68,10 @@
         layout {
           default_tab_template {
             pane size=1 borderless=true {
-              plugin location="zellij:compact-bar" {
-                tooltip "Ctrl b"
-              }
+              plugin location="zellij:compact-bar"
             }
 
             children
-
           }
 
           tab name="Tab #1" {

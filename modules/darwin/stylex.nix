@@ -17,6 +17,8 @@
       inputs.stylix.darwinModules.stylix
     ];
 
+  stylix.enableReleaseChecks = false;
+
     stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-frappe.yaml";
     stylix.fonts = {
       serif = config.stylix.fonts.monospace;
