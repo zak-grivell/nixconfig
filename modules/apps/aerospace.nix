@@ -7,7 +7,7 @@ let
     alt-e = ''exec-and-forget open -a "Zed.app" '';
 
     alt-shift-t = ''exec-and-forget open -a "Ghostty.app" -n '';
-    alt-shift-b = ''exec-and-forget open -a "Helium.app" -n '';
+    alt-shift-b = ''exec-and-forget open -a "Zen.app" -n '';
     alt-shift-d = ''exec-and-forget open -a "Finder.app" -n '';
     alt-shift-e = ''exec-and-forget open -a "Zed.app" -n '';
 
