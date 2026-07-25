@@ -19,11 +19,11 @@
           window-padding-x = 0;
           window-padding-y = 0;
           window-padding-balance = false;
-          command = "${pkgs.zsh}/bin/zsh -l -c 'zellij -l welcome'";
+          command = "${pkgs.zsh}/bin/zsh -l -c 'nu'";
         };
       };
     };
     flake.modules.darwin.system = {
-      homebrew.casks = [ ];
+      homebrew.casks = [ "cmux" ];
     };
 }
