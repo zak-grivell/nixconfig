@@ -42,7 +42,7 @@ let
 in {
   flake.modules.darwin.system = {
     homebrew = {
-      casks = ["alt-tab" "numi"];
+      casks = [];
       taps = [
         {
           name = "sadiksaifi/tap";
@@ -51,7 +51,6 @@ in {
       ];
 
       brews = [
-        "sadiksaifi/tap/mac-menu"
       ];
     };
   };

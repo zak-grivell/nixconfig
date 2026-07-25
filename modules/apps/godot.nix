@@ -1,6 +1,6 @@
 
 {
-    flake.modules.darwin.system = {
+    flake.modules.darwin.disabled = {
       homebrew.casks = [ "godot-mono" ];
     };
 }

@@ -5,16 +5,10 @@
 
       settings = {
         theme = "catppuccin-frappe";
-        default_layout = "extra-compact";
+        default_layout = "dev";
         pane_frames = false;
-        default_shell = "nu";
+        default_shell = "";
 
-        plugins = {
-          # compact-bar = {
-          #   location = "zellij:compact-bar";
-          #   tooltip = "Ctrl b";
-          # };
-        };
         keybinds = {
           normal = {
             "bind \"Ctrl 1\"" = {
@@ -53,6 +47,18 @@
             "bind \"Ctrl p\"" = {
               GoToPreviousTab = {};
             };
+            "bind \"Ctrl e\"" = {
+              GoToTab = 0;
+            };
+            "bind \"Ctrl g\"" = {
+              GoToTab = 2;
+            };
+            "bind \"Ctrl s\"" = {
+              GoToTab = 1;
+            };
+            "bind \"Ctrl a\"" = {
+              GoToTab = 3;
+            };
             "bind \"Ctrl w\"" = {
               LaunchOrFocusPlugin = {
                 _args = ["zellij:session-manager"];
@@ -78,6 +84,41 @@
             pane borderless=true
           }
         }
+      '';
+
+      layouts."dev" = ''
+                layout {
+                    default_tab_template {
+                      pane size=1 borderless=true {
+                        plugin location="zellij:compact-bar"
+                      }
+
+                      children
+                    }
+
+                    tab name="editor" {
+                        pane command="nu" {
+                          args "-e" "direnv exec . hx ."
+                        }
+                    }
+
+
+                    tab name="shell" {
+                        pane
+                    }
+                    
+                    tab name="git" {
+                        pane command="nu" {
+                          args "-e" "direnv exec . lazygit"
+                        }
+                    }
+
+                    tab name="ai"  {
+                        pane command="nu" {
+                          args "-e" "direnv exec . opencode"
+                        }
+                    }
+                }
       '';
     };
   };
