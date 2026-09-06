@@ -1,7 +1,6 @@
 {
   flake.homeModules.default = { pkgs, ... }: {
     programs = {
-      fzf.enable = true;
       zoxide = { enable = true; enableNushellIntegration = true;};
       ripgrep.enable = true;
       fd.enable = true;
