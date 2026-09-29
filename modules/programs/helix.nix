@@ -77,6 +77,7 @@
             soft-wrap.enable = true;
             line-number = "relative";
             end-of-line-diagnostics = "hint";
+            insert-final-newline = false;
             bufferline = "always";
             file-picker = {
               hidden = false;
