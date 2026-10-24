@@ -15,7 +15,7 @@
           resize-overlay = "never";
           font-family = "JetBrainsMono Nerd Font";
           font-size = 20;
-          macos-titlebar-style = "hidden";
+          # macos-titlebar-style = "tabs";
           window-padding-x = 0;
           window-padding-y = 0;
           window-padding-balance = false;

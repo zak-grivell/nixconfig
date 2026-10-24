@@ -64,6 +64,7 @@
       helix = {
         enable = true;
         defaultEditor = true;
+        ignores = [".direnv/"];
 
         settings = {
           theme = lib.mkForce "catppuccin_frappe";

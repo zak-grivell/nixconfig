@@ -23,6 +23,7 @@
         doCheck = false;
       });
       enableNushellIntegration = true;
+      enableZshIntegration = true;
       silent = true;
       nix-direnv.enable = true;
     };

@@ -1,6 +1,9 @@
 
 {
     flake.modules.darwin.system = {
-      homebrew.casks = [ "discord" ];
+      homebrew.casks = [
+        "discord"
+        "zoom"
+      ];
     };
 }
