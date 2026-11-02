@@ -1,12 +1,12 @@
 let
   key_bindings = {
     alt-x = "close --quit-if-last-window";
-    alt-t = ''exec-and-forget open -a "Ghostty.app" '';
+    alt-t = ''exec-and-forget open -a "Rex.app" '';
     alt-b = ''exec-and-forget open -a "Helium.app" '';
     alt-d = ''exec-and-forget open -a "Finder.app" '';
     alt-e = ''exec-and-forget open -a "Zed.app" '';
 
-    alt-shift-t = ''exec-and-forget open -a "Ghostty.app" -n '';
+    alt-shift-t = ''exec-and-forget open -a "Rex.app" -n '';
     alt-shift-b = ''exec-and-forget open -a "Zen.app" -n '';
     alt-shift-d = ''exec-and-forget open -a "Finder.app" -n '';
     alt-shift-e = ''exec-and-forget open -a "Zed.app" -n '';
