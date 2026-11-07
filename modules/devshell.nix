@@ -4,6 +4,7 @@
       name = "deploy";
       runtimeInputs = [pkgs.git];
       text = ''
+        nix-collect-garbage -d
         nix run .#write-flake
         nix flake update
         git add .

@@ -32,6 +32,7 @@
       user = "zakgrivell";
     };
 
+    homebrew.casks = ["prismlauncher"];
     homebrew.enable = true;
   };
 }

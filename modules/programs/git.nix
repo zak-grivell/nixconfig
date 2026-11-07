@@ -10,6 +10,7 @@
         enable = true;
         ignores = ["*~" "*.swp" ".DS_store" ".devenv" ".settings" ".devenv.flake.nix" ".envrc" ".direnv"];
         settings = {
+          pull.rebase = false;
           user = {
             name = "zak grivell";
             email = "zak@grivell.uk";
