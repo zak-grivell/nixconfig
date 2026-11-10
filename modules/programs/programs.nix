@@ -1,13 +1,13 @@
 {
   flake.homeModules.default = { pkgs, ... }: {
     programs = {
-      zoxide = { enable = true; enableNushellIntegration = true;};
+      zoxide = { enable = true; enableFishIntegration = true;};
       ripgrep.enable = true;
       fd.enable = true;
       bat.enable = true;
       # atuin = {
       #   enable = true;
-      #   enableNushellIntegration = true;
+      #   enableFishIntegration = true;
       #   flags = [ "--disable-up-arrow" ];
       # };
       

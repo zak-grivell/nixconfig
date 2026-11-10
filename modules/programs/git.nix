@@ -22,7 +22,7 @@
       };
       lazygit = {
         enable = true;
-        enableNushellIntegration = true;
+        enableFishIntegration = true;
       };
 
       gh.enable = true;

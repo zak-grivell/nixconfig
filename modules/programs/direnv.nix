@@ -22,7 +22,7 @@
       package = pkgs.direnv.overrideAttrs (_: {
         doCheck = false;
       });
-      enableNushellIntegration = true;
+      enableFishIntegration = true;
       enableZshIntegration = true;
       silent = true;
       nix-direnv.enable = true;
