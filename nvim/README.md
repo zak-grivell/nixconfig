@@ -38,7 +38,7 @@ environment. `Space ch` shows the tools detected for the current buffer.
 | `[n` / `]n` in Visual mode | Previous / next syntax node |
 | `[N` / `]N` in Visual mode | Grow selection to adjacent siblings |
 | `gc`, `gcc` | Native commenting |
-| `Tab` | Accept completion when the menu is open; otherwise native snippet navigation / indentation |
+| `Tab` | Accept completion when the menu is open; otherwise trigger completion after text or indent after whitespace |
 | `Shift-Tab` | Native backward snippet navigation |
 
 `gd` keeps its original local-declaration meaning; **`grd`** is the added LSP
@@ -46,8 +46,8 @@ definition shortcut. The old bare `gr` override has been removed so native
 `gr…` shortcuts work without interference.
 
 Completion uses `Ctrl-n` / `Ctrl-p` to select, `Tab` or `Ctrl-y` to accept, and
-`Ctrl-Space` to request suggestions. These fall back to normal behaviour when
-the completion menu is closed. Enter remains Enter.
+`Tab` after text or `Ctrl-Space` to request suggestions. Tab indents after
+whitespace when the menu is closed. Enter remains Enter.
 
 ## Added Vim-style editing
 

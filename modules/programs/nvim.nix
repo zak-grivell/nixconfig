@@ -165,7 +165,21 @@
               {name = "buffer";}
             ];
             mapping = {
-              "<Tab>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.confirm({ select = true }) else fallback() end end, {'i'})";
+              "<Tab>" = ''
+                cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                    cmp.confirm({ select = true })
+                  else
+                    local col = vim.api.nvim_win_get_cursor(0)[2]
+                    local before = vim.api.nvim_get_current_line():sub(1, col)
+                    if col > 0 and not before:match('%s$') then
+                      cmp.complete()
+                    else
+                      fallback()
+                    end
+                  end
+                end, {'i'})
+              '';
               "<C-n>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end, {'i'})";
               "<C-p>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end, {'i'})";
               "<C-y>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.confirm({ select = true }) else fallback() end end, {'i'})";
