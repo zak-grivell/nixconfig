@@ -32,7 +32,12 @@
       user = "zakgrivell";
     };
 
-    homebrew.casks = ["prismlauncher"];
+    homebrew.taps = [ "heroku/brew" ];
+    homebrew.brews = [
+      "tailscale"
+      { name = "heroku/brew/heroku"; trusted = true; }
+    ];
+    homebrew.casks = ["prismlauncher" "dotnet-sdk"];
     homebrew.enable = true;
   };
 }
