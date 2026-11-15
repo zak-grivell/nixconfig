@@ -51,6 +51,7 @@ in {
       ];
 
       brews = [
+        { name = "sadiksaifi/tap/mac-menu"; trusted = true; }
       ];
     };
   };
