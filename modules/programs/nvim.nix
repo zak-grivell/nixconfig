@@ -61,6 +61,8 @@
 
     programs.nixvim = {
       enable = true;
+      # Nixvim imports its own nixpkgs, separate from the system's unfree policy.
+      nixpkgs.config.allowUnfreePredicate = pkg: pkgs.lib.getName pkg == "cmp-spell";
 
       extraPlugins = [
         (pkgs.callPackage ../../packages/path-lsp {
@@ -73,6 +75,7 @@
         require("editor-workflow").setup()
       '';
       extraFiles."lua/editor-workflow.lua".source = ../../nvim/workflow.lua;
+      extraFiles."lua/editor-spelling.lua".source = ../../nvim/spelling.lua;
       globals.mapleader = " ";
 
       colorschemes.catppuccin = {
@@ -119,6 +122,8 @@
         showmode = false;
         laststatus = 3;
         fillchars = {eob = " ";};
+        spell = true;
+        spelllang = "en_gb";
       };
 
       plugins = {
@@ -153,10 +158,21 @@
 
         # path-lsp starts servers from Helix defaults when found on PATH.
         cmp-nvim-lsp.enable = true;
+        cmp-spell.enable = true;
 
         cmp = {
           enable = true;
           autoEnableSources = true;
+          filetype.typst.sources = [
+            {name = "nvim_lsp";}
+            {name = "path";}
+            {name = "buffer";}
+            {
+              name = "spell";
+              keyword_length = 3;
+              option.keep_all_entries = true;
+            }
+          ];
           settings = {
             snippet.expand.__raw = "function(args) vim.snippet.expand(args.body) end";
             sources = [
@@ -165,6 +181,8 @@
               {name = "buffer";}
             ];
             mapping = {
+              "<Up>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end, {'i'})";
+              "<Down>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end, {'i'})";
               "<Tab>" = ''
                 cmp.mapping(function(fallback)
                   if cmp.visible() then
@@ -180,8 +198,6 @@
                   end
                 end, {'i'})
               '';
-              "<C-n>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end, {'i'})";
-              "<C-p>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end, {'i'})";
               "<C-y>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.confirm({ select = true }) else fallback() end end, {'i'})";
               "<C-Space>" = "cmp.mapping.complete()";
             };
@@ -193,6 +209,25 @@
           settings.defaults = {
             file_ignore_patterns = ["%.direnv/" "%.git/"];
             vimgrep_arguments = ["rg" "--color=never" "--no-heading" "--with-filename" "--line-number" "--column" "--smart-case" "--glob" "!.direnv/**"];
+          };
+        };
+
+        dressing = {
+          enable = true;
+          settings = {
+            input.enabled = false;
+            select = {
+              backend = ["builtin"];
+              builtin = {
+                relative = "cursor";
+                show_numbers = false;
+                border = "rounded";
+                min_width = 20;
+                min_height = 1;
+                max_height = 12;
+                mappings."<Tab>" = "Confirm";
+              };
+            };
           };
         };
 

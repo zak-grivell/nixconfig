@@ -43,6 +43,31 @@ local function run()
   eq(require('mini.surround').config.mappings.delete, 'ds')
   assert(not package.loaded['nvim-autopairs'])
   assert(not package.loaded['mini.ai'])
+  -- Native code actions include spelling corrections without an external server.
+  edit(temp .. '/spelling.txt', { 'hello speling world' })
+  vim.wo.spell = true
+  assert(vim.wait(2000, function()
+    local client = vim.lsp.get_clients({ bufnr = 0, name = 'spelling' })[1]
+    return client and client.initialized
+  end))
+  vim.api.nvim_win_set_cursor(0, { 1, 9 })
+  local select_ui = vim.ui.select
+  local correction
+  vim.ui.select = function(items, _, choose)
+    for _, item in ipairs(items) do
+      if item.action.title == 'Spelling: spelling' then
+        correction = item
+        choose(item)
+        return
+      end
+    end
+    choose(nil)
+  end
+  vim.lsp.buf.code_action()
+  assert(vim.wait(2000, function() return correction ~= nil end), 'missing spelling code action')
+  vim.ui.select = select_ui
+  eq(vim.api.nvim_get_current_line(), 'hello spelling world')
+  vim.bo.modified = false
   -- Autosave is disabled by default, including on focus loss.
   eq(vim.g.autosave_enabled, false)
   -- Debounced autosave runs through normal write hooks when explicitly enabled.

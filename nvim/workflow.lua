@@ -61,6 +61,11 @@ function M.setup(opts)
     for buf in pairs(timers) do cancel(buf) end
   end })
 
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
+    group = group, callback = function(event) require('editor-spelling').attach(event.buf) end,
+  })
+  require('editor-spelling').attach(vim.api.nvim_get_current_buf())
+
   vim.diagnostic.config({
     severity_sort = true, underline = true, signs = true, update_in_insert = false,
     virtual_text = { spacing = 2, severity = { min = vim.diagnostic.severity.WARN } },
@@ -90,12 +95,23 @@ function M.setup(opts)
     end, 'Select ' .. capture)
   end
   map('n', 'grd', vim.lsp.buf.definition, 'LSP definition')
+  map({ 'n', 'x' }, '<leader>p', '"+p', 'Paste from clipboard')
+  map({ 'n', 'x' }, '<leader>y', '"+y', 'Yank to clipboard')
+  -- Visual P replaces without overwriting the source register.
+  map('x', 'R', 'P', 'Replace selection with register')
+  vim.keymap.set('n', 'R', function()
+    return 'v"' .. vim.v.register .. 'P'
+  end, { expr = true, silent = true, desc = 'Replace character with register' })
+  map('x', '<leader>R', '"+P', 'Replace selection with clipboard')
+  map('n', '<leader>R', 'v"+P', 'Replace character with clipboard')
   -- Do not map gr itself: native gra/grn/grr/gri/grt need that prefix.
   map('n', '<leader>f', pick('find_files', false), 'Find files (cwd)')
   map('n', '<leader>F', pick('find_files', true), 'Find files (project)')
   map('n', '<leader>g', pick('live_grep', true), 'Grep project')
   map('n', '<leader>G', pick('live_grep', false), 'Grep cwd')
   map('n', '<leader>b', pick('buffers', true), 'Buffers')
+  map('n', 'gn', '<cmd>BufferLineCycleNext<CR>', 'Next buffer')
+  map('n', 'gp', '<cmd>BufferLineCyclePrev<CR>', 'Previous buffer')
   map('n', '<leader>e', '<cmd>Oil<CR>', 'File explorer')
   map('n', '<leader>s', pick('lsp_document_symbols', true), 'Document symbols')
   map('n', '<leader>S', pick('lsp_dynamic_workspace_symbols', true), 'Workspace symbols')
@@ -113,6 +129,7 @@ function M.setup(opts)
     vim.notify('Autosave ' .. (vim.g.autosave_enabled and 'enabled' or 'disabled'))
   end, 'Toggle autosave')
   map('n', '<leader>uw', function() vim.wo.wrap = not vim.wo.wrap end, 'Toggle soft wrap')
+  map('n', '<leader>us', function() vim.wo.spell = not vim.wo.spell end, 'Toggle spell checking')
   map('n', '<leader>uh', function()
     local buf = vim.api.nvim_get_current_buf()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }), { bufnr = buf })

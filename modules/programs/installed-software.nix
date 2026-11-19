@@ -16,11 +16,6 @@
         path = "/Applications/MATLAB_R2026b.app";
         installation = "MathWorks installer with a MATLAB licence";
       };
-      rex-beta = {
-        path = "/Applications/Rex Beta.app";
-        installation = "Superlogical preview installer and built-in updater";
-        feed = "https://blob.superlogical.com/public/rex-app/preview-arm64/appcast.xml";
-      };
       cisco-secure-client = {
         path = "/opt/cisco/secureclient";
         installation = "Organisation-provided Cisco installer and VPN profiles";

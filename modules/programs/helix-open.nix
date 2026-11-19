@@ -5,17 +5,6 @@
     pkgs,
     ...
   }: let
-    launcher = pkgs.writeShellScript "helix-open" ''
-      for app in /Applications/Rex.app "/Applications/Rex Beta.app"; do
-        rex="$app/Contents/Helpers/Rex Server.rex/Contents/MacOS/rex"
-        if [ -x "$rex" ]; then
-          /usr/bin/open -a "$app"
-          exec "$rex" run --shell=none --label Helix -- ${config.programs.helix.package}/bin/hx "$@"
-        fi
-      done
-      echo "HelixOpen requires Rex in /Applications" >&2
-      exit 1
-    '';
     applet = pkgs.writeText "HelixOpen.applescript" ''
       on run
         launchHelix({})
@@ -26,11 +15,14 @@
       end open
 
       on launchHelix(fileList)
-        set commandLine to quoted form of "${launcher}"
+        set commandLine to quoted form of "${config.programs.helix.package}/bin/hx"
         repeat with selectedFile in fileList
           set commandLine to commandLine & " " & quoted form of POSIX path of selectedFile
         end repeat
-        do shell script commandLine
+        tell application "Terminal"
+          activate
+          do script commandLine
+        end tell
       end launchHelix
     '';
   in {

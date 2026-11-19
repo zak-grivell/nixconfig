@@ -6,6 +6,7 @@
   outputs = inputs: import ./outputs.nix inputs;
 
   inputs = {
+    codex-menubar.url = "github:zak-grivell/codex-menubar";
     flake-file.url = "github:vic/flake-file";
     flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {
