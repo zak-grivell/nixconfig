@@ -5,8 +5,8 @@ A Neovim plugin packaged with Nix. Reads the pinned `helix-unwrapped` source's
 Project-local `.helix/languages.toml` files are ignored, with no trust prompts.
 No server or formatter downloads at runtime.
 
-The home module passes `programs.helix.languages` as personal overrides. Other
-users can call this package with `helixOverrides = { ... };`.
+The Nixvim home module passes its language overrides via `helixOverrides`.
+Standalone Nix callers can pass their own overrides through the same argument.
 
 ## Usage
 
@@ -27,8 +27,8 @@ It never runs `direnv allow` or changes your direnv files.
 - `:PathLspFormat`: format this buffer using its external formatter, then LSP fallback.
 - Saving formats automatically unless the language has `auto-format = false`.
 
-Declare language, server, formatter and indentation overrides in
-`programs.helix.languages` in the flake; both editors use those settings.
+Declare language, server, formatter and indentation overrides in the
+`helixOverrides` argument in the Nixvim home module.
 Maps merge recursively, lists replace, and language entries merge by name.
 
 ## Grammar support and limits

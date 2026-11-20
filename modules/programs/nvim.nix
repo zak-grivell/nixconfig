@@ -46,11 +46,7 @@
       };
   };
 
-  flake.homeModules.default = {
-    pkgs,
-    config,
-    ...
-  }: {
+  flake.homeModules.default = {pkgs, ...}: {
     imports = [
       inputs.nixvim.homeModules.nixvim
     ];
@@ -66,7 +62,20 @@
 
       extraPlugins = [
         (pkgs.callPackage ../../packages/path-lsp {
-          helixOverrides = config.programs.helix.languages;
+          helixOverrides = {
+            language-server.copilot = {
+              command = "copilot-language-server";
+              args = ["--stdio"];
+            };
+            language-server.rust-analyzer.config.check.command = "clippy";
+
+            language = [
+              {
+                name = "nix";
+                formatter.command = "alejandra";
+              }
+            ];
+          };
         })
       ];
       extraPackages = [pkgs.ripgrep pkgs.fd];
