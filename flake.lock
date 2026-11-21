@@ -90,11 +90,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1795218828,
-        "narHash": "sha256-Z5HOe2qqUcn8ZNFV3fBfrakDB7r7IdPN01fsf/r0eJY=",
+        "lastModified": 1795219348,
+        "narHash": "sha256-lz3qx3YObtxnnO+5koKKBnm/rCE9bSw4LQ8nbcbg+a0=",
         "owner": "zak-grivell",
         "repo": "codex-menubar",
-        "rev": "5eb101f7294ecd2ce0795ad275e748f2dd5a84d8",
+        "rev": "b8e66c61836a412ee6d776a0e398fda248dca78a",
         "type": "github"
       },
       "original": {
