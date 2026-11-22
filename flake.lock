@@ -410,6 +410,23 @@
         "type": "github"
       }
     },
+    "rex": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795116584,
+        "narHash": "sha256-sodLKItgiZdA4JQowYVogqE02b4SmGTPB1ux9pyEUrk=",
+        "type": "tarball",
+        "url": "https://pkgs.superlogical.com/rex/nix/preview/0.1.0-preview.22.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://pkgs.superlogical.com/rex/nix/preview.tar.gz"
+      }
+    },
     "root": {
       "inputs": {
         "codex-menubar": "codex-menubar",
@@ -421,8 +438,10 @@
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs_2",
         "nixvim": "nixvim",
+        "rex": "rex",
         "stylix": "stylix",
-        "systems": "systems_3"
+        "systems": "systems_3",
+        "zen-browser": "zen-browser"
       }
     },
     "stylix": {
@@ -567,6 +586,29 @@
       "original": {
         "owner": "tinted-theming",
         "repo": "base16-zed",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795333741,
+        "narHash": "sha256-xJaT+L8DeMR0TJjAOlrjGqaRG2AjZrjivQfCtiLRtlY=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "81376950ac382a96b965f9d6f8bf60354ad99c2f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

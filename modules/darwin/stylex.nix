@@ -6,18 +6,19 @@
     };
   };
 
-  flake.modules.darwin.system = {
+  flake.modules.darwin.system.imports = [
+    inputs.stylix.darwinModules.stylix
+    inputs.self.modules.generic.appearance
+  ];
+
+  flake.modules.generic.appearance = {
     pkgs,
     config,
     ...
   }: {
     stylix.enable = true;
 
-    imports = [
-      inputs.stylix.darwinModules.stylix
-    ];
-
-  stylix.enableReleaseChecks = false;
+    stylix.enableReleaseChecks = false;
 
     stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-frappe.yaml";
     stylix.fonts = {

@@ -1,6 +1,7 @@
 {
   flake.homeModules.default = {
     config,
+    isDarwin,
     lib,
     pkgs,
     ...
@@ -25,7 +26,7 @@
         end tell
       end launchNvim
     '';
-  in {
+  in lib.optionalAttrs isDarwin {
     home.activation.nvimOpen = lib.hm.dag.entryAfter ["writeBoundary"] ''
       app="$HOME/Applications/NvimOpen.app"
       temporary=$(/usr/bin/mktemp -d)

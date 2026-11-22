@@ -11,12 +11,13 @@
     users.users.zakgrivell.shell = pkgs.fish;
   };
 
-  flake.homeModules.default = {pkgs, ...}: {
+  flake.homeModules.default = {lib, pkgs, ...}: {
     home.packages = [pkgs.pokeget-rs pkgs.fastfetch pkgs.xonsh];
 
     home.sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
+    } // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
       STM32CubeMX_PATH = "/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources";
       STM32_PRG_PATH = "/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/Resources/bin";
     };
@@ -93,7 +94,7 @@
     programs.fish = {
       enable = true;
 
-      shellInit = ''
+      shellInit = lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
         fish_add_path --path --prepend "$HOME/Library/Application Support/carapace/bin"
         fish_add_path --path --append "$HOME/.nix-profile/bin" /opt/homebrew/bin
       '';

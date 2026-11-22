@@ -1,6 +1,6 @@
 {
-  flake.homeModules.default = { pkgs, ... }:
-  {
+  flake.homeModules.default = { isDarwin, lib, pkgs, ... }:
+  lib.optionalAttrs isDarwin {
     home.packages = with pkgs; [
       karabiner-elements
     ];

@@ -12,6 +12,7 @@ in {
     ];
   home-manager.extraSpecialArgs = {
     inherit inputs;
+    isDarwin = true;
   };
 
     home-manager.useGlobalPkgs = true;

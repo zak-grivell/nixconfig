@@ -6,9 +6,9 @@
     ];
   };
 
-  flake.homeModules.default = { pkgs, ... }: {
+  flake.homeModules.default = { isDarwin, lib, pkgs, ... }: {
     home.packages = with pkgs; [ cargo-clean-all lldb ];
-
+  } // lib.optionalAttrs isDarwin {
     # Vendor installations are inventoried, not installed by this manifest.
     # Keep licensed installers and existing vendor update mechanisms intact.
     xdg.configFile."installed-software/manual.json".text = builtins.toJSON {

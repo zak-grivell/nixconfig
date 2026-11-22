@@ -1,20 +1,18 @@
-{
-  
-  # flake-file.inputs = {
-  #   zen-browser = {
-  #     inputs = {
-  #       home-manager.follows = "home-manager";
-  #       nixpkgs.follows = "nixpkgs";
-  #     };
-  #     url = "github:0xc000022070/zen-browser-flake";
-  #   };
-  # };
-  
-  flake.homeModules.default = { ... }:{
-    # programs.zen-browser.enable = true;
+{inputs, ...}: {
+  flake-file.inputs.zen-browser = {
+    url = "github:0xc000022070/zen-browser-flake";
+    inputs.home-manager.follows = "home-manager";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
-    flake.modules.darwin.system = {
-      homebrew.casks = [ "zen" "helium-browser" "chatgpt" ];
+  flake.homeModules.linux = {
+    imports = [inputs.zen-browser.homeModules.beta];
+    stylix.targets.zen-browser.enable = false;
+    programs.zen-browser = {
+      enable = true;
+      setAsDefaultBrowser = true;
     };
+  };
+
+  flake.modules.darwin.system.homebrew.casks = ["zen" "helium-browser" "chatgpt"];
 }

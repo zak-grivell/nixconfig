@@ -1,5 +1,5 @@
 {
-  flake.homeModules.default = { lib, ...}: {
+  flake.homeModules.default = { isDarwin, lib, ...}: lib.optionalAttrs isDarwin {
     home.activation = {
       copyNixApps = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
         # Create directory for the applications
