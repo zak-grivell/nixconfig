@@ -27,7 +27,7 @@ Rex Preview runs as your personal systemd user service at boot. It stays up whil
 ## Browse and sync files
 
 1. On the PC, run `sudo smbpasswd -a zakgrivell` to set the share password.
-2. In Finder, use **Go → Connect to Server** with `smb://zakpc/Files`. In Files on iPhone or iPad, use **Connect to Server** and sign in as a registered user. On other computers, connect with an SMB client. The share stores files under `/srv/nas` on the system disk by default.
+2. In Finder, use **Go → Connect to Server** with `smb://zakpc/Files`. In Files on iPhone or iPad, use **Connect to Server** and sign in as a registered user. On other computers, connect with an SMB client. The share opens the `zakgrivell` home directory.
 3. For offline files on the Mac, install Syncthing there, then open the PC's Syncthing UI through an SSH tunnel:
 
    ```sh
@@ -35,6 +35,61 @@ Rex Preview runs as your personal systemd user service at boot. It stays up whil
    ```
 
    Open `http://127.0.0.1:18384` on the Mac. Exchange device IDs and set the PC's device address on the Mac to `tcp://<PC-Tailscale-IPv4>:22000`. The Mac initiates the connection. Add a folder on the PC at `/srv/nas/Sync` or a subfolder, share it with the Mac, and accept it into a local folder on the Mac. Only folders you pair will occupy local space and sync edits in the background. Keep bulk files available through SMB. Syncthing propagates deletions, so keep a separate backup for important data.
+
+## Chat with Hermes on Discord
+
+Create a bot in the [Discord Developer Portal](https://discord.com/developers/applications), enable **Message Content Intent**, and install it on your server with the `bot` and `applications.commands` scopes. Give the bot access to a private text channel, with permission to send messages, attach files, and create and reply in threads. Enable Developer Mode in Discord and copy your numeric user ID. The gateway requires an explicit user allowlist and responds to mentions in server channels. [Hermes Discord setup](https://hermes-agent.nousresearch.com/docs/user-guide/messaging/discord)
+
+On zakpc, create the credential file as root and edit it locally. Keep the real tokens out of Git and Discord.
+
+```sh
+sudo install -d -m 0700 /etc/hermes-agent
+sudo test -e /etc/hermes-agent/discord.env || sudo install -m 0600 /dev/null /etc/hermes-agent/discord.env
+sudoedit /etc/hermes-agent/discord.env
+```
+
+```dotenv
+DISCORD_BOT_TOKEN=your-bot-token
+DISCORD_ALLOWED_USERS=your-numeric-user-id
+```
+
+Hermes uses ChatGPT/Codex OAuth. After switching to the configuration, run the login as the service account and complete the device-code prompt using your ChatGPT account. [Hermes provider configuration](https://hermes-agent.nousresearch.com/docs/integrations/providers)
+
+```sh
+cd ~/config
+sudo nixos-rebuild switch --flake 'path:.#zakpc'
+bash -c 'set -e; package=$(nix build --no-link --print-out-paths github:NousResearch/hermes-agent/v0.23.3#default); exec sudo -Hu hermes env HERMES_HOME=/var/lib/hermes/.hermes "$package/bin/hermes" auth add openai-codex --type oauth --no-browser'
+sudo systemctl restart hermes-agent
+sudo journalctl -u hermes-agent -n 50
+```
+
+Mention the bot in the private channel and ask it to list its workspace. Hermes runs as a dedicated account with a writable `/var/lib/hermes/workspace`, a headless Chromium browser, and shell tools for Git, Python, Node.js and media processing. Put files or projects you want it to work on in that workspace. Add credentials for integrations you want to use to the same environment file, then run `sudo systemctl restart hermes-agent`.
+
+## Back up the home directory to iCloud Drive
+
+After switching to the `zakpc` configuration, run the following commands as `zakgrivell`. In `rclone config`, create a remote named `icloud`, select `iclouddrive` with the Drive service, and complete Apple sign-in and two-factor authentication. rclone documents a 30-day trust token. Renew it with `rclone config reconnect icloud:` when authentication expires.
+
+```sh
+rclone config
+chmod 600 ~/.config/rclone/rclone.conf
+rclone lsd icloud:
+install -d -m 700 ~/.config/restic
+bash -c 'umask 077; set -o noclobber -o pipefail; od -An -N32 -tx1 /dev/urandom | tr -d "[:space:]" > "$HOME/.config/restic/icloud-home-password"'
+restic-icloud-home init
+sudo systemctl start icloud-home-backup.service
+```
+
+Keep a copy of the repository password in a password manager so you can restore after losing the PC. Generate the password and initialize the repository only on the first setup. When moving to a replacement machine, restore the original password file and reconnect rclone.
+
+The timer runs at 03:00 local time and catches up on a missed run after boot. Restic deduplicates data across encrypted snapshots. Snapshots are kept until manually removed. The backup stays on the home filesystem and skips the Nix store, caches, Trash, GVFS and the backup credentials. Symlinks are saved as links.
+
+Check the service log and restore a small sample to a temporary folder after the first backup.
+
+```sh
+journalctl -u icloud-home-backup.service -n 50
+restic-icloud-home snapshots
+bash -c 'restic-icloud-home restore latest --include /home/zakgrivell/config/flake.nix --target "$(mktemp -d)"'
+```
 
 ## Use the desktop
 
@@ -47,6 +102,7 @@ Hyprland's monocle layout gives each normal window the full workspace. Floating 
 | Alt+X | Close the focused window |
 | Alt+T / B / D / E | Open Ghostty / Zen / Thunar / Zed |
 | Super+Space | Open the application launcher |
+| Super+Tab | Open the window switcher across workspaces. Search or use Tab and the arrow keys, then press Enter to switch. |
 | Alt+1–9 | Switch workspace |
 | Alt+Shift+1–9 | Move the focused window to a workspace |
 | Super+Shift+Q | Exit Hyprland |

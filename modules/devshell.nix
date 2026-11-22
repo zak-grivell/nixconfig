@@ -3,6 +3,16 @@
     packages.default = pkgs.writeShellApplication {
       name = "deploy";
       runtimeInputs = [pkgs.git];
+      runtimeEnv =
+        if pkgs.stdenv.hostPlatform.isDarwin
+        then {
+          REBUILD_COMMAND = "darwin-rebuild";
+          REBUILD_FLAKE = ".#zakbook";
+        }
+        else {
+          REBUILD_COMMAND = "nixos-rebuild";
+          REBUILD_FLAKE = "path:.#zakpc";
+        };
       text = ''
         nix-collect-garbage -d
         nix run .#write-flake
@@ -10,7 +20,7 @@
         git add .
         git commit --allow-empty --allow-empty-message -m ""
         git push
-        sudo darwin-rebuild switch --flake .
+        sudo "$REBUILD_COMMAND" switch --flake "$REBUILD_FLAKE"
         nix-collect-garbage -d
       '';
     };

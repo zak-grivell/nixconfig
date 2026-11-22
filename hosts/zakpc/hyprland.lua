@@ -35,6 +35,7 @@ hl.bind("ALT + B", hl.dsp.exec_cmd("zen-beta"))
 hl.bind("ALT + D", hl.dsp.exec_cmd("thunar"))
 hl.bind("ALT + E", hl.dsp.exec_cmd("zeditor"))
 hl.bind("SUPER + Space", hl.dsp.exec_cmd("rofi -show drun"))
+hl.bind("SUPER + Tab", hl.dsp.exec_cmd("rofi -show window -show-icons -display-window 'Switch to'"))
 hl.bind("SUPER + SHIFT + Q", hl.dsp.exit())
 
 for workspace = 1, 9 do

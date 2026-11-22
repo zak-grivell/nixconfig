@@ -1,5 +1,46 @@
 {
-  flake.modules.nixos.storage = {config, ...}: {
+  flake.modules.nixos.storage = {config, lib, pkgs, ...}: let
+    home = config.users.users.zakgrivell.home;
+    resticICloud = pkgs.writeShellScriptBin "restic-icloud-home" ''
+      export RESTIC_REPOSITORY=rclone:icloud:Backups/zakpc-home
+      export RESTIC_PASSWORD_FILE=${lib.escapeShellArg "${home}/.config/restic/icloud-home-password"}
+      export RCLONE_CONFIG=${lib.escapeShellArg "${home}/.config/rclone/rclone.conf"}
+      export PATH=${lib.makeBinPath [pkgs.rclone]}:$PATH
+      exec ${pkgs.restic}/bin/restic "$@"
+    '';
+  in {
+    environment.systemPackages = [pkgs.rclone resticICloud];
+
+    systemd.services.icloud-home-backup = {
+      description = "Back up the zakpc home directory to iCloud Drive";
+      wants = ["network-online.target"];
+      after = ["network-online.target"];
+      serviceConfig = {
+        Type = "oneshot";
+        User = "zakgrivell";
+        UMask = "0077";
+      };
+      script = ''
+        exec ${resticICloud}/bin/restic-icloud-home backup --one-file-system \
+          --exclude=/nix/store \
+          --exclude=${lib.escapeShellArg "${home}/.cache"} \
+          --exclude=${lib.escapeShellArg "${home}/.local/share/Trash"} \
+          --exclude=${lib.escapeShellArg "${home}/.gvfs"} \
+          --exclude=${lib.escapeShellArg "${home}/.config/rclone"} \
+          --exclude=${lib.escapeShellArg "${home}/.config/restic/icloud-home-password"} \
+          ${lib.escapeShellArg home}
+      '';
+    };
+
+    systemd.timers.icloud-home-backup = {
+      description = "Run the iCloud home backup daily";
+      wantedBy = ["timers.target"];
+      timerConfig = {
+        OnCalendar = "*-*-* 03:00:00";
+        Persistent = true;
+      };
+    };
+
     systemd.tmpfiles.rules = [
       "d /srv/nas 0700 zakgrivell users -"
       "d /srv/nas/Sync 0700 zakgrivell users -"
@@ -18,7 +59,7 @@
           "map to guest" = "Never";
         };
         Files = {
-          path = "/srv/nas";
+          path = config.users.users.zakgrivell.home;
           "read only" = "no";
           "valid users" = "zakgrivell";
           "guest ok" = "no";

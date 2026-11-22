@@ -9,6 +9,7 @@
     codex-menubar.url = "github:zak-grivell/codex-menubar";
     flake-file.url = "github:vic/flake-file";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    hermes-agent.url = "github:NousResearch/hermes-agent/v0.23.3";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
