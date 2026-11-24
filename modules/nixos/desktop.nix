@@ -38,9 +38,6 @@
   };
 
   flake.homeModules.linux = {pkgs, ...}: {
-    # Home Manager removed Wayprompt, but Stylix still enables its theme by default.
-    stylix.targets.wayprompt.enable = false;
-
     programs.ghostty = {
       enable = true;
       settings.font-family = "JetBrainsMono Nerd Font";

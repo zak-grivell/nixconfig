@@ -22,6 +22,10 @@
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixvim.url = "github:nix-community/nixvim";
+    raptor = {
+      url = "path:/home/zakgrivell/projects/raptor";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     rex = {
       url = "https://pkgs.superlogical.com/rex/nix/preview.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -542,6 +542,23 @@
         "type": "github"
       }
     },
+    "raptor": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795400762,
+        "narHash": "sha256-fLsLLFZSUxyjRzCEj2+GzlYLCCUCQgA4BqqhI0QorlU=",
+        "path": "/home/zakgrivell/projects/raptor",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/zakgrivell/projects/raptor",
+        "type": "path"
+      }
+    },
     "rex": {
       "inputs": {
         "nixpkgs": [
@@ -571,6 +588,7 @@
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs_3",
         "nixvim": "nixvim",
+        "raptor": "raptor",
         "rex": "rex",
         "stylix": "stylix",
         "systems": "systems_3",
