@@ -41,6 +41,42 @@ function M.setup(opts)
   opts = opts or {}
   vim.g.autosave_enabled = false
   local group = vim.api.nvim_create_augroup('editor-workflow', { clear = true })
+  local function scroll_margin()
+    local height = vim.api.nvim_win_get_height(0)
+    vim.opt_local.scrolloff = math.floor(height / 3)
+  end
+
+  vim.api.nvim_create_autocmd({ 'WinEnter', 'WinResized' }, {
+    group = group,
+    callback = function(event)
+      if event.event == 'WinResized' then
+        for _, win in ipairs(vim.v.event.windows) do
+          vim.api.nvim_win_call(win, scroll_margin)
+        end
+      else
+        scroll_margin()
+      end
+    end,
+  })
+  scroll_margin()
+
+  vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+    group = group,
+    callback = function()
+      if vim.bo.buftype == '' and vim.fn.line('w$') == vim.fn.line('$')
+          and vim.fn.winline() > vim.api.nvim_win_get_height(0) - vim.wo.scrolloff then
+        -- Native scrolloff stops at EOF. Centering can expose the space below it.
+        vim.cmd.normal({ args = { 'zz' }, bang = true })
+      end
+    end,
+  })
+
+  for key, motion in pairs({ j = 'gj', k = 'gk' }) do
+    vim.keymap.set({ 'n', 'x' }, key, function()
+      return vim.wo.wrap and vim.v.count == 0 and motion or key
+    end, { expr = true, desc = 'Move by screen row when wrapping' })
+  end
+
   vim.api.nvim_create_autocmd({ 'TextChanged', 'TextChangedI' }, {
     group = group,
     callback = function(event)

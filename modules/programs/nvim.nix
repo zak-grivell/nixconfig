@@ -123,6 +123,7 @@
         updatetime = 250;
         signcolumn = "yes";
         wrap = true;
+        smoothscroll = true;
         linebreak = true;
         breakindent = true;
         fixendofline = false;
