@@ -85,6 +85,9 @@
       '';
       extraFiles."lua/editor-workflow.lua".source = ../../nvim/workflow.lua;
       extraFiles."lua/editor-spelling.lua".source = ../../nvim/spelling.lua;
+      extraFiles."after/ftplugin/typst.lua".text = ''
+        vim.opt_local.backupcopy = "yes"
+      '';
       globals.mapleader = " ";
 
       colorschemes.catppuccin = {
