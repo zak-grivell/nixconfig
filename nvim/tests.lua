@@ -14,13 +14,24 @@ local function run()
   local function mapping(key, mode)
     return vim.fn.maparg(key, mode or 'n', false, true)
   end
-  -- The actual generated Nixvim package must preserve native editing/LSP maps.
-  for _, key in ipairs({ 'h', 'j', 'k', 'l', 's', 'S', 'x', 'X', 'gd', 'gr', 'n', 'N', '/', 'f', 'F', 't', 'T', ';', ',' }) do
+  -- Preserve Vim editing and LSP navigation, with actions under Space.
+  for _, key in ipairs({ 'h', 'l', 's', 'S', 'x', 'X', 'gd', 'gr', 'gn', 'gp', 'n', 'N', '/', 'f', 'F', 't', 'T', ';', ',' }) do
     assert(vim.tbl_isempty(mapping(key)), key .. ' must retain its builtin meaning')
   end
-  for _, key in ipairs({ 'grn', 'gra', 'grr', 'gri', 'grt', 'gO', '[d', ']d', '[b', ']b' }) do
+  for _, key in ipairs({ 'grr', 'gri', 'grt', '[d', ']d', '[b', ']b' }) do
     assert(mapping(key).desc and mapping(key).desc ~= '', key .. ' must retain its native mapping')
   end
+  for _, key in ipairs({ 'grn', 'gra', 'grx', 'gO' }) do
+    assert(vim.tbl_isempty(mapping(key)), key .. ' has moved to Space')
+  end
+  assert(vim.tbl_isempty(mapping('gra', 'x')))
+  eq(mapping(' a').callback, vim.lsp.buf.code_action)
+  eq(mapping(' a', 'x').callback, vim.lsp.buf.code_action)
+  eq(mapping(' r').callback, vim.lsp.buf.rename)
+  eq(mapping(' k').callback, vim.lsp.buf.hover)
+  assert(mapping(' gg').callback and mapping(' tc').callback)
+  eq(mapping(' ey').desc, 'Yazi (current file)')
+  eq(vim.fn.exists(':Yazi'), 2)
   eq(mapping('an', 'x').desc, 'Select parent (outer) node')
   eq(mapping('in', 'x').desc, 'Select child (inner) node')
   eq(mapping('grd').desc, 'LSP definition')
@@ -63,7 +74,7 @@ local function run()
     end
     choose(nil)
   end
-  vim.lsp.buf.code_action()
+  mapping(' a').callback()
   assert(vim.wait(2000, function() return correction ~= nil end), 'missing spelling code action')
   vim.ui.select = select_ui
   eq(vim.api.nvim_get_current_line(), 'hello spelling world')
@@ -115,11 +126,11 @@ local function run()
   vim.o.columns, vim.o.lines = 120, 40
   mapping(' f').callback()
   local prompt = vim.api.nvim_get_current_buf()
-  eq(require('telescope.actions.state').get_current_picker(prompt).cwd, temp .. '/project/subdir')
+  eq(require('telescope.actions.state').get_current_picker(prompt).cwd, temp .. '/project')
   require('telescope.actions').close(prompt)
   mapping(' F').callback()
   prompt = vim.api.nvim_get_current_buf()
-  eq(require('telescope.actions.state').get_current_picker(prompt).cwd, temp .. '/project')
+  eq(require('telescope.actions.state').get_current_picker(prompt).cwd, temp .. '/project/subdir')
   require('telescope.actions').close(prompt)
   -- Multiple-cursor maps add cursors without repurposing Vim's motion/editing keys.
   vim.api.nvim_buf_set_lines(code, 0, -1, false, { 'word word word' })

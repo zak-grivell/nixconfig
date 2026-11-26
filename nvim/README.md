@@ -26,9 +26,7 @@ environment. `Space ch` shows the tools detected for the current buffer.
 
 | Keys | Action |
 | --- | --- |
-| `grn` / `gra` | Rename / code action |
 | `grr` / `gri` / `grt` | References / implementation / type definition |
-| `gO` | Document symbols |
 | `K` | LSP hover when an attached server supports it |
 | `Ctrl-s` in Insert mode | Signature help |
 | `[d` / `]d` | Previous / next diagnostic |
@@ -42,8 +40,8 @@ environment. `Space ch` shows the tools detected for the current buffer.
 | `Shift-Tab` | Native backward snippet navigation |
 
 `gd` keeps its original local-declaration meaning; **`grd`** is the added LSP
-definition shortcut. The old bare `gr` override has been removed so native
-`gr…` shortcuts work without interference.
+definition shortcut. Rename, code actions, code lenses, and symbol pickers
+live under Space. `gn` and `gp` use their native Vim behaviour.
 
 Completion uses `Ctrl-n` / `Ctrl-p` to select, `Tab` or `Ctrl-y` to accept, and
 `Tab` after text or `Ctrl-Space` to request suggestions. Tab indents after
@@ -69,19 +67,24 @@ comment plugins have been removed.
 
 | Keys after Space | Action |
 | --- | --- |
-| `f` / `F` | Files in current working directory / project |
-| `g` / `G` | Grep project / current working directory |
-| `b` / `e` | Buffer picker / Oil file explorer |
+| `f` / `F` | Files in project / current working directory |
+| `/` / `G` | Grep project / current working directory |
+| `gg` / `gs` | LazyGit / changed files |
+| `b` | Buffer picker |
+| `ey` / `eY` / `eo` | Yazi at current file / Yazi at cwd / Oil |
+| `tc` | Codex CLI at project root |
 | `s` / `S` | Document / workspace symbol picker |
 | `d` / `D` | Trouble diagnostics panel / diagnostic picker |
 | `j` | Flash jump |
-| `ca` / `cr` / `cf` | Code action / rename / format |
+| `a` / `r` / `k` | Code action / rename / hover documentation |
+| `cf` / `cl` | Format / run code lens |
 | `ck` / `ch` / `cR` | Signature help / language health / reload language tools |
 | `ua` / `uw` / `uh` / `ud` | Toggle autosave / wrap / inlay hints / diagnostics |
 
 Files and grep respect ignore files and exclude `.direnv/`. Hidden files are
-hidden by default. `Space f` uses Neovim's working directory (`:pwd`), while
-`Space F` uses the detected language/project root.
+hidden by default. `Space f` uses the detected language/project root.
+`Space F` uses Neovim's working directory (`:pwd`). LazyGit and Codex open in
+terminal tabs. Codex uses the `codex` executable on PATH.
 
 ## Multiple cursors
 

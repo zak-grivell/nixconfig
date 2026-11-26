@@ -37,6 +37,31 @@ local function pick(name, project)
   end
 end
 
+local function terminal(command, cwd)
+  if vim.fn.executable(command) ~= 1 then
+    vim.notify(command .. ' is not on PATH', vim.log.levels.ERROR)
+    return
+  end
+  vim.cmd.tabnew()
+  local buf = vim.api.nvim_get_current_buf()
+  vim.bo[buf].bufhidden = 'hide'
+  local job = vim.fn.jobstart({ command }, {
+    cwd = cwd,
+    term = true,
+    on_exit = function(_, code)
+      if code == 0 and vim.api.nvim_buf_is_valid(buf) then
+        vim.api.nvim_buf_delete(buf, { force = true })
+      end
+    end,
+  })
+  if job > 0 then
+    vim.cmd.startinsert()
+  else
+    vim.cmd.tabclose()
+    vim.notify('Could not start ' .. command, vim.log.levels.ERROR)
+  end
+end
+
 function M.setup(opts)
   opts = opts or {}
   vim.g.autosave_enabled = false
@@ -140,23 +165,39 @@ function M.setup(opts)
   end, { expr = true, silent = true, desc = 'Replace character with register' })
   map('x', '<leader>R', '"+P', 'Replace selection with clipboard')
   map('n', '<leader>R', 'v"+P', 'Replace character with clipboard')
-  -- Do not map gr itself: native gra/grn/grr/gri/grt need that prefix.
-  map('n', '<leader>f', pick('find_files', false), 'Find files (cwd)')
-  map('n', '<leader>F', pick('find_files', true), 'Find files (project)')
-  map('n', '<leader>g', pick('live_grep', true), 'Grep project')
+  -- Keep the native LSP jump maps under g and move actions to Space.
+  for _, key in ipairs({ 'grn', 'grx', 'gO', 'gra' }) do
+    pcall(vim.keymap.del, 'n', key)
+  end
+  pcall(vim.keymap.del, 'x', 'gra')
+  map('n', '<leader>f', pick('find_files', true), 'Find files (project)')
+  map('n', '<leader>F', pick('find_files', false), 'Find files (cwd)')
+  map('n', '<leader>/', pick('live_grep', true), 'Grep project')
   map('n', '<leader>G', pick('live_grep', false), 'Grep cwd')
   map('n', '<leader>b', pick('buffers', true), 'Buffers')
-  map('n', 'gn', '<cmd>BufferLineCycleNext<CR>', 'Next buffer')
-  map('n', 'gp', '<cmd>BufferLineCyclePrev<CR>', 'Previous buffer')
-  map('n', '<leader>e', '<cmd>Oil<CR>', 'File explorer')
+  map('n', '<leader>ey', '<cmd>Yazi<CR>', 'Yazi (current file)')
+  map('n', '<leader>eY', '<cmd>Yazi cwd<CR>', 'Yazi (cwd)')
+  map('n', '<leader>eo', '<cmd>Oil<CR>', 'Oil')
+  map('n', '<leader>gg', function()
+    local root = vim.fs.root(M.project_root(), '.git')
+    if root then
+      terminal('lazygit', root)
+    else
+      vim.notify('No Git repository found for the current project', vim.log.levels.WARN)
+    end
+  end, 'LazyGit')
+  map('n', '<leader>gs', pick('git_status', true), 'Changed files')
+  map('n', '<leader>tc', function() terminal('codex', M.project_root()) end, 'Codex')
   map('n', '<leader>s', pick('lsp_document_symbols', true), 'Document symbols')
   map('n', '<leader>S', pick('lsp_dynamic_workspace_symbols', true), 'Workspace symbols')
   map('n', '<leader>d', '<cmd>Trouble diagnostics toggle<CR>', 'Diagnostics panel')
   map('n', '<leader>D', pick('diagnostics', true), 'Find diagnostics')
-  map({ 'n', 'x' }, '<leader>ca', vim.lsp.buf.code_action, 'Code action')
-  map('n', '<leader>cr', vim.lsp.buf.rename, 'Rename symbol')
+  map({ 'n', 'x' }, '<leader>a', vim.lsp.buf.code_action, 'Code action')
+  map('n', '<leader>r', vim.lsp.buf.rename, 'Rename symbol')
+  map('n', '<leader>k', vim.lsp.buf.hover, 'Hover documentation')
   map('n', '<leader>cf', '<cmd>PathLspFormat<CR>', 'Format buffer')
   map('n', '<leader>ck', vim.lsp.buf.signature_help, 'Signature help')
+  map('n', '<leader>cl', vim.lsp.codelens.run, 'Run code lens')
   map('n', '<leader>ch', '<cmd>PathLspHealth<CR>', 'Language health')
   map('n', '<leader>cR', '<cmd>PathLspReload<CR>', 'Reload language tools')
   map('n', '<leader>j', function() require('flash').jump() end, 'Jump to text')
@@ -198,7 +239,9 @@ function M.setup(opts)
     set({ 'n', 'x' }, '<leader>m]', mc.nextCursor)
   end)
   require('which-key').add({
-    { '<leader>c', group = 'Code' }, { '<leader>u', group = 'Toggles' },
+    { '<leader>c', group = 'Language tools' }, { '<leader>u', group = 'Toggles' },
+    { '<leader>g', group = 'Git' }, { '<leader>e', group = 'File explorers' },
+    { '<leader>t', group = 'Tools' },
     { '<leader>m', group = 'Multiple cursors', mode = { 'n', 'x' } },
   })
   map('n', '<leader>?', function() require('which-key').show({ keys = '<Space>', loop = false }) end, 'Show Space menu')

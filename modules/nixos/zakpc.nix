@@ -57,6 +57,7 @@ in {
 
     services.sunshine.enable = true;
     systemd.user.services.sunshine.unitConfig.ConditionUser = "zakgrivell";
+    networking.firewall.interfaces.eno1.allowedUDPPorts = [41641];
     networking.firewall.interfaces.${config.services.tailscale.interfaceName} = {
       allowedTCPPorts = [47984 47989 48010];
       allowedUDPPorts = [47998 47999 48000 48002 48010];

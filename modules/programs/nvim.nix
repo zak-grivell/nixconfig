@@ -78,7 +78,7 @@
           };
         })
       ];
-      extraPackages = [pkgs.ripgrep pkgs.fd];
+      extraPackages = [pkgs.ripgrep pkgs.fd pkgs.lazygit];
       extraConfigLua = ''
         require("path-lsp").setup()
         require("editor-workflow").setup()
@@ -245,6 +245,7 @@
         };
 
         oil.enable = true;
+        yazi.enable = true;
 
         flash = {
           enable = true;
